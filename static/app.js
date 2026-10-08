@@ -1,0 +1,2 @@
+document.querySelectorAll('[data-page]').forEach(link=>{const url=new URL(window.location.href);url.searchParams.set('page',link.dataset.page);link.href=url.pathname+url.search;});
+document.querySelectorAll('form[data-busy]').forEach(form=>form.addEventListener('submit',()=>{const button=form.querySelector('button');button.disabled=true;button.textContent='Analyzing… please wait';form.setAttribute('aria-busy','true');}));

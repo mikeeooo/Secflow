@@ -1,0 +1,326 @@
+{
+  "run": 2,
+  "count": 6265,
+  "duration_seconds": 4.787341916991863,
+  "parameters": {
+    "trees": 32,
+    "sample_size": 64,
+    "seed": 42,
+    "eps": 1.8,
+    "min_samples": 4,
+    "k": 10,
+    "reference": 128,
+    "validation": 64,
+    "dbscan_window": 24,
+    "features": [
+      "log amount",
+      "amount / prior mean",
+      "prior transfers in 60s",
+      "prior transfers in 5m",
+      "log prior 5m amount",
+      "new beneficiary",
+      "new device",
+      "failed logins",
+      "recent incoming transfers"
+    ],
+    "mode": "Chronological replay; fixed earlier reference, causal DBSCAN window",
+    "score": "0.30 IF + 0.25 LOF + 0.15 DBSCAN noise + 0.30 rules; review >=45, block >=65",
+    "calibration": "Not calibrated; fixed demonstrator thresholds",
+    "datasets": [
+      {
+        "checksum": "33e91572efc31d8294ef8e7a5ed9eeae6078f438e0a04f495b1c1e75cd2194f5",
+        "rows": 6520
+      }
+    ]
+  },
+  "metrics": {
+    "PaySim": {
+      "fit_seconds": 0.0206,
+      "reference_rows": 128,
+      "validation_rows": 64,
+      "test_rows": 1808,
+      "methods": {
+        "validation": {
+          "Isolation Forest": {
+            "tp": 0,
+            "fp": 5,
+            "fn": 0,
+            "tn": 59,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.078,
+            "n": 64
+          },
+          "LOF": {
+            "tp": 0,
+            "fp": 7,
+            "fn": 0,
+            "tn": 57,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.109,
+            "n": 64
+          },
+          "DBSCAN noise": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Rules": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Algorithms only": {
+            "tp": 0,
+            "fp": 5,
+            "fn": 0,
+            "tn": 59,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.078,
+            "n": 64
+          },
+          "Combined": {
+            "tp": 0,
+            "fp": 4,
+            "fn": 0,
+            "tn": 60,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.062,
+            "n": 64
+          }
+        },
+        "test": {
+          "Isolation Forest": {
+            "tp": 4,
+            "fp": 197,
+            "fn": 8,
+            "tn": 1599,
+            "precision": 0.02,
+            "recall": 0.333,
+            "f1": 0.038,
+            "false_positive_rate": 0.11,
+            "n": 1808
+          },
+          "LOF": {
+            "tp": 5,
+            "fp": 255,
+            "fn": 7,
+            "tn": 1541,
+            "precision": 0.019,
+            "recall": 0.417,
+            "f1": 0.037,
+            "false_positive_rate": 0.142,
+            "n": 1808
+          },
+          "DBSCAN noise": {
+            "tp": 1,
+            "fp": 29,
+            "fn": 11,
+            "tn": 1767,
+            "precision": 0.033,
+            "recall": 0.083,
+            "f1": 0.048,
+            "false_positive_rate": 0.016,
+            "n": 1808
+          },
+          "Rules": {
+            "tp": 1,
+            "fp": 17,
+            "fn": 11,
+            "tn": 1779,
+            "precision": 0.056,
+            "recall": 0.083,
+            "f1": 0.067,
+            "false_positive_rate": 0.009,
+            "n": 1808
+          },
+          "Algorithms only": {
+            "tp": 3,
+            "fp": 188,
+            "fn": 9,
+            "tn": 1608,
+            "precision": 0.016,
+            "recall": 0.25,
+            "f1": 0.03,
+            "false_positive_rate": 0.105,
+            "n": 1808
+          },
+          "Combined": {
+            "tp": 3,
+            "fp": 162,
+            "fn": 9,
+            "tn": 1634,
+            "precision": 0.018,
+            "recall": 0.25,
+            "f1": 0.034,
+            "false_positive_rate": 0.09,
+            "n": 1808
+          }
+        }
+      }
+    },
+    "Generated scenario": {
+      "fit_seconds": 0.0232,
+      "reference_rows": 128,
+      "validation_rows": 64,
+      "test_rows": 4329,
+      "methods": {
+        "validation": {
+          "Isolation Forest": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0,
+            "tn": 63,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.016,
+            "n": 64
+          },
+          "LOF": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 0,
+            "tn": 62,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.031,
+            "n": 64
+          },
+          "DBSCAN noise": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Rules": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Algorithms only": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Combined": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          }
+        },
+        "test": {
+          "Isolation Forest": {
+            "tp": 430,
+            "fp": 253,
+            "fn": 150,
+            "tn": 3495,
+            "precision": 0.63,
+            "recall": 0.741,
+            "f1": 0.681,
+            "false_positive_rate": 0.068,
+            "n": 4328
+          },
+          "LOF": {
+            "tp": 580,
+            "fp": 3740,
+            "fn": 0,
+            "tn": 8,
+            "precision": 0.134,
+            "recall": 1.0,
+            "f1": 0.237,
+            "false_positive_rate": 0.998,
+            "n": 4328
+          },
+          "DBSCAN noise": {
+            "tp": 247,
+            "fp": 49,
+            "fn": 333,
+            "tn": 3699,
+            "precision": 0.834,
+            "recall": 0.426,
+            "f1": 0.564,
+            "false_positive_rate": 0.013,
+            "n": 4328
+          },
+          "Rules": {
+            "tp": 145,
+            "fp": 10,
+            "fn": 435,
+            "tn": 3738,
+            "precision": 0.935,
+            "recall": 0.25,
+            "f1": 0.395,
+            "false_positive_rate": 0.003,
+            "n": 4328
+          },
+          "Algorithms only": {
+            "tp": 580,
+            "fp": 3740,
+            "fn": 0,
+            "tn": 8,
+            "precision": 0.134,
+            "recall": 1.0,
+            "f1": 0.237,
+            "false_positive_rate": 0.998,
+            "n": 4328
+          },
+          "Combined": {
+            "tp": 511,
+            "fp": 270,
+            "fn": 69,
+            "tn": 3478,
+            "precision": 0.654,
+            "recall": 0.881,
+            "f1": 0.751,
+            "false_positive_rate": 0.072,
+            "n": 4328
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+.venv/
+.env
+.DS_Store
+
+__pycache__/
+*.py[cod]
+
+db.sqlite3
+*.sqlite3-journal
+
+# Local source/downloaded and generated datasets are too large for Git.
+data/raw/*
+!data/raw/.gitkeep
+data/generated/*
+!data/generated/.gitkeep
+
+.impeccable/review/

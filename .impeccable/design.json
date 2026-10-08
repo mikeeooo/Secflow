@@ -1,0 +1,394 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T07:20:52.037350+00:00",
+  "title": "Design System: SecFlow",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "displayName": "Primary",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15.00% 0.20597 263.39)",
+          "oklch(26.43% 0.20597 263.39)",
+          "oklch(37.86% 0.20597 263.39)",
+          "oklch(49.29% 0.20597 263.39)",
+          "oklch(60.71% 0.20597 263.39)",
+          "oklch(72.14% 0.20597 263.39)",
+          "oklch(83.57% 0.20597 263.39)",
+          "oklch(95.00% 0.20597 263.39)"
+        ]
+      },
+      "primary-hover": {
+        "displayName": "Primary Hover",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15.00% 0.17371 263.09)",
+          "oklch(26.43% 0.17371 263.09)",
+          "oklch(37.86% 0.17371 263.09)",
+          "oklch(49.29% 0.17371 263.09)",
+          "oklch(60.71% 0.17371 263.09)",
+          "oklch(72.14% 0.17371 263.09)",
+          "oklch(83.57% 0.17371 263.09)",
+          "oklch(95.00% 0.17371 263.09)"
+        ]
+      },
+      "nav": {
+        "displayName": "Nav",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.00573 264.53)",
+          "oklch(26.43% 0.00573 264.53)",
+          "oklch(37.86% 0.00573 264.53)",
+          "oklch(49.29% 0.00573 264.53)",
+          "oklch(60.71% 0.00573 264.53)",
+          "oklch(72.14% 0.00573 264.53)",
+          "oklch(83.57% 0.00573 264.53)",
+          "oklch(95.00% 0.00573 264.53)"
+        ]
+      },
+      "ink": {
+        "displayName": "Ink",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.05457 261.42)",
+          "oklch(26.43% 0.05457 261.42)",
+          "oklch(37.86% 0.05457 261.42)",
+          "oklch(49.29% 0.05457 261.42)",
+          "oklch(60.71% 0.05457 261.42)",
+          "oklch(72.14% 0.05457 261.42)",
+          "oklch(83.57% 0.05457 261.42)",
+          "oklch(95.00% 0.05457 261.42)"
+        ]
+      },
+      "muted": {
+        "displayName": "Muted",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.03988 260.31)",
+          "oklch(26.43% 0.03988 260.31)",
+          "oklch(37.86% 0.03988 260.31)",
+          "oklch(49.29% 0.03988 260.31)",
+          "oklch(60.71% 0.03988 260.31)",
+          "oklch(72.14% 0.03988 260.31)",
+          "oklch(83.57% 0.03988 260.31)",
+          "oklch(95.00% 0.03988 260.31)"
+        ]
+      },
+      "line": {
+        "displayName": "Line",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.01380 258.35)",
+          "oklch(26.43% 0.01380 258.35)",
+          "oklch(37.86% 0.01380 258.35)",
+          "oklch(49.29% 0.01380 258.35)",
+          "oklch(60.71% 0.01380 258.35)",
+          "oklch(72.14% 0.01380 258.35)",
+          "oklch(83.57% 0.01380 258.35)",
+          "oklch(95.00% 0.01380 258.35)"
+        ]
+      },
+      "wash": {
+        "displayName": "Wash",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.00861 264.52)",
+          "oklch(26.43% 0.00861 264.52)",
+          "oklch(37.86% 0.00861 264.52)",
+          "oklch(49.29% 0.00861 264.52)",
+          "oklch(60.71% 0.00861 264.52)",
+          "oklch(72.14% 0.00861 264.52)",
+          "oklch(83.57% 0.00861 264.52)",
+          "oklch(95.00% 0.00861 264.52)"
+        ]
+      },
+      "surface": {
+        "displayName": "Surface",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.00000 89.88)",
+          "oklch(26.43% 0.00000 89.88)",
+          "oklch(37.86% 0.00000 89.88)",
+          "oklch(49.29% 0.00000 89.88)",
+          "oklch(60.71% 0.00000 89.88)",
+          "oklch(72.14% 0.00000 89.88)",
+          "oklch(83.57% 0.00000 89.88)",
+          "oklch(95.00% 0.00000 89.88)"
+        ]
+      },
+      "danger": {
+        "displayName": "Danger",
+        "role": "semantic",
+        "tonalRamp": [
+          "oklch(15.00% 0.14516 23.58)",
+          "oklch(26.43% 0.14516 23.58)",
+          "oklch(37.86% 0.14516 23.58)",
+          "oklch(49.29% 0.14516 23.58)",
+          "oklch(60.71% 0.14516 23.58)",
+          "oklch(72.14% 0.14516 23.58)",
+          "oklch(83.57% 0.14516 23.58)",
+          "oklch(95.00% 0.14516 23.58)"
+        ]
+      },
+      "success": {
+        "displayName": "Success",
+        "role": "semantic",
+        "tonalRamp": [
+          "oklch(15.00% 0.08500 161.26)",
+          "oklch(26.43% 0.08500 161.26)",
+          "oklch(37.86% 0.08500 161.26)",
+          "oklch(49.29% 0.08500 161.26)",
+          "oklch(60.71% 0.08500 161.26)",
+          "oklch(72.14% 0.08500 161.26)",
+          "oklch(83.57% 0.08500 161.26)",
+          "oklch(95.00% 0.08500 161.26)"
+        ]
+      },
+      "warning": {
+        "displayName": "Warning",
+        "role": "semantic",
+        "tonalRamp": [
+          "oklch(15.00% 0.10180 75.46)",
+          "oklch(26.43% 0.10180 75.46)",
+          "oklch(37.86% 0.10180 75.46)",
+          "oklch(49.29% 0.10180 75.46)",
+          "oklch(60.71% 0.10180 75.46)",
+          "oklch(72.14% 0.10180 75.46)",
+          "oklch(83.57% 0.10180 75.46)",
+          "oklch(95.00% 0.10180 75.46)"
+        ]
+      },
+      "focus": {
+        "displayName": "Focus",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.13522 266.81)",
+          "oklch(26.43% 0.13522 266.81)",
+          "oklch(37.86% 0.13522 266.81)",
+          "oklch(49.29% 0.13522 266.81)",
+          "oklch(60.71% 0.13522 266.81)",
+          "oklch(72.14% 0.13522 266.81)",
+          "oklch(83.57% 0.13522 266.81)",
+          "oklch(95.00% 0.13522 266.81)"
+        ]
+      },
+      "nav-active": {
+        "displayName": "Nav Active",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.02543 268.85)",
+          "oklch(26.43% 0.02543 268.85)",
+          "oklch(37.86% 0.02543 268.85)",
+          "oklch(49.29% 0.02543 268.85)",
+          "oklch(60.71% 0.02543 268.85)",
+          "oklch(72.14% 0.02543 268.85)",
+          "oklch(83.57% 0.02543 268.85)",
+          "oklch(95.00% 0.02543 268.85)"
+        ]
+      },
+      "nav-active-text": {
+        "displayName": "Nav Active Text",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.18605 262.63)",
+          "oklch(26.43% 0.18605 262.63)",
+          "oklch(37.86% 0.18605 262.63)",
+          "oklch(49.29% 0.18605 262.63)",
+          "oklch(60.71% 0.18605 262.63)",
+          "oklch(72.14% 0.18605 262.63)",
+          "oklch(83.57% 0.18605 262.63)",
+          "oklch(95.00% 0.18605 262.63)"
+        ]
+      },
+      "nav-hover": {
+        "displayName": "Nav Hover",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.01444 264.50)",
+          "oklch(26.43% 0.01444 264.50)",
+          "oklch(37.86% 0.01444 264.50)",
+          "oklch(49.29% 0.01444 264.50)",
+          "oklch(60.71% 0.01444 264.50)",
+          "oklch(72.14% 0.01444 264.50)",
+          "oklch(83.57% 0.01444 264.50)",
+          "oklch(95.00% 0.01444 264.50)"
+        ]
+      },
+      "field-border": {
+        "displayName": "Field Border",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.02168 259.19)",
+          "oklch(26.43% 0.02168 259.19)",
+          "oklch(37.86% 0.02168 259.19)",
+          "oklch(49.29% 0.02168 259.19)",
+          "oklch(60.71% 0.02168 259.19)",
+          "oklch(72.14% 0.02168 259.19)",
+          "oklch(83.57% 0.02168 259.19)",
+          "oklch(95.00% 0.02168 259.19)"
+        ]
+      },
+      "block-bg": {
+        "displayName": "Block Bg",
+        "role": "semantic",
+        "tonalRamp": [
+          "oklch(15.00% 0.01741 13.10)",
+          "oklch(26.43% 0.01741 13.10)",
+          "oklch(37.86% 0.01741 13.10)",
+          "oklch(49.29% 0.01741 13.10)",
+          "oklch(60.71% 0.01741 13.10)",
+          "oklch(72.14% 0.01741 13.10)",
+          "oklch(83.57% 0.01741 13.10)",
+          "oklch(95.00% 0.01741 13.10)"
+        ]
+      },
+      "review-bg": {
+        "displayName": "Review Bg",
+        "role": "semantic",
+        "tonalRamp": [
+          "oklch(15.00% 0.03480 87.07)",
+          "oklch(26.43% 0.03480 87.07)",
+          "oklch(37.86% 0.03480 87.07)",
+          "oklch(49.29% 0.03480 87.07)",
+          "oklch(60.71% 0.03480 87.07)",
+          "oklch(72.14% 0.03480 87.07)",
+          "oklch(83.57% 0.03480 87.07)",
+          "oklch(95.00% 0.03480 87.07)"
+        ]
+      },
+      "allow-bg": {
+        "displayName": "Allow Bg",
+        "role": "semantic",
+        "tonalRamp": [
+          "oklch(15.00% 0.01405 155.59)",
+          "oklch(26.43% 0.01405 155.59)",
+          "oklch(37.86% 0.01405 155.59)",
+          "oklch(49.29% 0.01405 155.59)",
+          "oklch(60.71% 0.01405 155.59)",
+          "oklch(72.14% 0.01405 155.59)",
+          "oklch(83.57% 0.01405 155.59)",
+          "oklch(95.00% 0.01405 155.59)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Login introduction."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page headings."
+      },
+      "metric": {
+        "displayName": "Metric",
+        "purpose": "Workspace summary counts."
+      }
+    },
+    "motion": [
+      {
+        "name": "button-background",
+        "value": "background 0.18s ease",
+        "purpose": "Button background changes only."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1100px"
+      },
+      {
+        "name": "mobile",
+        "value": "760px"
+      },
+      {
+        "name": "wide",
+        "value": "1600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Export transactions",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Compact operational action.",
+      "html": "<button class=\"ds-button-primary\">Export transactions</button>",
+      "css": ".ds-button-primary{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;display:inline-flex;align-items:center;justify-content:center;gap:20px;border:1px solid transparent;border-radius:7px;padding:10px 17px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .18s;background:var(--blue,#2259da);color:#fff;border-color:transparent}.ds-button-primary:hover{background:#1745ad}.ds-button-primary:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-button-primary:disabled{opacity:.6;cursor:wait}"
+    },
+    {
+      "name": "Print report",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Compact operational action.",
+      "html": "<button class=\"ds-button-secondary\">Print report</button>",
+      "css": ".ds-button-secondary{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;display:inline-flex;align-items:center;justify-content:center;gap:20px;border:1px solid transparent;border-radius:7px;padding:10px 17px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .18s;background:#fff;color:var(--ink,#172641);border-color:var(--line,#e2e8f1)}.ds-button-secondary:hover{background:var(--wash,#f5f8fe)}.ds-button-secondary:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-button-secondary:disabled{opacity:.6;cursor:wait}"
+    },
+    {
+      "name": "Search field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labeled filter input.",
+      "html": "<label class=\"ds-label\">Search transactions<input class=\"ds-input\" placeholder=\"Transaction or account\"></label>",
+      "css": ".ds-label{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:550;color:#46546d}.ds-input{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;border:1px solid #ccd5e3;border-radius:7px;padding:10px 12px;min-width:0;background:#fff;color:var(--ink,#172641);font-size:13px;caret-color:var(--blue,#2259da)}.ds-input::placeholder{color:var(--muted,#627087)}.ds-input:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}"
+    },
+    {
+      "name": "Primary navigation",
+      "kind": "nav",
+      "refersTo": "navigation-active",
+      "description": "Current destination and a neighboring destination.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Example navigation\"><a href=\"#overview\" aria-current=\"page\">Overview</a><a href=\"#transactions\">Transactions</a></nav>",
+      "css": ".ds-nav{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;display:grid;gap:8px;background:var(--nav,#f7f9fd);padding:22px}.ds-nav a{color:#53617b;padding:11px 16px;border-radius:7px;font-weight:550;text-decoration:none}.ds-nav a:hover{background:#edf2fc}.ds-nav a[aria-current]{background:#e6edff;color:#194ebf}.ds-nav a:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}"
+    },
+    {
+      "name": "Decision badges",
+      "kind": "chip",
+      "refersTo": "badge-block",
+      "description": "Explicit noninteractive decision states.",
+      "html": "<span class=\"ds-badge ds-block\">Block</span> <span class=\"ds-badge ds-review\">Review</span> <span class=\"ds-badge ds-allow\">Allow</span>",
+      "css": ".ds-badge{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;display:inline-block;padding:4px 9px;border-radius:5px;font-size:11px;font-weight:550;white-space:nowrap}.ds-block{background:#fceced;color:var(--danger,#a53738)}.ds-review{background:#fff4db;color:var(--warning,#895e12)}.ds-allow{background:#ebf5ee;color:var(--success,#226749)}"
+    },
+    {
+      "name": "Investigation panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Flat content container with heading and supporting text.",
+      "html": "<section class=\"ds-panel\"><h2>Needs attention</h2><p>Open investigations, ordered by initial risk.</p></section>",
+      "css": ".ds-panel{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;border:1px solid var(--line,#e2e8f1);border-radius:var(--radius,12px);background:#fff;padding:25px;color:var(--ink,#172641)}.ds-panel h2{font-size:17px;line-height:1.4;letter-spacing:-.015em;font-weight:650;margin:0 0 8px}.ds-panel p{color:var(--muted,#627087);font-size:12px;margin:0;max-width:74ch}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Analyst’s Desk",
+    "overview": "The Analyst’s Desk is a restrained working environment: white content surfaces, a pale navigation rail, clear blue actions, and readable operational data. The user-approved direction is minimalist blue and white; the metaphor here describes the implemented result rather than a separately approved visual concept.\n\nThe interface uses flat boundaries and measured spacing so tables, numbers, and investigation actions carry the hierarchy. English labels describe decisions and simulation limitations directly. This document records the current code; no approved image comp exists.",
+    "keyCharacteristics": [
+      "White content surfaces with a pale blue-gray navigation rail.",
+      "Blue actions and selection states, with restrained semantic status colors.",
+      "System typography, tabular numbers, and compact readable tables.",
+      "Flat bordered containers and visible keyboard focus."
+    ],
+    "rules": [
+      {
+        "name": "The Explicit State Rule",
+        "body": "Every decision badge includes a text label; color reinforces meaning.",
+        "section": "colors"
+      },
+      {
+        "name": "The Flat Surface Rule",
+        "body": "Use the established borders and tonal separation for panels; the current system does not define raised surfaces.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use the documented blue and white palette for the analyst workspace.",
+      "Do accompany decision colors with explicit Allow, Review, or Block text.",
+      "Do retain visible keyboard focus and the skip-to-content link.",
+      "Do preserve horizontal table scrolling and its mobile hint when columns exceed the viewport.",
+      "Do keep simulation provenance and uncalibrated-score explanations visible."
+    ],
+    "donts": [
+      "Don’t encode operational decisions through color alone.",
+      "Don’t describe risk scores as fraud probabilities.",
+      "Don’t combine amounts from different currency units into one unqualified total."
+    ]
+  }
+}
