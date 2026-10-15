@@ -43,9 +43,19 @@ class Transaction(models.Model):
     metadata = models.JSONField(default=dict)
     features = models.JSONField(default=list)
     evidence = models.JSONField(default=dict)
+    risk_explanation = models.JSONField(default=dict)
+    visible = models.BooleanField(default=True, db_index=True)
     risk = models.IntegerField(null=True)
     decision = models.CharField(max_length=20,default='Pending')
     class Meta: ordering = ['-timestamp','id']
+
+    @property
+    def display_risk(self):
+        return self.risk_explanation.get('score', self.risk)
+
+    @property
+    def risk_summary(self):
+        return self.risk_explanation.get('summary', '')
 
     @property
     def occurred_at(self):
@@ -53,7 +63,7 @@ class Transaction(models.Model):
 
     @property
     def currency_label(self):
-        return 'MDL demo' if self.currency == 'DEMO_UNIT' else 'unități PaySim'
+        return 'MDL demo' if self.currency in ('DEMO_UNIT', 'MDL') else 'unități PaySim'
 
     @property
     def decision_label(self):
@@ -79,6 +89,7 @@ class Assessment(models.Model):
     decision = models.CharField(max_length=20)
     reasons = models.JSONField(default=list)
     split = models.CharField(max_length=20)
+    explanation = models.JSONField(default=dict)
 
 class FraudCase(models.Model):
     transaction = models.OneToOneField(Transaction,on_delete=models.CASCADE)
@@ -126,3 +137,12 @@ class AnalysisJob(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(fields=['transaction'], condition=models.Q(kind='single'),
                                                 name='one_analysis_job_per_transfer')]
+
+
+class DemoPlayback(models.Model):
+    """Single local presentation clock. Future rows remain outside analyst queries."""
+    status = models.CharField(max_length=12, default='paused')
+    interval = models.PositiveIntegerField(default=3)
+    last_release = models.DateTimeField(null=True)
+    heartbeat = models.DateTimeField(null=True)
+    released = models.PositiveIntegerField(default=0)

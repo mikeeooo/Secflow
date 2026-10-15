@@ -10,6 +10,7 @@ from django.db import transaction
 from django.db.models import Q
 
 from core.models import Account, Assessment, AuditEvent, DatasetImport, DetectionRun, FraudCase, Transaction
+from detection import mia
 from detection.evaluation import metrics
 from detection.features import build
 from detection.pipeline import DetectionModel, REFERENCE_SIZE, VALIDATION_SIZE, WINDOW_SIZE, parameters
@@ -51,7 +52,7 @@ def import_dataset(path, paysim_limit=2000):
                 raise ValueError('Timpul sau numărul autentificărilor eșuate este în afara intervalului permis.')
             if row['ground_truth_fraud'] not in ('0', '1'):
                 raise ValueError('Eticheta de fraudă trebuie să fie 0 sau 1.')
-            units = {'PaySim': 'PAYSIM_UNIT', 'Generated scenario': 'DEMO_UNIT'}
+            units = {'PaySim': 'PAYSIM_UNIT', 'Generated scenario': 'DEMO_UNIT', mia.ORIGIN: 'MDL'}
             if units.get(row['data_origin']) != row['currency']:
                 raise ValueError('Sursa și unitatea monetară nu corespund convenției setului de date.')
             if len(row['type']) > 30:
@@ -70,7 +71,7 @@ def import_dataset(path, paysim_limit=2000):
                     amount=row['amount'], timestamp=int(row['timestamp_seconds']), kind=row['type'],
                     origin=row['data_origin'], currency=row['currency'], device=row['device_id'],
                     failed_logins=int(row['failed_login_attempts']), truth=row['ground_truth_fraud'] == '1',
-                    metadata=row)
+                    metadata=row, visible=row.get('phase') != 'stream')
         for row in rows
     ], ignore_conflicts=True, batch_size=400)
     DatasetImport.objects.create(checksum=digest, name=Path(path).name, rows=len(rows))
@@ -79,26 +80,30 @@ def import_dataset(path, paysim_limit=2000):
 
 def record_assessment(tx, result, run, split, accounts, cases, events):
     """Keep the first operational decision; append every later assessment."""
-    if tx.decision == 'Pending':
+    tx.risk_explanation = result.get('explanation', {})
+    was_pending = tx.decision == 'Pending'
+    if was_pending:
         sender = accounts[tx.sender_id]
         if sender.blocked:
             result['decision'] = 'Block'
             result['reasons'].append('Sender already restricted in simulation')
         tx.risk, tx.decision = result['risk'], result['decision']
         sender.risk = max(sender.risk, tx.risk)
-        if tx.decision == 'Block' and not sender.blocked:
+        if tx.decision == 'Block' and not sender.blocked and tx.origin != mia.ORIGIN:
             sender.blocked = True
             events.append(AuditEvent(actor=run.actor, action='Automatic account restriction',
                                      target=sender.pk, reason=f'Transfer {tx.pk}: risk {tx.risk}',
                                      before='Active', after='Blocked'))
         if tx.decision != 'Allow':
             cases.append(FraudCase(transaction=tx))
-    return Assessment(transaction=tx, run=run, split=split,
+    if not was_pending and tx.origin == mia.ORIGIN and result['risk'] >= mia.REVIEW:
+        cases.append(FraudCase(transaction=tx))
+    return Assessment(transaction=tx, run=run, split=split, explanation=tx.risk_explanation,
                       **{key: result[key] for key in ('forest', 'lof', 'cluster', 'risk', 'decision', 'reasons')})
 
 
 @transaction.atomic
-def analyze(actor=None, trees=32, eps=1.8, k=10):
+def analyze(actor=None, trees=32, eps=1.8, k=10, origin=None):
     """Replay each source separately; fit once and write results in batches."""
     config = parameters(trees, eps, k)
     start = time.perf_counter()
@@ -107,36 +112,49 @@ def analyze(actor=None, trees=32, eps=1.8, k=10):
     })
     accounts = Account.objects.in_bulk()
     results, all_cases, events, count = {}, [], [], 0
-    origins = Transaction.objects.order_by('origin').values_list('origin', flat=True).distinct()
+    source_rows = Transaction.objects.filter(visible=True)
+    if origin:
+        source_rows = source_rows.filter(origin=origin)
+    origins = source_rows.order_by('origin').values_list('origin', flat=True).distinct()
     for origin in origins:
-        rows = list(Transaction.objects.filter(origin=origin).order_by('timestamp', 'id'))
+        rows = list(source_rows.filter(origin=origin).order_by('timestamp', 'id'))
         if len(rows) < 200:
             raise ValueError(f'{origin}: importă cel puțin 200 de tranzacții înainte de analiză.')
         features = build(rows)
-        model = DetectionModel([vector for vector, _ in features[:REFERENCE_SIZE]], config)
-        vectors = [model.scaler.transform(vector) for vector, _ in features]
+        reference, validation = REFERENCE_SIZE, VALIDATION_SIZE
+        source_config = config
+        if origin == mia.ORIGIN:
+            model, vectors, source_config = mia.fit(features, [tx.truth for tx in rows])
+            reference, validation = mia.REFERENCE, mia.VALIDATION
+            run.parameters['mia'] = source_config
+        else:
+            model = DetectionModel([vector for vector, _ in features[:reference]], config)
+            vectors = [model.scaler.transform(vector) for vector, _ in features]
         assessments, evaluation = [], []
         for index, (tx, (vector, evidence)) in enumerate(zip(rows, features)):
             tx.features, tx.evidence = vector, evidence
-            if index < REFERENCE_SIZE:
+            if index < reference:
                 continue
-            result = model.assess(vectors[index], evidence, vectors[max(0, index - WINDOW_SIZE + 1):index + 1])
-            split = 'validation' if index < REFERENCE_SIZE + VALIDATION_SIZE else 'test'
+            window = vectors[max(0, index - WINDOW_SIZE + 1):index + 1]
+            result = (mia.assess(model, vectors[index], evidence, window, source_config['thresholds'])
+                      if origin == mia.ORIGIN else model.assess(vectors[index], evidence, window))
+            split = 'validation' if index < reference + validation else 'test'
             # Evaluation measures algorithm predictions, independently of account restrictions.
             if tx.truth is not None:
                 evaluation.append((tx.truth, result['predictions'], split))
             assessments.append(record_assessment(tx, result, run, split, accounts, all_cases, events))
-        Transaction.objects.bulk_update(rows, ['features', 'evidence', 'risk', 'decision'], batch_size=400)
+        Transaction.objects.bulk_update(rows, ['features', 'evidence', 'risk', 'decision', 'risk_explanation'], batch_size=400)
         Assessment.objects.bulk_create(assessments, batch_size=400)
         methods = {}
         names = ['Isolation Forest', 'LOF', 'DBSCAN noise', 'Rules', 'Algorithms only', 'Combined']
         for split in ('validation', 'test'):
             selected = [row for row in evaluation if row[2] == split]
             methods[split] = {name: metrics([row[0] for row in selected], [row[1][i] for row in selected])
-                              for i, name in enumerate(names)}
+                              for i, name in enumerate(names)
+                              if origin != mia.ORIGIN or name in ('Isolation Forest', 'LOF', 'DBSCAN noise', 'Combined')}
         results[origin] = {
-            'fit_seconds': round(model.fit_seconds, 4), 'reference_rows': REFERENCE_SIZE,
-            'validation_rows': VALIDATION_SIZE, 'test_rows': len(rows) - REFERENCE_SIZE - VALIDATION_SIZE,
+            'fit_seconds': round(model.fit_seconds, 4), 'reference_rows': reference,
+            'validation_rows': validation, 'test_rows': len(rows) - reference - validation,
             'methods': methods,
         }
         count += len(assessments)
@@ -156,7 +174,7 @@ def analyze(actor=None, trees=32, eps=1.8, k=10):
 def assess_transfer(tx, actor=None):
     """Evaluate only this new transfer, using the same reference and scoring code."""
     start = time.perf_counter()
-    rows = list(Transaction.objects.filter(origin=tx.origin).filter(
+    rows = list(Transaction.objects.filter(origin=tx.origin, visible=True).filter(
         Q(timestamp__lt=tx.timestamp) | Q(timestamp=tx.timestamp, id__lte=tx.pk)
     ).order_by('timestamp', 'id'))
     if len(rows) < 201 or rows[-1].pk != tx.pk:
@@ -165,15 +183,21 @@ def assess_transfer(tx, actor=None):
     saved = previous.parameters if previous else {}
     config = parameters(saved.get('trees', 32), saved.get('eps', 1.8), saved.get('k', 10))
     features = build(rows)
-    model = DetectionModel([vector for vector, _ in features[:REFERENCE_SIZE]], config)
-    window = [model.scaler.transform(vector) for vector, _ in features[-WINDOW_SIZE:]]
+    if tx.origin == mia.ORIGIN:
+        model, vectors, config = mia.fit(features, [row.truth for row in rows],
+                                         thresholds=saved.get('mia', {}).get('thresholds'))
+        window = vectors[-WINDOW_SIZE:]
+    else:
+        model = DetectionModel([vector for vector, _ in features[:REFERENCE_SIZE]], config)
+        window = [model.scaler.transform(vector) for vector, _ in features[-WINDOW_SIZE:]]
     tx.features, tx.evidence = features[-1]
-    result = model.assess(window[-1], tx.evidence, window)
-    run = DetectionRun.objects.create(actor=actor, parameters={**config, 'mode': 'single'}, count=1)
+    result = (mia.assess(model, window[-1], tx.evidence, window, config['thresholds'])
+              if tx.origin == mia.ORIGIN else model.assess(window[-1], tx.evidence, window))
+    run = DetectionRun.objects.create(actor=actor, parameters={**config, 'mode': 'single', 'source': tx.origin}, count=1)
     accounts = {tx.sender_id: Account.objects.get(pk=tx.sender_id)}
     cases, events = [], []
     assessment = record_assessment(tx, result, run, 'manual', accounts, cases, events)
-    tx.save(update_fields=['features', 'evidence', 'risk', 'decision'])
+    tx.save(update_fields=['features', 'evidence', 'risk', 'decision', 'risk_explanation'])
     accounts[tx.sender_id].save(update_fields=['risk', 'blocked'])
     assessment.save()
     FraudCase.objects.bulk_create(cases, ignore_conflicts=True)

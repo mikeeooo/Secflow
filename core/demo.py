@@ -29,10 +29,12 @@ def prepare_profiles(history=True):
     Account.objects.bulk_update(accounts, ['display_name'], batch_size=400)
     created = 0
     if history:
-        current = Transaction.objects.filter(origin='Generated scenario').aggregate(t=Max('timestamp'))['t'] or 0
+        from .playback import active_origin
+        origin = active_origin()
+        current = Transaction.objects.filter(origin=origin, visible=True).aggregate(t=Max('timestamp'))['t'] or 0
         candidates = FraudCase.objects.select_related('transaction').filter(
             status='Open', demo_history=False, notes__isnull=True,
-            transaction__origin='Generated scenario', transaction__truth__isnull=False,
+            transaction__origin=origin, transaction__visible=True, transaction__truth__isnull=False,
             transaction__timestamp__lt=current - 7200).order_by('transaction__timestamp', 'pk')
         for case in candidates:
             # Stable subset, avoiding analyst notes or already-investigated cases.

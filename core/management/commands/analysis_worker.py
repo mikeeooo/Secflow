@@ -5,9 +5,10 @@ from pathlib import Path
 
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
-from django.db import close_old_connections
+from django.db import close_old_connections, OperationalError
 
 from core.background import process_next
+from core.playback import tick
 from core.models import AnalysisJob
 
 
@@ -30,7 +31,13 @@ class Command(BaseCommand):
             try:
                 while True:
                     close_old_connections()
-                    worked = process_next()
+                    try:
+                        tick()
+                        worked = process_next()
+                    except OperationalError as error:
+                        if 'locked' not in str(error).lower():
+                            raise
+                        worked = False  # A concurrent analyst write can finish; retry the durable queue.
                     if options['once']:
                         return
                     if not worked:

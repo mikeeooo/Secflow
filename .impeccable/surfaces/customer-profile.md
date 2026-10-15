@@ -1,28 +1,28 @@
 # Customer profile surface
 
-Status: shipped within the incumbent minimalist blue and white workspace. User-facing heading is the fictional customer's name; route: /accounts/<id>/. No approved image comp. Context loader and detector remain unavailable because the bundled engine is missing. This record uses current source and the completed visual review.
+Status: shipped risk-explanation extension within the incumbent Romanian white and blue workspace. The heading is the fictional customer name; route: /accounts/<id>/. No approved image comp or quality card. The context engine remains unavailable; no detector ran in this pass. The fresh final reviewer returned SHIP with no material findings and confirmed all six risk captures valid.
 
 ## Purpose
-Investigate one customer's current risk, transaction history, prior cases, and restrictions. Calculate an indicative next-hour alert-volume estimate only when this profile is opened.
+Investigate a customer's latest evaluated outgoing transfer, its causes, transaction/case history, and restrictions. The separate next-hour alert-volume estimate is computed only after opening this profile.
 
 ## Composition
-1. The fictional customer name leads the page; its public account identifier, current restriction state, and Client fictiv appear below. Înapoi la clienți returns to the list.
-2. Three summary columns show sent/received requests, maximum initial risk, and closed case count.
-3. Estimarea alertelor · următoarea oră pairs an approximate count with a chart: six historical hourly bars in pale blue and one next-hour forecast bar in action blue. Counts, relative hour labels, and an accessible description reinforce the color distinction.
-4. Istoricul tranzacțiilor shows simulated calendar times, named parties, amount/currency, and decisions, with a link to all transactions.
-5. Dosarele clientului shows case links, simulated opening times, status, outcome, and closure date. Prepared historical cases carry Istoric demonstrativ.
-6. Gestionează restricția contului is closed by default. It contains a required reason and the appropriate block/unblock action, followed by restriction events. Prior refused transactions remain blocked.
-7. Detalii sursă și dispozitive is closed by default and contains the original source account ID and simulated device identifiers.
+1. Name, public account identifier, current restriction state, and Client fictiv identify the customer. Înapoi la clienți returns to the list.
+2. Three summary columns show sent/received requests, Ultimul transfer evaluat, and closed case count. Risk refers to the latest evaluated visible outgoing transfer, never a lifetime maximum.
+3. De ce acest risc? precedes the forecast. It identifies that transfer's simulation date and amount, links to its transaction, and reuses the current score/status/meter, concrete risk facts, favorable facts, and contribution disclosure.
+4. Estimarea alertelor · următoarea oră remains separate: an approximate alert count and six historical hourly bars plus one next-hour bar. It estimates volume, not fraud probability.
+5. Transaction and case histories retain simulated dates, named parties, amounts/decisions, case outcomes, and demonstrative-history labels.
+6. Gestionează restricția contului and Detalii sursă și dispozitive remain closed disclosures. Restriction changes require a reason; previously refused transactions remain blocked.
 
 ## States and behavior
-- With recent observations, show the estimate, last-six-hour request/alert counts, and the orientative-estimate explanation. This is alert volume, not fraud probability.
-- Without recent observations, show the concise no-recent-requests message and omit the chart/count.
-- Empty history and case tables state their absence clearly.
-- At 760px the forecast panel stacks with a 25px gap; the chart retains all seven bars. Tables scroll and all three summary columns remain visible.
-- The forecast is computed on profile access. Monitoring, transaction, and customer lists show current risk signals and do not show or calculate per-customer forecasts.
+- No evaluated outgoing transfer: show a dash in the summary and omit the risk explanation panel. The customer list states Fără cereri evaluate.
+- Customer-list scores link to #risk-context with Vezi cauzele. The profile links to the specific evaluated transaction.
+- Risk and favorable fact groups appear only when populated. The full stored factors and point rounding are secondary details.
+- With recent observations, show the profile-only estimate and the last-six-hour request/alert counts. Without recent observations, omit the count/chart and explain the lack of a relevant estimate.
+- At 760px risk evidence and the forecast panel stack; risk numbers become 36px, the seven forecast bars remain, and tables scroll. The three profile summary columns remain visible.
+- Lists never show or compute per-customer forecasts. Dashboard time-series values are observed aggregate activity, distinct from this estimate.
 
 ## Authority and verification
-Implementation: templates/account.html, core/views.py, static/app.css, and static/app.js. Reusable system: DESIGN.md and .impeccable/design.json. Visual review reports no material UI findings. Current evidence: .impeccable/review/mia-desktop-profile.jpg (1440px), .impeccable/review/mia-mobile-profile.jpg (390px), and supplemental .impeccable/review/mia-desktop-history.jpg. This pass verified source consistency without changing the UI.
+Implementation: templates/account.html, templates/accounts.html, templates/risk_explanation.html, core/views.py, and static/app.css. Semantics: detection/risk.py and stored explanations. System: DESIGN.md and .impeccable/design.json. Valid final captures: .impeccable/review/risk-desktop-profile.jpg and risk-mobile-profile.jpg. This pass verified source consistency without changing implementation.
 
 ## Content guardrails
-Names, public account identifiers, MDL demo amounts, and calendar dates belong to the simulation. Preserve original source identifiers in secondary detail. Keep the next-hour quantity labeled as an indicative alert-volume estimate; never present it as a fraud probability or put it in lists. Algorithm theory remains in docs/ALGORITHMS.md.
+Keep fictional identity, MDL demo, and simulation dates explicit. Label risk as belonging to the latest evaluated transfer; do not imply lifetime or predicted customer fraud risk. Preserve the distinction between current score, original decision, and forecast volume. Algorithm names, raw model scores, and diagnostics stay outside the analyst UI.

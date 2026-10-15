@@ -1,6 +1,53 @@
 # Algoritmii SecFlow — ghid pentru susținere
 
-Acest ghid explică implementarea efectivă. Teoria rămâne aici; platforma arată parametrii, rezultatele și dovezile tranzacțiilor. Toate cele trei metode sunt implementate în `detection/algorithms.py`, fără scikit-learn.
+Acest ghid explică implementarea efectivă. Teoria și parametrii rămân aici; platforma arată numai rezultate și observații pentru investigație. Toate cele trei metode sunt implementate în `detection/algorithms.py`, fără scikit-learn.
+
+## Politica folosită în prezentarea MIA
+
+Demonstrația implicită folosește `datasets/demo_mia.py` și `detection/mia.py`. Secțiunile 5, 7 și 9 de mai jos documentează **experimentul anterior PaySim/scenarii extinse**, păstrat separat pentru comparație; ponderile sale nu sunt politica dashboardului MIA.
+
+Setul nou are 1.520 de cereri integral sintetice pentru 48 de conturi: 36 expeditori și 12 beneficiari. Sumele obișnuite au distribuție log-normală, cu medie de scară diferită între clienți. Scenariile includ sume foarte mari, dispozitive noi după autentificări eșuate și secvențe rapide. Există intenționat și sume mari legitime și dispozitive noi legitime. Etichetele sunt adevărul scenariului, nu constatări bancare reale. Proporția de fraude este îmbogățită pentru demonstrație și nu reproduce frecvența bancară.
+
+| Segment cronologic | Rânduri | Utilizare |
+|---|---:|---|
+| Referință | 256 | Normalizare, arbori și densități; scenarii normale prin construcție |
+| Validare | 256 | Selectarea pragurilor individuale IF și LOF |
+| Test istoric | 768 | Raportarea evaluării separate, fără ajustarea pragurilor |
+| Flux demonstrativ | 240 | Cereri ascunse până la redare, analizate succesiv de worker |
+
+Parametri: 48 arbori, eșantion 64, seed 42, k=10, ε=1,8, minimum 4 puncte, fereastră de 24 cereri. `mia.fit()` maximizează F1 **numai pe validare**, din grilele IF `[0,5; 0,55; 0,6; 0,65; 0,7; 0,75]` și LOF `[1,3; 1,5; 2; 3; 5; 10]`. La egalitate alege pragul mai mare. Pentru seed-ul 73 al setului, rezultă IF ≥0,65 și LOF ≥3. DBSCAN semnalează eticheta −1. Testul nu decide pragurile.
+
+Scorul actual este definit în `detection/risk.py`, versiunea `continuous-v2`. Înlocuiește voturile binare, care produceau numai câteva valori. Toate contribuțiile sunt deterministe; nu adăugăm zgomot pentru procente diferite.
+
+```text
+F = limitare(0,5 + (IF − prag_IF) / (2 × max(prag_IF − 0,35; 0,05)), 0, 1)
+L = max(0, LOF − 1) / (max(0, LOF − 1) + max(prag_LOF − 1; 0,1))
+D = 1 pentru noise DBSCAN, altfel 0
+profil = 25×F + 20×L + 10×D                 [maximum 55 puncte]
+scor = rotunjire(profil + factorii observabili) [maximum 100]
+```
+
+Cele două intensități continue păstrează diferențe între observațiile apropiate de prag și cele foarte îndepărtate. Un rezultat individual la prag înseamnă jumătate din contribuția sa posibilă, nu probabilitate 50% de fraudă. Pragurile individuale IF/LOF sunt alese pe validare; maparea, ponderile și pragurile finale 45/70 sunt alegeri fixe ale demo-ului, stabilite înainte de măsurarea noului test.
+
+| Factor observabil | Maximum | Calcul, limitat între 0 și 1 |
+|---|---:|---|
+| Suma față de media proprie | 12 | `log2(max(raport,1))/4`; zero dacă nu există istoric |
+| Frecvență | 8 | maxim dintre `cereri_60s/3` și `cereri_300s/6` |
+| Dispozitiv nou | 6 | 1 nou, 0 folosit anterior |
+| Autentificări eșuate | 8 | număr / 6 |
+| Beneficiar nou | 4 | 1 nou, 0 folosit anterior |
+| Încasări recente | 4 | număr în 5 minute / 4 |
+| Istoric limitat | 3 | `(5 − număr_cereri_anterioare)/5` |
+
+Contribuțiile se rotunjesc la două zecimale, se însumează și abia apoi totalul se rotunjește la întreg. Exemplu de aritmetică: profil 26,40 + sumă 8,20 + frecvență 4 + dispozitiv 6 + acces 5,33 + beneficiar 4 + încasări 0 + istoric 0 = 53,93 → **54/100**. Acesta este un exemplu ilustrativ, nu o tranzacție măsurată.
+
+Niveluri afișate: sub45 scăzut; 45–59 moderat; 60–100 ridicat. Politica pentru cereri noi cere verificare de la45 și blocare de la70; severitatea afișată și acțiunea sunt concepte distincte. Un factor obișnuit adaugă zero sau puține puncte; nu adăugăm reduceri arbitrare negative. „Elemente favorabile” înseamnă contribuții mici, nu dovadă că plata este sigură. Un cont deja restricționat poate bloca cererea independent de scor.
+
+Explicația stocată conține toate cele opt componente (profil + șapte factori), valorile observate, contribuția, plafonul și pragurile. Profilul este componenta agregată a metodelor; factorii observabili sunt componente explicite ale politicii. Nu pretindem că aceste componente sunt o atribuire cauzală SHAP sau o explicație internă a arborilor. Numele algoritmilor și formulele rămân în cod/documentație. Nici eticheta `truth`, nici `scenario_type`, nici viitorul nu intră în calcul. Factorii comportamentali reutilizează unele semnale ale modelelor: ponderile sunt intenționat compozite și nu reprezintă dovezi independente.
+
+La reanalizare, `Transaction.risk_explanation` se actualizează și o nouă `Assessment.explanation` păstrează fotografia explicației. `Transaction.risk` și decizia inițială rămân istorice; notele și concluziile cazurilor nu se rescriu. Listele și exportul folosesc scorul actual. Profilul și lista clienților folosesc ultimul transfer evaluat, nu maximul vieții contului. Un transfer cu scor mic ulterior nu dovedește că un caz anterior este închis.
+
+`manage.py evaluate_mia` reproduce testul **istoric original**, indiferent câte cicluri au fost redate local. Pe cele 768 de cereri: 179 TP, 6 FP, 16 FN, 567 TN; precizie 96,8%, acoperire 91,8%, F1 94,2%, alarme false 1,0%. Apar **66 de valori distincte** ale scorului. Raport: `artifacts/mia-continuous-evaluation.json`. Datele sunt sintetice, cu fraude îmbogățite și scenarii concepute pentru aceste semnale; rezultatele nu demonstrează performanță bancară reală. Politica nu a fost ajustată după citirea acestui test. Raportul anterior al voturilor binare rămâne în `artifacts/mia-demo-evaluation.json`, pentru trasabilitate.
 
 ## 1. De la o tranzacție la un vector
 
@@ -22,7 +69,7 @@ De exemplu, după cinci plăți de câte 100, o cerere de 900 are raportul 9. Pe
 
 Istoricul se actualizează **după** calcularea vectorului curent. Rândurile sunt ordonate după `(timestamp, id)`; la egalitate, ID-ul stabilește ordinea. Cererile blocate intră în istoric: analizăm tentative, nu transferuri bancare executate.
 
-Normalizarea este `z = (x − media_referinței) / max(1, abaterea_standard_referinței)`. Pragul de 1 este o alegere explicită a acestui prototip, nu standardizarea pură cu abatere standard arbitrar de mică. Scalerul învață exclusiv din primele 128 de observații ale sursei.
+Normalizarea este `z = (x − media_referinței) / max(1, abaterea_standard_referinței)`. Pragul de 1 este o alegere explicită a acestui prototip, nu standardizarea pură cu abatere standard arbitrar de mică. Scalerul învață exclusiv din referința anterioară: 256 observații pentru MIA, 128 în experimentul anterior.
 
 ## 2. Isolation Forest
 
@@ -44,7 +91,7 @@ s(x) = 2 ^ (−media_lungimilor_căilor / c(64))
 
 **Exemplu conceptual:** pentru `ψ = 4`, `c(4) = 2,1667`. O cale medie 1 dă aproximativ 0,726, iar o cale medie 2 dă aproximativ 0,527. Calea mai scurtă are scor mai mare. Exemplul explică formula; nu este un rezultat măsurat pe PaySim.
 
-În evaluarea individuală semnalăm `s ≥ 0,6`. Arborele nu explică intenția persoanei și nu transformă scorul în probabilitate de fraudă.
+În experimentul anterior semnalăm `s ≥ 0,6`; MIA selectează pragul pe validare. Arborele nu explică intenția persoanei și nu transformă scorul în probabilitate de fraudă.
 
 ## 3. DBSCAN
 
@@ -77,11 +124,11 @@ LOF(p) = media(lrd(o) / lrd(p)), pentru vecinii o
 
 **Exemplu conceptual:** dacă densitatea tranzacției este 1, iar densitățile vecinilor sunt 2 și 2, LOF este `(2/1 + 2/1)/2 = 2`. LOF aproape de 1 indică densități asemănătoare; o valoare mare indică izolare locală.
 
-În proiect, `k = 10` implicit. `model.scores` descrie retrospectiv punctele de referință. `model.score(x)` evaluează o observație nouă față de vecinii și densitățile fixe din referința anterioară. Platforma folosește acest al doilea mod. Pragul individual demonstrativ este `LOF ≥ 1,5`.
+În proiect, `k = 10` implicit. `model.scores` descrie retrospectiv punctele de referință. `model.score(x)` evaluează o observație nouă față de vecinii și densitățile fixe din referința anterioară. Platforma folosește acest al doilea mod. Pragul experimentului anterior este `LOF ≥ 1,5`; MIA selectează pragul pe validare.
 
 ## 5. Combinarea într-o decizie
 
-`pipeline.py` este singurul loc care definește normalizarea scorurilor, regulile și ponderile. Replay-ul și simularea apelează aceeași metodă `DetectionModel.assess()`.
+În experimentul anterior, `pipeline.py` este locul care definește normalizarea scorurilor, regulile și ponderile. Replay-ul și simularea apelează aceeași metodă `DetectionModel.assess()`.
 
 ```text
 IF_normalizat = limitare((IF_brut − 0,35) / 0,4 × 100, 0, 100)
@@ -118,13 +165,13 @@ Ponderile și pragurile sunt alegeri demonstrative. Un semnal individual nu este
 | DBSCAN prin scanare | Nu are model persistent | O(w² · d) | O(w · d + w), fără matrice de distanțe |
 | LOF cu sortare | O(n² · d + n² · log n) | O(n · d + n · log n) | O(n · d + n · k), până la O(n² + n · d) din egalități |
 
-În replay: `n = 128`, `d = 9`, `ψ = 64`, `w ≤ 24`, `t = 32` implicit. De aceea nu aplicăm LOF exhaustiv sau DBSCAN global pe cele 54.520 de rânduri. Pentru fiecare sursă ajustăm modelele mici o dată și apoi parcurgem cererile.
+În replay-ul anterior: `n = 128`, `d = 9`, `ψ = 64`, `w ≤ 24`, `t = 32` implicit. În MIA folosim n=256 și t=48; ceilalți parametri rămân aceiași. De aceea nu aplicăm LOF exhaustiv sau DBSCAN global pe cele 54.520 de rânduri. Pentru fiecare sursă ajustăm modelele mici o dată și apoi parcurgem cererile.
 
 Caracteristicile păstrează istoricul partenerilor și dispozitivelor, deci memoria întregii aplicații nu este constantă. Numărătorile și suma recentă scanează fereastra de activitate a contului; în cazul patologic cu toate cererile în cinci minute, construirea caracteristicilor poate avea cost pătratic. Setul demonstrativ și ferestrele mici fac acest compromis ușor de urmărit.
 
 ## 7. Evaluare corectă pe setul existent
 
-Setul pregătit are **50.000 de rânduri PaySim extins + 4.520 de scenarii generate**. Importul implicit folosește doar primele 2.000 PaySim și toate scenariile. Fiecare sursă este separată: 128 referință, 64 validare, restul test. Rândurile de referință rămân fără decizie. Simulările manuale au `truth=None` și nu intră în metrici.
+Setul pregătit are **50.000 de rânduri PaySim extins + 4.520 de scenarii generate**. Importul opțional `setup_demo --legacy` folosește primele 2.000 PaySim și toate scenariile. Fiecare sursă este separată: 128 referință, 64 validare, restul test. Rândurile de referință rămân fără decizie. Simulările manuale au `truth=None` și nu intră în metrici.
 
 `evaluation.metrics()` primește etichetele numai după calcularea scorurilor. Pentru evaluarea individuală folosim pragurile IF 0,6, LOF 1,5 și noise DBSCAN. Pentru combinație, semnal înseamnă risc ≥45, incluzând atât verificarea cât și blocarea.
 
@@ -145,7 +192,7 @@ Fișierele `artifacts/latest-run.json`, `artifacts/benchmark.json` și `artifact
 
 **De ce trei algoritmi?** Privesc anomalia din perspective diferite: separare aleatoare, grupare și densitate locală. Comparăm rezultatele; nu presupunem că acordul lor confirmă o fraudă.
 
-**Este antrenare supravegheată?** Nu. IF și LOF se ajustează pe referință fără etichete; DBSCAN grupează fără etichete. Adevărul cunoscut este folosit ulterior pentru măsurare.
+**Este antrenare supravegheată?** Nu. IF și LOF se ajustează pe referință fără etichete; DBSCAN grupează fără etichete. Etichetele de validare calibrează pragurile MIA; etichetele testului sunt folosite numai pentru măsurare.
 
 **De ce normalizare?** Distanțele ar fi dominate de dimensiunile cu valori mari. Normalizarea folosește numai referința anterioară.
 
@@ -168,6 +215,6 @@ Rezultatele PaySim sunt slabe cu aceste caracteristici și praguri fixe. Nu prez
 
 Cei trei algoritmi păstrează formulele de mai sus, dar acum sunt executați de workerul `analysis_worker`. Platforma salvează o cerere și un job; workerul citește istoricul numai până la acea cerere, rulează pipeline-ul și salvează rezultatul. Numele fictive și ID-urile publice sunt exclusiv prezentare.
 
-Prognoza din profil este o **estimare a numărului de alerte**, separată de cei trei algoritmi de anomalie. Împărțim ultimele șase ore de simulare în șase intervale și numărăm cererile cu risc inițial ≥45. Estimarea pentru următoarea oră este media ponderată `(1×a₁ + 2×a₂ + … + 6×a₆)/21`, acordând mai multă greutate orelor recente. Nu citim etichete de fraudă sau cereri viitoare. Timp O(m), memorie O(6), pentru m cereri recente ale clientului.
+Prognoza din profil este o **estimare a numărului de alerte**, separată de cei trei algoritmi de anomalie. Împărțim ultimele șase ore de simulare în șase intervale și numărăm cererile cu risc actual ≥45 pentru MIA (risc inițial ≥45 în experimentul anterior). Estimarea pentru următoarea oră este media ponderată `(1×a₁ + 2×a₂ + … + 6×a₆)/21`, acordând mai multă greutate orelor recente. Nu citim etichete de fraudă sau cereri viitoare. Timp O(m), memorie O(6), pentru m cereri recente ale clientului.
 
 Este o extrapolare simplă a ritmului alertelor, nu un model validat de probabilitate sau o predicție sigură a fraudei. Fără activitate recentă, interfața indică lipsa datelor. Se afișează numai după deschiderea profilului unui client, conform cerinței utilizatorului.

@@ -8,12 +8,18 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.paginator import Paginator
 from django.db import transaction
-from django.db.models import Count, Max, Q, Sum
+from django.db.models import Count, Max, Q, OuterRef, Subquery, IntegerField
+from django.db.models.functions import Coalesce
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+from django.template.loader import render_to_string
+from detection.mia import ORIGIN
+from .playback import active_origin
+from .monitoring import snapshot
+from .models import DemoPlayback
 
-from detection.pipeline import contributions, rules, parameters
+from detection.pipeline import parameters
 from detection.forecast import estimate
 from .forms import SimulationForm
 from .models import Account, AnalysisJob, Assessment, AuditEvent, CaseNote, DetectionRun, FraudCase, Transaction
@@ -24,7 +30,7 @@ staff = user_passes_test(lambda user: user.is_active and user.is_staff)
 
 
 def shell(request, template, title, **context):
-    auto_refresh = request.resolver_match.url_name in ['dashboard', 'transactions', 'accounts']
+    auto_refresh = request.resolver_match.url_name in ['transactions', 'accounts']
     return render(request, template, {'title': title, 'auto_refresh': auto_refresh,
                                      'monitor_revision': monitor_revision() if auto_refresh else '', **context})
 
@@ -33,42 +39,69 @@ def latest_replay():
     return DetectionRun.objects.exclude(parameters__mode='single').order_by('-pk').first()
 
 
+def historical_mia_report():
+    try:
+        report = json.loads((settings.BASE_DIR/'artifacts/mia-continuous-evaluation.json').read_text())
+        from detection.risk import VERSION
+        return report if report['parameters']['policy_version'] == VERSION else None
+    except (OSError, ValueError, KeyError):
+        return None
+
+
 def filtered_transactions(request):
-    rows = Transaction.objects.select_related('sender', 'recipient')
+    rows = Transaction.objects.select_related('sender', 'recipient').filter(visible=True)
     query = request.GET.get('q', '').strip()
     if query:
         rows = rows.filter(Q(id__icontains=query) | Q(sender__id__icontains=query) | Q(recipient__id__icontains=query) | Q(sender__display_name__icontains=query) | Q(recipient__display_name__icontains=query))
-    rows = rows.filter(origin=request.GET.get('origin') or 'Generated scenario')
+    rows = rows.filter(origin=request.GET.get('origin') or active_origin())
     if request.GET.get('decision'):
         rows = rows.filter(decision=request.GET['decision'])
     return rows
 
 
+def period(request):
+    return {'1': 1, '6': 6, '24': 24}.get(request.GET.get('hours'), 6)
+
+
 @login_required
 def dashboard(request):
-    rows = Transaction.objects.filter(origin='Generated scenario')
-    counts = {row['decision']: row['n'] for row in rows.values('decision').annotate(n=Count('id'))}
-    buckets = list(rows.extra(select={'day': 'timestamp / 86400'}).values('day').annotate(total=Count('id')).order_by('day'))
-    peak = max([bucket['total'] for bucket in buckets] or [1])
-    for bucket in buckets:
-        bucket['height'] = round(bucket['total'] / peak * 100)
-    open_cases = FraudCase.objects.select_related('transaction__sender').filter(transaction__origin='Generated scenario').exclude(status='Resolved')
-    return shell(
-        request, 'dashboard.html', 'Monitorizare MIA', total=rows.count(),
-        review=open_cases.filter(transaction__decision='Review').count(),
-        open_cases=open_cases.count(), blocked=Account.objects.filter(id__startswith='SIM_', blocked=True).count(),
-        allowed=counts.get('Allow', 0), pending=counts.get('Pending', 0),
-        cases=open_cases.order_by('-transaction__risk', 'pk')[:6], buckets=buckets, run=latest_replay(),
-        recent=list(rows.select_related('sender', 'recipient').order_by('-timestamp')[:5]),
-        simulated_now=rows.order_by('-timestamp').first(),
-        queued=AnalysisJob.objects.filter(status__in=['queued','running']).count(),
-        impact=list(rows.exclude(truth=None).values('currency').annotate(
-            blocked_fraud=Sum('amount', filter=Q(truth=True, decision='Block')),
-            allowed_fraud=Sum('amount', filter=Q(truth=True, decision='Allow')),
-            legitimate_blocks=Count('id', filter=Q(truth=False, decision='Block')))),
-        sums=list(rows.values('currency').annotate(value=Sum('amount'))),
-        origins=list(rows.values('origin').annotate(n=Count('id'))),
-    )
+    return shell(request, 'dashboard.html', 'Monitorizare MIA', **snapshot(period(request)))
+
+
+@login_required
+def dashboard_data(request):
+    context = snapshot(period(request))
+    return JsonResponse({'html': render_to_string('dashboard_panels.html', context, request=request),
+                         'playback': context['state'].status if context['state'] else 'unavailable'})
+
+
+@login_required
+@require_POST
+def playback_control(request):
+    action = request.POST.get('action')
+    if action not in ('running', 'paused'):
+        return HttpResponse(status=400)
+    state = get_object_or_404(DemoPlayback, pk=1)
+    if state.status == 'completed' and action == 'running':
+        from .playback import repeat_stream
+        repeat_stream()
+    else:
+        state.status = action
+        state.save(update_fields=['status'])
+    state.refresh_from_db()
+    if request.headers.get('Accept') == 'application/json':
+        return JsonResponse({'status': state.status})
+    return redirect('dashboard')
+
+
+@login_required
+def metrics_endpoint(request):
+    data = snapshot()
+    gauges = {'transfers': data['total'], 'alerts': data['alerts'], 'queue_depth': data['queued'],
+              'worker_up': int(data['healthy']), 'analysis_latency_ms': data['latency'] or 0,
+              'failed_jobs': data['failed']}
+    text = ''.join(f'# TYPE secflow_{name} gauge\nsecflow_{name} {value}\n' for name,value in gauges.items())
+    return HttpResponse(text, content_type='text/plain; version=0.0.4; charset=utf-8')
 
 
 @login_required
@@ -81,20 +114,23 @@ def transactions(request):
 
 @login_required
 def detail(request, pk):
-    tx = get_object_or_404(Transaction.objects.select_related('sender', 'recipient'), pk=pk)
+    tx = get_object_or_404(Transaction.objects.select_related('sender', 'recipient'), pk=pk, visible=True)
     assessment = tx.assessments.order_by('-run_id').first()
-    parts = []
-    if assessment and tx.evidence:
-        rule_score, _ = rules(tx.evidence)
-        parts = contributions(assessment.forest, assessment.lof, assessment.cluster, rule_score)
-    return shell(request, 'detail.html', 'Detaliile tranzacției', tx=tx, assessment=assessment, parts=parts,
+    evidence = tx.evidence
+    observations = []
+    if evidence:
+        if evidence.get('amount_ratio', 1) > 3: observations.append(f"Suma depășește de {evidence['amount_ratio']:.1f} ori media anterioară.")
+        if evidence.get('new_device'): observations.append('Cerere de pe un dispozitiv nou.')
+        if evidence.get('failed_logins', 0): observations.append(f"Autentificări eșuate: {evidence['failed_logins']}.")
+        if evidence.get('recent_count', 0) >= 3: observations.append(f"Transferuri în ultimele 5 minute: {evidence['recent_count']}.")
+    return shell(request, 'detail.html', 'Detaliile tranzacției', tx=tx, assessment=assessment, observations=observations, risk_info=assessment.explanation if assessment else {},
                  case=FraudCase.objects.filter(transaction=tx).first(),
                  job=AnalysisJob.objects.filter(transaction=tx).order_by('-pk').first())
 
 
 @login_required
 def cases(request):
-    rows = FraudCase.objects.select_related('transaction__sender', 'assignee').filter(transaction__origin='Generated scenario').order_by('-transaction__timestamp', '-pk')
+    rows = FraudCase.objects.select_related('transaction__sender', 'assignee').filter(transaction__origin=active_origin(), transaction__visible=True).order_by('-transaction__timestamp', '-pk')
     if request.GET.get('q'):
         rows = rows.filter(Q(transaction__sender__id__icontains=request.GET['q']) |
                            Q(transaction__sender__display_name__icontains=request.GET['q']))
@@ -107,7 +143,7 @@ def cases(request):
 
 @login_required
 def case_detail(request, pk):
-    case = get_object_or_404(FraudCase.objects.select_related('transaction__sender', 'transaction__recipient'), pk=pk)
+    case = get_object_or_404(FraudCase.objects.select_related('transaction__sender', 'transaction__recipient'), pk=pk, transaction__visible=True)
     if request.method == 'POST':
         status = request.POST.get('status')
         outcome = request.POST.get('outcome', '')
@@ -122,7 +158,7 @@ def case_detail(request, pk):
                 case.status = status
                 case.outcome = outcome if status == 'Resolved' else ''
                 case.assignee = request.user
-                case.closed_at = (Transaction.objects.aggregate(t=Max('timestamp'))['t'] or case.transaction.timestamp) if status == 'Resolved' else None
+                case.closed_at = (Transaction.objects.filter(origin=case.transaction.origin, visible=True).aggregate(t=Max('timestamp'))['t'] or case.transaction.timestamp) if status == 'Resolved' else None
                 case.save()
                 CaseNote.objects.create(case=case, author=request.user, text=note)
                 AuditEvent.objects.create(actor=request.user, action='Case updated', target=str(case.pk),
@@ -137,7 +173,12 @@ def case_detail(request, pk):
 
 @login_required
 def accounts(request):
-    rows = Account.objects.filter(id__startswith='SIM_').annotate(transfer_count=Count('sent', distinct=True)).order_by('-risk', 'display_name', 'id')
+    latest = Transaction.objects.filter(sender_id=OuterRef('pk'), visible=True, risk__isnull=False).order_by('-timestamp','-pk')
+    rows = Account.objects.filter(id__startswith='SIM_MIA_' if active_origin() == ORIGIN else 'SIM_').annotate(
+        transfer_count=Count('sent', filter=Q(sent__visible=True), distinct=True),
+        latest_score=Coalesce(Subquery(latest.values('risk_explanation__score')[:1], output_field=IntegerField()),
+                              Subquery(latest.values('risk')[:1]), output_field=IntegerField()),
+    ).order_by('-latest_score', 'display_name', 'id')
     if request.GET.get('q'):
         rows = rows.filter(Q(id__icontains=request.GET['q']) | Q(display_name__icontains=request.GET['q']))
     if request.GET.get('state') == 'Blocked':
@@ -163,31 +204,35 @@ def account(request, pk):
                                           reason=reason, before=before, after='Blocked' if obj.blocked else 'Active')
             messages.success(request, 'Contul a fost actualizat. Tranzacțiile refuzate anterior rămân blocate.')
             return redirect('account', pk=pk)
-    history = Transaction.objects.select_related('sender', 'recipient').filter(Q(sender=obj) | Q(recipient=obj))
-    current = Transaction.objects.filter(origin='Generated scenario').aggregate(t=Max('timestamp'))['t'] or 0
-    profile_cases = FraudCase.objects.filter(transaction__sender=obj).select_related('transaction').order_by('-transaction__timestamp')
-    forecast = estimate(list(obj.sent.filter(timestamp__gte=current - 21600).values_list('timestamp','risk')), current)
+    history = Transaction.objects.select_related('sender', 'recipient').filter(Q(sender=obj) | Q(recipient=obj), visible=True)
+    current = Transaction.objects.filter(origin=active_origin(), visible=True).aggregate(t=Max('timestamp'))['t'] or 0
+    profile_cases = FraudCase.objects.filter(transaction__sender=obj, transaction__visible=True).select_related('transaction').order_by('-transaction__timestamp')
+    recent = list(obj.sent.filter(visible=True, timestamp__gte=current - 21600))
+    forecast = estimate([(tx.timestamp, tx.display_risk) for tx in recent], current, threshold=45)
+    latest_tx = obj.sent.filter(visible=True, risk__isnull=False).order_by('-timestamp','-pk').first()
     return shell(request, 'account.html', 'Profil client', account=obj, history=history[:10],
+                 latest_tx=latest_tx, risk_info=latest_tx.risk_explanation if latest_tx else {},
                  events=AuditEvent.objects.filter(target=pk).order_by('-created'),
-                 devices=obj.sent.values('device').distinct(), forecast=forecast, profile_cases=profile_cases[:8],
-                 sent_count=obj.sent.count(), received_count=obj.received.count(),
+                 devices=obj.sent.filter(visible=True).values('device').distinct(), forecast=forecast, profile_cases=profile_cases[:8],
+                 sent_count=obj.sent.filter(visible=True).count(), received_count=obj.received.filter(visible=True).count(),
                  prior_cases=profile_cases.filter(status='Resolved').count())
 
 
 @login_required
 def algorithms(request):
-    benchmark_path = settings.BASE_DIR / 'artifacts/benchmark.json'
-    try:
-        benchmark = json.loads(benchmark_path.read_text())
-    except (OSError, ValueError):
-        benchmark = None
     run = latest_replay()
     available = run.metrics if run else {}
-    selected_origin = request.GET.get('origin', 'Generated scenario')
+    selected_origin = request.GET.get('origin', active_origin())
     if selected_origin not in available:
         selected_origin = next(iter(available), '')
-    return shell(request, 'algorithms.html', 'Rezultate de detecție', run=run, benchmark=benchmark,
-                 selected_origin=selected_origin, selected_result=available.get(selected_origin, {}))
+    selected = available.get(selected_origin, {})
+    evaluation_scope = 'Evaluarea ultimei reanalizări a istoricului vizibil.'
+    if selected_origin == ORIGIN and (report := historical_mia_report()):
+        selected = {'methods': {'test': report['methods']}}
+        evaluation_scope = 'Testul istoric inițial de 768 de cereri, separat de fluxul redat.'
+    return shell(request, 'algorithms.html', 'Rezultate de detecție', run=run,
+                 selected_origin=selected_origin, selected_result=selected, evaluation_scope=evaluation_scope)
+
 
 
 @staff
@@ -232,15 +277,19 @@ def export(request):
         return response
     if request.GET.get('kind') == 'metrics':
         run = latest_replay()
-        response = HttpResponse(json.dumps(run.metrics if run else {}, indent=2), content_type='application/json')
+        payload = run.metrics if run else {}
+        if active_origin() == ORIGIN and (report := historical_mia_report()):
+            payload = {'historical_test': report, 'latest_visible_replay': payload}
+        response = HttpResponse(json.dumps(payload, indent=2), content_type='application/json')
         response['Content-Disposition'] = 'attachment; filename=secflow-metrics.json'
         return response
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename=secflow-transactions.csv'
     writer = csv.writer(response)
-    writer.writerow(['id', 'sender', 'recipient', 'amount', 'currency', 'origin', 'risk', 'decision'])
-    rows = filtered_transactions(request).values_list('id', 'sender_id', 'recipient_id', 'amount', 'currency', 'origin', 'risk', 'decision')
-    for row in rows.iterator():
+    writer.writerow(['id', 'sender', 'recipient', 'amount', 'currency', 'origin', 'risk_current', 'decision_initial'])
+    rows = filtered_transactions(request)
+    for tx in rows.iterator():
+        row = (tx.pk, tx.sender_id, tx.recipient_id, tx.amount, tx.currency, tx.origin, tx.display_risk, tx.decision)
         writer.writerow(["'" + str(value) if str(value).startswith(('=', '+', '-', '@')) else value for value in row])
     return response
 
@@ -248,14 +297,17 @@ def export(request):
 @login_required
 def simulate(request):
     form = SimulationForm(request.POST if request.method == 'POST' else None)
+    if active_origin() == ORIGIN:
+        for field in ('sender', 'recipient'):
+            form.fields[field].queryset = Account.objects.filter(id__startswith='SIM_MIA_').order_by('display_name')
     if request.method == 'POST' and form.is_valid():
         try:
             with transaction.atomic():
                 data = form.cleaned_data
                 tx = Transaction.objects.create(
                     id='LIVE_' + uuid.uuid4().hex[:12], sender=data['sender'], recipient=data['recipient'],
-                    amount=data['amount'], timestamp=(Transaction.objects.aggregate(t=Max('timestamp'))['t'] or 0) + 10,
-                    kind='TRANSFER', origin='Generated scenario', currency='DEMO_UNIT', device=data['device'],
+                    amount=data['amount'], timestamp=(Transaction.objects.filter(origin=active_origin(), visible=True).aggregate(t=Max('timestamp'))['t'] or 0) + 1,
+                    kind='TRANSFER', origin=active_origin(), currency='MDL' if active_origin() == ORIGIN else 'DEMO_UNIT', device=data['device'],
                     failed_logins=data['failed_logins'], truth=None,
                     metadata={'source': 'Manual simulation; no ground truth label'})
                 enqueue_transfer(tx, request.user)
@@ -270,14 +322,14 @@ def simulate(request):
 
 @login_required
 def analysis_status(request, pk):
-    tx = get_object_or_404(Transaction, pk=pk)
+    tx = get_object_or_404(Transaction, pk=pk, visible=True)
     job = AnalysisJob.objects.filter(transaction=tx).order_by('-pk').first()
     return JsonResponse({'status': job.status if job else 'completed',
-                         'decision': tx.decision_label, 'risk': tx.risk})
+                         'decision': tx.decision_label, 'risk': tx.display_risk})
 
 
 def monitor_revision():
-    latest = Transaction.objects.filter(origin='Generated scenario').aggregate(t=Max('timestamp'), n=Count('pk'))
+    latest = Transaction.objects.filter(origin=active_origin(), visible=True).aggregate(t=Max('timestamp'), n=Count('pk'))
     assessment = Assessment.objects.aggregate(pk=Max('pk'))['pk'] or 0
     event = AuditEvent.objects.aggregate(pk=Max('pk'))['pk'] or 0
     return f"{latest['n']}:{latest['t']}:{assessment}:{event}"

@@ -29,14 +29,18 @@ def build(rows):
         count, total = stats[sender]
         ratio = amount / (total / count) if count and total else 1
         new_device = device not in devices[sender]
+        recent_60 = sum(t >= timestamp - 60 for t, _ in recent)
+        new_beneficiary = recipient not in partners[sender]
         evidence = {
             'history_count': count, 'amount_ratio': round(ratio, 2), 'recent_count': len(recent),
+            'amount': amount, 'prior_mean': total/count if count else 0,
+            'recent_count_60': recent_60, 'new_beneficiary': new_beneficiary,
             'new_device': new_device, 'failed_logins': row.failed_logins, 'recent_incoming': len(received),
         }
         vector = [
-            math.log1p(amount), math.log1p(ratio), sum(t >= timestamp - 60 for t, _ in recent),
+            math.log1p(amount), math.log1p(ratio), recent_60,
             len(recent), math.log1p(sum(value for _, value in recent)),
-            int(recipient not in partners[sender]), int(new_device), row.failed_logins, len(received),
+            int(new_beneficiary), int(new_device), row.failed_logins, len(received),
         ]
         result.append((vector, evidence))
         # Update history only after extracting this request's features.

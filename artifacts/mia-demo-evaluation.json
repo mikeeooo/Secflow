@@ -1,0 +1,134 @@
+{
+  "dataset": "MIA demo; seed 73; synthetic only",
+  "parameters": {
+    "trees": 48,
+    "sample_size": 64,
+    "seed": 42,
+    "eps": 1.8,
+    "min_samples": 4,
+    "k": 10,
+    "reference": 256,
+    "validation": 256,
+    "dbscan_window": 24,
+    "features": [
+      "log amount",
+      "amount / prior mean",
+      "prior transfers in 60s",
+      "prior transfers in 5m",
+      "log prior 5m amount",
+      "new beneficiary",
+      "new device",
+      "failed logins",
+      "recent incoming transfers"
+    ],
+    "score": "40 IF + 35 LOF + 25 DBSCAN (binary votes)",
+    "review_threshold": 60,
+    "block_threshold": 100,
+    "calibration": "F1 on chronological validation only; held-out test never selects thresholds",
+    "thresholds": [
+      0.65,
+      3
+    ]
+  },
+  "duration_seconds": 1.4571118339663371,
+  "results": {
+    "fit_seconds": 0.0614,
+    "reference_rows": 256,
+    "validation_rows": 256,
+    "test_rows": 768,
+    "methods": {
+      "validation": {
+        "Isolation Forest": {
+          "tp": 23,
+          "fp": 4,
+          "fn": 11,
+          "tn": 218,
+          "precision": 0.852,
+          "recall": 0.676,
+          "f1": 0.754,
+          "false_positive_rate": 0.018,
+          "n": 256
+        },
+        "LOF": {
+          "tp": 34,
+          "fp": 32,
+          "fn": 0,
+          "tn": 190,
+          "precision": 0.515,
+          "recall": 1.0,
+          "f1": 0.68,
+          "false_positive_rate": 0.144,
+          "n": 256
+        },
+        "DBSCAN noise": {
+          "tp": 32,
+          "fp": 17,
+          "fn": 2,
+          "tn": 205,
+          "precision": 0.653,
+          "recall": 0.941,
+          "f1": 0.771,
+          "false_positive_rate": 0.077,
+          "n": 256
+        },
+        "Combined": {
+          "tp": 34,
+          "fp": 18,
+          "fn": 0,
+          "tn": 204,
+          "precision": 0.654,
+          "recall": 1.0,
+          "f1": 0.791,
+          "false_positive_rate": 0.081,
+          "n": 256
+        }
+      },
+      "test": {
+        "Isolation Forest": {
+          "tp": 84,
+          "fp": 15,
+          "fn": 111,
+          "tn": 558,
+          "precision": 0.848,
+          "recall": 0.431,
+          "f1": 0.571,
+          "false_positive_rate": 0.026,
+          "n": 768
+        },
+        "LOF": {
+          "tp": 195,
+          "fp": 92,
+          "fn": 0,
+          "tn": 481,
+          "precision": 0.679,
+          "recall": 1.0,
+          "f1": 0.809,
+          "false_positive_rate": 0.161,
+          "n": 768
+        },
+        "DBSCAN noise": {
+          "tp": 170,
+          "fp": 64,
+          "fn": 25,
+          "tn": 509,
+          "precision": 0.726,
+          "recall": 0.872,
+          "f1": 0.793,
+          "false_positive_rate": 0.112,
+          "n": 768
+        },
+        "Combined": {
+          "tp": 180,
+          "fp": 65,
+          "fn": 15,
+          "tn": 508,
+          "precision": 0.735,
+          "recall": 0.923,
+          "f1": 0.818,
+          "false_positive_rate": 0.113,
+          "n": 768
+        }
+      }
+    }
+  }
+}

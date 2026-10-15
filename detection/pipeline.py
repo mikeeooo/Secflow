@@ -64,11 +64,13 @@ class DetectionModel:
         self.dbscan = DBSCAN(config['eps'], config['min_samples'])
         self.fit_seconds = time.perf_counter() - started
 
+    def scores(self, point, window):
+        """Run all three methods against an already-scaled request/window."""
+        return self.forest.score(point), self.lof.score(point), self.dbscan.fit_predict(window)[-1]
+
     def assess(self, point, evidence, window):
-        """point and the trailing window are already scaled; window includes point."""
-        forest = self.forest.score(point)
-        lof = self.lof.score(point)
-        cluster = self.dbscan.fit_predict(window)[-1]
+        """Legacy policy. MIA reuses scores() with its own validation-calibrated policy."""
+        forest, lof, cluster = self.scores(point, window)
         rule_score, reasons = rules(evidence)
         parts = contributions(forest, lof, cluster, rule_score)
         risk = round(sum(part['points'] for part in parts))

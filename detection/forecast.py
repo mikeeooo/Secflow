@@ -1,6 +1,6 @@
 """A small transparent alert-volume estimate, separate from fraud detection."""
 
-def estimate(rows, now, hours=6):
+def estimate(rows, now, hours=6, threshold=45):
     """Weighted mean of the last six hourly alert counts. Uses no fraud labels."""
     buckets = [{'hour': index, 'alerts': 0, 'transfers': 0} for index in range(hours)]
     start = now - hours * 3600
@@ -9,7 +9,7 @@ def estimate(rows, now, hours=6):
             continue
         index = min(hours - 1, (timestamp - start) // 3600)
         buckets[index]['transfers'] += 1
-        if risk is not None and risk >= 45:
+        if risk is not None and risk >= threshold:
             buckets[index]['alerts'] += 1
     weights = list(range(1, hours + 1))
     expected = sum(bucket['alerts'] * weight for bucket, weight in zip(buckets, weights)) / sum(weights)

@@ -1,26 +1,26 @@
 # Algorithms surface
 
-Status: shipped refinement of the incumbent minimalist blue and white workspace. User-facing title: Rezultate; route: /algorithms/. No approved image comp. Context loader and detector remain unavailable because the bundled engine is missing. This record uses current source and the completed visual review.
+Status: shipped refinement of the incumbent Romanian white and blue workspace. User-facing title: Rezultate de detecție; navigation label: Rezultate; route: /algorithms/. No approved image comp or quality card. Context loader and detector remain unavailable because the bundled engine is missing. The current risk extension received SHIP with no material findings. This record distinguishes the original historical test from local replay statistics.
 
 ## Purpose
-Compare readable results produced automatically by the background detection engine, one evaluation source at a time. Algorithm run, parameter, and import controls do not appear in the analyst frontend.
+Show a concise combined evaluation of the prepared synthetic test history. The analyst sees outcomes without algorithm names, individual diagnostics, execution controls, or configuration.
 
 ## Composition
-1. Heading and subtitle describe automatically calculated results. Exportă rezultate appears when an analysis exists.
-2. Rezultate pe datele de test shows the run time, evaluation count, and duration, followed by a Sursa datelor selector and Afișează.
-3. The table compares Isolation Forest, LOF, DBSCAN, and Scor combinat for the selected source. Precizie, Acoperire, F1, and Alarme false have short explanations. The combined row has a pale blue background and stronger text.
-4. Captions distinguish test, reference, and validation counts and state that sources are evaluated separately; metrics describe the local subset.
-5. Rezultate detaliate și validare is closed by default, with confusion counts by split and a threshold/exclusion note.
-6. Experiment separat: PaySim original appears only when benchmark data exists, closed by default, with its separate cohort, thresholds, table, limitations, and export.
+1. A heading and short subtitle explain identification of suspicious demonstration scenarios. Exportă rezultate appears when a stored run exists.
+2. Rezultate pe datele de test states the number of synthetic transfers evaluated separately from reference and validation.
+3. Three metrics show Alarme corecte, Fraude detectate, and Alarme false. Each has a plain-language denominator below its percentage.
+4. A wrapping count row shows Fraude găsite, Fraude omise, Alarme false, and Legitime nesemnalate.
+5. A visible caption explains that evaluation scope is explicit: for MIA, the original 768-request historical test stays separate from the played stream. Synthetic percentages do not describe bank performance.
 
 ## States and behavior
-- No published run: Analiză în pregătire explains that the engine will publish results after processing.
-- Choosing a source and submitting Afișează shows that source's statistics; evaluation populations remain separate.
-- At 760px the source filter wraps and tables scroll with the Romanian swipe hint.
-- There are no algorithm execution, parameter, or dataset-import forms, including for administrator users on this page.
+- With no combined test result, Analiză în pregătire explains that results appear after preparing the demonstration data.
+- At 760px the three metrics stack vertically with 22px gaps and 30px values. Counts wrap naturally.
+- The page has no source selector, comparison table, validation disclosure, benchmark disclosure, or algorithm run/parameter/import controls.
+- For MIA, the original historical-test artifact supplies the displayed combined statistics. If unavailable or version-incompatible, the page labels the latest visible-history replay scope. Playback does not silently rewrite the original test.
+- Metric export separates historical_test from latest_visible_replay when the original MIA artifact is available.
 
 ## Authority and verification
-Implementation: templates/base.html, templates/algorithms.html, static/app.css, and static/app.js. Reusable system: DESIGN.md and .impeccable/design.json. Visual review reports no material UI findings. Current evidence: .impeccable/review/mia-desktop-results.jpg (1440px) and .impeccable/review/mia-mobile-results.jpg (390px). This pass verified source consistency without changing the UI.
+Implementation: templates/algorithms.html, templates/base.html, and static/app.css. Reusable system: DESIGN.md and .impeccable/design.json. Evaluation source: core/views.py and artifacts/mia-continuous-evaluation.json. Existing result capture: .impeccable/review/monitor-results-mobile.jpg. The fresh risk reviewer returned SHIP; no new result-layout capture is claimed by this documentation pass.
 
 ## Content guardrails
-Keep statistics intuitive and source-separated. Preserve the distinction between local simulation metrics and bank performance. Algorithm theory stays in docs/ALGORITHMS.md; technical configuration belongs to backend/administration. No forecast values appear in result or customer lists.
+Keep combined synthetic-test results distinct from the live playback stream. Explain denominators and synthetic-data limits. Do not display algorithm names, raw model scores, theory, parameters, or diagnostics anywhere in the analyst interface. Algorithm theory remains in docs/ALGORITHMS.md; forecasts remain profile-only.
