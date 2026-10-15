@@ -1,0 +1,25 @@
+{
+  "named_accounts": 3684,
+  "mia_demo_accounts": 470,
+  "historical_demo_cases": 41,
+  "worker_jobs": [
+    {
+      "id": 1,
+      "kind": "single",
+      "status": "completed"
+    }
+  ],
+  "page_checks": {
+    "/": 200,
+    "/transactions/": 200,
+    "/cases/": 200,
+    "/accounts/": 200,
+    "/accounts/SIM_00_00/": 200,
+    "/algorithms/": 200,
+    "/monitor/status/": 200
+  },
+  "test_suite": "33 tests passed",
+  "browser_workflow": "Simulated request returned Pending, background worker completed it, page refreshed automatically",
+  "forecast": "Weighted hourly alert-volume estimate, displayed only in selected customer profile",
+  "identities": "All names are fictional; original CSV untouched"
+}

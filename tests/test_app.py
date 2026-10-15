@@ -36,7 +36,7 @@ class WorkflowTests(TestCase):
         self.client.post(url,{'status':'Resolved','note':'Checked','outcome':'False positive'})
         self.case.refresh_from_db(); self.assertEqual(self.case.status,'Resolved')
         self.assertEqual(self.case.notes.count(),1)
-        self.assertContains(self.client.get(url), 'selected>False positive')
+        self.assertContains(self.client.get(url), 'selected>Alarmă falsă')
         response=self.client.post(url,{'status':'Resolved','note':'Unsaved findings'})
         self.assertContains(response,'Unsaved findings')
     def test_csrf_enforced(self):

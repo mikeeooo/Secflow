@@ -1,11 +1,11 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-04T07:20:52.037350+00:00",
+  "generatedAt": "2026-10-15T13:23:43.556575+00:00",
   "title": "Design System: SecFlow",
   "extensions": {
     "colorMeta": {
       "primary": {
-        "displayName": "Primary",
+        "displayName": "Action Blue",
         "role": "primary",
         "tonalRamp": [
           "oklch(15.00% 0.20597 263.39)",
@@ -19,7 +19,7 @@
         ]
       },
       "primary-hover": {
-        "displayName": "Primary Hover",
+        "displayName": "Deep Action Blue",
         "role": "primary",
         "tonalRamp": [
           "oklch(15.00% 0.17371 263.09)",
@@ -33,7 +33,7 @@
         ]
       },
       "nav": {
-        "displayName": "Nav",
+        "displayName": "Navigation Mist",
         "role": "neutral",
         "tonalRamp": [
           "oklch(15.00% 0.00573 264.53)",
@@ -47,7 +47,7 @@
         ]
       },
       "ink": {
-        "displayName": "Ink",
+        "displayName": "Ink Navy",
         "role": "neutral",
         "tonalRamp": [
           "oklch(15.00% 0.05457 261.42)",
@@ -61,7 +61,7 @@
         ]
       },
       "muted": {
-        "displayName": "Muted",
+        "displayName": "Slate Text",
         "role": "neutral",
         "tonalRamp": [
           "oklch(15.00% 0.03988 260.31)",
@@ -75,7 +75,7 @@
         ]
       },
       "line": {
-        "displayName": "Line",
+        "displayName": "Cool Divider",
         "role": "neutral",
         "tonalRamp": [
           "oklch(15.00% 0.01380 258.35)",
@@ -89,7 +89,7 @@
         ]
       },
       "wash": {
-        "displayName": "Wash",
+        "displayName": "Blue Wash",
         "role": "neutral",
         "tonalRamp": [
           "oklch(15.00% 0.00861 264.52)",
@@ -103,7 +103,7 @@
         ]
       },
       "surface": {
-        "displayName": "Surface",
+        "displayName": "Paper White",
         "role": "neutral",
         "tonalRamp": [
           "oklch(15.00% 0.00000 89.88)",
@@ -117,7 +117,7 @@
         ]
       },
       "danger": {
-        "displayName": "Danger",
+        "displayName": "Muted Red",
         "role": "semantic",
         "tonalRamp": [
           "oklch(15.00% 0.14516 23.58)",
@@ -131,7 +131,7 @@
         ]
       },
       "success": {
-        "displayName": "Success",
+        "displayName": "Forest Green",
         "role": "semantic",
         "tonalRamp": [
           "oklch(15.00% 0.08500 161.26)",
@@ -145,7 +145,7 @@
         ]
       },
       "warning": {
-        "displayName": "Warning",
+        "displayName": "Ochre",
         "role": "semantic",
         "tonalRamp": [
           "oklch(15.00% 0.10180 75.46)",
@@ -159,8 +159,8 @@
         ]
       },
       "focus": {
-        "displayName": "Focus",
-        "role": "neutral",
+        "displayName": "Focus Blue",
+        "role": "primary",
         "tonalRamp": [
           "oklch(15.00% 0.13522 266.81)",
           "oklch(26.43% 0.13522 266.81)",
@@ -173,8 +173,8 @@
         ]
       },
       "nav-active": {
-        "displayName": "Nav Active",
-        "role": "neutral",
+        "displayName": "Selection Blue Background",
+        "role": "primary",
         "tonalRamp": [
           "oklch(15.00% 0.02543 268.85)",
           "oklch(26.43% 0.02543 268.85)",
@@ -187,8 +187,8 @@
         ]
       },
       "nav-active-text": {
-        "displayName": "Nav Active Text",
-        "role": "neutral",
+        "displayName": "Selection Blue Text",
+        "role": "primary",
         "tonalRamp": [
           "oklch(15.00% 0.18605 262.63)",
           "oklch(26.43% 0.18605 262.63)",
@@ -201,8 +201,8 @@
         ]
       },
       "nav-hover": {
-        "displayName": "Nav Hover",
-        "role": "neutral",
+        "displayName": "Navigation Hover",
+        "role": "primary",
         "tonalRamp": [
           "oklch(15.00% 0.01444 264.50)",
           "oklch(26.43% 0.01444 264.50)",
@@ -229,7 +229,7 @@
         ]
       },
       "block-bg": {
-        "displayName": "Block Bg",
+        "displayName": "Blocked Background",
         "role": "semantic",
         "tonalRamp": [
           "oklch(15.00% 0.01741 13.10)",
@@ -243,7 +243,7 @@
         ]
       },
       "review-bg": {
-        "displayName": "Review Bg",
+        "displayName": "Review Background",
         "role": "semantic",
         "tonalRamp": [
           "oklch(15.00% 0.03480 87.07)",
@@ -257,7 +257,7 @@
         ]
       },
       "allow-bg": {
-        "displayName": "Allow Bg",
+        "displayName": "Allowed Background",
         "role": "semantic",
         "tonalRamp": [
           "oklch(15.00% 0.01405 155.59)",
@@ -269,27 +269,57 @@
           "oklch(83.57% 0.01405 155.59)",
           "oklch(95.00% 0.01405 155.59)"
         ]
+      },
+      "historical-bar": {
+        "displayName": "Historical Blue",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15.00% 0.04978 266.51)",
+          "oklch(26.43% 0.04978 266.51)",
+          "oklch(37.86% 0.04978 266.51)",
+          "oklch(49.29% 0.04978 266.51)",
+          "oklch(60.71% 0.04978 266.51)",
+          "oklch(72.14% 0.04978 266.51)",
+          "oklch(83.57% 0.04978 266.51)",
+          "oklch(95.00% 0.04978 266.51)"
+        ]
       }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Login introduction."
+        "purpose": "Login introduction; 32px at the mobile breakpoint."
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Page headings."
+        "purpose": "Page headings; 26px at the mobile breakpoint."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section headings and panel titles."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "General interface content, with paragraphs limited to 72ch."
       },
       "metric": {
         "displayName": "Metric",
-        "purpose": "Workspace summary counts."
+        "purpose": "Workspace counts with tabular numerals; 27px on mobile."
+      },
+      "table-label": {
+        "displayName": "Table Label",
+        "purpose": "Sentence-case column headings; normal tracking."
+      },
+      "forecast": {
+        "displayName": "Forecast",
+        "purpose": "Approximate next-hour alert count, with a smaller unit label."
       }
     },
     "motion": [
       {
         "name": "button-background",
-        "value": "background 0.18s ease",
-        "purpose": "Button background changes only."
+        "value": "background .18s",
+        "purpose": "Button background changes; transitions are disabled for reduced-motion preferences."
       }
     ],
     "breakpoints": [
@@ -300,71 +330,90 @@
       {
         "name": "mobile",
         "value": "760px"
-      },
-      {
-        "name": "wide",
-        "value": "1600px"
       }
     ]
   },
   "components": [
     {
-      "name": "Export transactions",
+      "name": "Primary action",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Compact operational action.",
-      "html": "<button class=\"ds-button-primary\">Export transactions</button>",
-      "css": ".ds-button-primary{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;display:inline-flex;align-items:center;justify-content:center;gap:20px;border:1px solid transparent;border-radius:7px;padding:10px 17px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .18s;background:var(--blue,#2259da);color:#fff;border-color:transparent}.ds-button-primary:hover{background:#1745ad}.ds-button-primary:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-button-primary:disabled{opacity:.6;cursor:wait}"
+      "description": "The main operational action inside a customer restriction form.",
+      "html": "<button class=\"ds-button-primary\">Blochează contul</button>",
+      "css": ".ds-button-primary{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;border:1px solid transparent;border-radius:7px;padding:10px 17px;font-weight:600;cursor:pointer;text-align:center;transition:background .18s;background:var(--blue,#2259da);color:#fff}.ds-button-primary:hover{background:var(--blue-hover,#1745ad)}.ds-button-primary:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-button-primary:disabled{opacity:.65;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none}}"
     },
     {
-      "name": "Print report",
+      "name": "Secondary action",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "Compact operational action.",
-      "html": "<button class=\"ds-button-secondary\">Print report</button>",
-      "css": ".ds-button-secondary{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;display:inline-flex;align-items:center;justify-content:center;gap:20px;border:1px solid transparent;border-radius:7px;padding:10px 17px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .18s;background:#fff;color:var(--ink,#172641);border-color:var(--line,#e2e8f1)}.ds-button-secondary:hover{background:var(--wash,#f5f8fe)}.ds-button-secondary:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-button-secondary:disabled{opacity:.6;cursor:wait}"
+      "description": "A supporting action beside the primary task.",
+      "html": "<button class=\"ds-button-secondary\">Exportă rezultate</button>",
+      "css": ".ds-button-secondary{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;border:1px solid transparent;border-radius:7px;padding:10px 17px;font-weight:600;cursor:pointer;text-align:center;transition:background .18s;background:#fff;color:var(--ink,#172641);border-color:var(--line,#e2e8f1)}.ds-button-secondary:hover{background:var(--wash,#f5f8fe)}.ds-button-secondary:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-button-secondary:disabled{opacity:.65;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-button-secondary{transition:none}}"
     },
     {
-      "name": "Search field",
+      "name": "Labeled search field",
       "kind": "input",
       "refersTo": "input",
-      "description": "Labeled filter input.",
-      "html": "<label class=\"ds-label\">Search transactions<input class=\"ds-input\" placeholder=\"Transaction or account\"></label>",
-      "css": ".ds-label{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:550;color:#46546d}.ds-input{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;border:1px solid #ccd5e3;border-radius:7px;padding:10px 12px;min-width:0;background:#fff;color:var(--ink,#172641);font-size:13px;caret-color:var(--blue,#2259da)}.ds-input::placeholder{color:var(--muted,#627087)}.ds-input:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}"
+      "description": "A compact search input for fictional customer names or source identifiers.",
+      "html": "<label class=\"ds-label\">Caută un client<input class=\"ds-input\" name=\"q\" placeholder=\"Nume sau identificator sursă\"></label>",
+      "css": ".ds-label{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:550;color:#46546d}.ds-input{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;border:1px solid #ccd5e3;border-radius:7px;padding:10px 12px;min-width:0;min-height:42px;background:#fff;color:var(--ink,#172641);font-size:13px;caret-color:var(--blue,#2259da)}.ds-input::placeholder{color:var(--muted,#627087)}.ds-input:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-input:disabled{background:var(--nav,#f7f9fd);color:var(--muted,#627087);cursor:not-allowed}.ds-input[aria-invalid=\"true\"]{border-color:var(--danger,#a53738)}"
     },
     {
       "name": "Primary navigation",
       "kind": "nav",
       "refersTo": "navigation-active",
       "description": "Current destination and a neighboring destination.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Example navigation\"><a href=\"#overview\" aria-current=\"page\">Overview</a><a href=\"#transactions\">Transactions</a></nav>",
-      "css": ".ds-nav{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;display:grid;gap:8px;background:var(--nav,#f7f9fd);padding:22px}.ds-nav a{color:#53617b;padding:11px 16px;border-radius:7px;font-weight:550;text-decoration:none}.ds-nav a:hover{background:#edf2fc}.ds-nav a[aria-current]{background:#e6edff;color:#194ebf}.ds-nav a:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}"
+      "html": "<nav class=\"ds-nav\" aria-label=\"Navigare principală\"><a href=\"#monitoring\" aria-current=\"page\">Monitorizare</a><a href=\"#customers\">Clienți și conturi</a></nav>",
+      "css": ".ds-nav{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:grid;gap:6px;background:var(--nav,#f7f9fd)}.ds-nav a{color:#53617b;padding:11px 14px;border-radius:7px;font-weight:550;font-size:13px;text-decoration:none}.ds-nav a:hover{background:#edf2fc}.ds-nav a[aria-current]{background:#e6edff;color:#194ebf}.ds-nav a:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}@media(max-width:760px){.ds-nav{display:flex;overflow:auto;gap:3px;padding-bottom:5px}.ds-nav a{padding:9px 12px;white-space:nowrap;font-size:12px}}"
     },
     {
       "name": "Decision badges",
       "kind": "chip",
       "refersTo": "badge-block",
-      "description": "Explicit noninteractive decision states.",
-      "html": "<span class=\"ds-badge ds-block\">Block</span> <span class=\"ds-badge ds-review\">Review</span> <span class=\"ds-badge ds-allow\">Allow</span>",
-      "css": ".ds-badge{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;display:inline-block;padding:4px 9px;border-radius:5px;font-size:11px;font-weight:550;white-space:nowrap}.ds-block{background:#fceced;color:var(--danger,#a53738)}.ds-review{background:#fff4db;color:var(--warning,#895e12)}.ds-allow{background:#ebf5ee;color:var(--success,#226749)}"
+      "description": "Explicit noninteractive Romanian decision states.",
+      "html": "<span class=\"ds-badge ds-block\">Blocată</span> <span class=\"ds-badge ds-review\">De verificat</span> <span class=\"ds-badge ds-allow\">Permisă</span>",
+      "css": ".ds-badge{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:inline-block;padding:4px 9px;border-radius:5px;background:#f0f3f8;color:#53617b;font-size:11px;font-weight:550;white-space:nowrap}.ds-block{background:#fceced;color:var(--danger,#a53738)}.ds-review{background:#fff4db;color:var(--warning,#895e12)}.ds-allow{background:#ebf5ee;color:var(--success,#226749)}"
     },
     {
       "name": "Investigation panel",
       "kind": "card",
       "refersTo": "panel",
-      "description": "Flat content container with heading and supporting text.",
-      "html": "<section class=\"ds-panel\"><h2>Needs attention</h2><p>Open investigations, ordered by initial risk.</p></section>",
-      "css": ".ds-panel{font-family:-apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif;font-size:14px;line-height:1.55;border:1px solid var(--line,#e2e8f1);border-radius:var(--radius,12px);background:#fff;padding:25px;color:var(--ink,#172641)}.ds-panel h2{font-size:17px;line-height:1.4;letter-spacing:-.015em;font-weight:650;margin:0 0 8px}.ds-panel p{color:var(--muted,#627087);font-size:12px;margin:0;max-width:74ch}"
+      "description": "A flat container whose heading introduces operational content.",
+      "html": "<section class=\"ds-panel\"><div class=\"ds-section-heading\"><div><h2>Necesită atenție</h2><p>Deschide clientul pentru istoricul și estimarea alertelor.</p></div><a href=\"#cases\">Toate cazurile active</a></div></section>",
+      "css": ".ds-panel{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;border:1px solid var(--line,#e2e8f1);border-radius:var(--radius,12px);background:#fff;margin-bottom:24px;overflow:hidden;color:var(--ink,#172641)}.ds-section-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:23px 24px 18px}.ds-section-heading h2{font-size:17px;line-height:1.4;letter-spacing:-.015em;font-weight:650;margin:0 0 4px}.ds-section-heading p{color:var(--muted,#627087);font-size:12px;margin:0;max-width:72ch}.ds-section-heading>a{font-size:12px;white-space:nowrap;color:var(--blue,#2259da);text-decoration:none;text-underline-offset:3px}.ds-section-heading>a:hover{text-decoration:underline}.ds-section-heading>a:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}@media(max-width:760px){.ds-section-heading{padding:20px 18px;flex-wrap:wrap}}"
+    },
+    {
+      "name": "Secondary detail disclosure",
+      "kind": "custom",
+      "refersTo": "disclosure-summary",
+      "description": "A native closed disclosure for secondary operational detail.",
+      "html": "<details class=\"ds-disclosure\"><summary>Rezultate detaliate și validare</summary><div class=\"ds-disclosure-body\"><p>Simulările manuale fără etichetă sunt excluse din aceste rezultate.</p></div></details>",
+      "css": ".ds-disclosure{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;border-bottom:1px solid var(--line,#e2e8f1);margin-bottom:4px;color:var(--ink,#172641)}.ds-disclosure summary{color:var(--ink,#172641);cursor:pointer;padding:18px 0;font-size:13px;font-weight:550}.ds-disclosure summary::marker{color:var(--blue,#2259da)}.ds-disclosure summary:hover{color:var(--blue,#2259da)}.ds-disclosure summary:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-disclosure-body{padding:7px 0 24px}.ds-disclosure-body p{font-size:13px;margin:0 0 1em;color:var(--muted,#627087);max-width:72ch}"
+    },
+    {
+      "name": "Customer alert estimate",
+      "kind": "custom",
+      "refersTo": "forecast-panel",
+      "description": "Six observed hourly alert counts and one next-hour estimate on the customer profile.",
+      "html": "<section class=\"ds-forecast-panel\"><div><h2>Estimarea alertelor · următoarea oră</h2><p class=\"ds-forecast-number\">≈ 2 <span>alerte</span></p><p class=\"ds-caption\">Estimare orientativă, fără probabilitate de fraudă.</p></div><div class=\"ds-forecast-chart\" role=\"img\" aria-label=\"Alerte pe ultimele șase ore și estimarea pentru ora următoare\"><div><span>1</span><i style=\"height:30%\"></i><small>−6h</small></div><div><span>2</span><i style=\"height:60%\"></i><small>−5h</small></div><div><span>1</span><i style=\"height:30%\"></i><small>−4h</small></div><div><span>3</span><i style=\"height:85%\"></i><small>−3h</small></div><div><span>2</span><i style=\"height:60%\"></i><small>−2h</small></div><div><span>1</span><i style=\"height:30%\"></i><small>−1h</small></div><div class=\"ds-forecast-next\"><span>2</span><i style=\"height:60%\"></i><small>+1h</small></div></div></section>",
+      "css": ".ds-forecast-panel{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;border:1px solid var(--line,#e2e8f1);border-radius:var(--radius,12px);background:#fff;padding:25px;color:var(--ink,#172641);overflow:hidden}.ds-forecast-panel h2{font-size:17px;line-height:1.4;letter-spacing:-.015em;font-weight:650;margin:0 0 10px}.ds-forecast-number{margin:18px 0;font-size:32px;line-height:1.3;color:var(--ink,#172641);font-variant-numeric:tabular-nums}.ds-forecast-number span{font-size:14px;color:var(--muted,#627087)}.ds-caption{font-size:12px;color:var(--muted,#627087);line-height:1.65;margin:18px 0 0;max-width:72ch}.ds-forecast-chart{display:flex;height:140px;gap:14px;align-items:end;padding-bottom:22px}.ds-forecast-chart>div{flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:end;position:relative;gap:5px;font-size:11px;color:var(--muted,#627087)}.ds-forecast-chart i{background:#c9d8fa;width:65%;min-height:3px;border-radius:3px 3px 0 0;max-height:85%}.ds-forecast-chart small{position:absolute;bottom:-23px;white-space:nowrap;display:block;font-size:11px;color:var(--muted,#627087);font-weight:400}.ds-forecast-chart .ds-forecast-next i{background:var(--blue,#2259da)}@media(max-width:760px){.ds-forecast-panel{grid-template-columns:1fr;gap:25px;padding:20px}.ds-forecast-chart{margin-top:5px}}"
+    },
+    {
+      "name": "Monitoring status",
+      "kind": "custom",
+      "description": "A wrapping row for background analysis, simulation time and queue size.",
+      "html": "<div class=\"ds-monitor-status\"><span><span class=\"ds-status-dot\"></span> Analiză automată în fundal</span><span>Ora simulării: 01.10.2026, 14:30</span></div>",
+      "css": ".ds-monitor-status{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:26px;color:var(--muted,#627087);font-size:12px}.ds-status-dot{display:inline-block;width:7px;height:7px;background:var(--blue,#2259da);border-radius:50%;margin-right:6px;flex-shrink:0}"
     }
   ],
   "narrative": {
     "northStar": "The Analyst’s Desk",
-    "overview": "The Analyst’s Desk is a restrained working environment: white content surfaces, a pale navigation rail, clear blue actions, and readable operational data. The user-approved direction is minimalist blue and white; the metaphor here describes the implemented result rather than a separately approved visual concept.\n\nThe interface uses flat boundaries and measured spacing so tables, numbers, and investigation actions carry the hierarchy. English labels describe decisions and simulation limitations directly. This document records the current code; no approved image comp exists.",
+    "overview": "The Analyst’s Desk is a restrained working environment: white content surfaces, a pale navigation rail, clear blue actions, and readable operational data. The user-approved direction is minimalist blue and white; the metaphor describes the implemented result rather than a separately approved visual concept.\n\nFlat boundaries and measured spacing let tables, numbers, and investigation actions carry the hierarchy. Romanian labels keep the university prototype direct and understandable. Essential tasks and results remain visible; secondary operational detail opens through native disclosures. This records the shipped code. No approved image comp exists.",
     "keyCharacteristics": [
       "White content surfaces with a pale blue-gray navigation rail.",
       "Blue actions and selection states, with restrained semantic status colors.",
       "System typography, tabular numbers, and compact readable tables.",
-      "Flat bordered containers and visible keyboard focus."
+      "Flat bordered containers, native disclosures, and visible keyboard focus."
     ],
     "rules": [
       {
@@ -380,15 +429,18 @@
     ],
     "dos": [
       "Do use the documented blue and white palette for the analyst workspace.",
-      "Do accompany decision colors with explicit Allow, Review, or Block text.",
+      "Do accompany decision colors with explicit Permisă, De verificat, or Blocată text.",
       "Do retain visible keyboard focus and the skip-to-content link.",
-      "Do preserve horizontal table scrolling and its mobile hint when columns exceed the viewport.",
-      "Do keep simulation provenance and uncalibrated-score explanations visible."
+      "Do preserve horizontal table scrolling and its Romanian mobile hint when columns exceed the viewport.",
+      "Do keep essential tasks visible and secondary operational details in clearly labeled disclosures.",
+      "Do keep the shared simulation and risk-score context readable."
     ],
     "donts": [
-      "Don’t encode operational decisions through color alone.",
-      "Don’t describe risk scores as fraud probabilities.",
-      "Don’t combine amounts from different currency units into one unqualified total."
+      "Don't encode operational decisions through color alone.",
+      "Don't replace Romanian task labels with untranslated interface copy.",
+      "Don't describe risk scores as fraud probabilities.",
+      "Don't combine amounts from different currency units into one unqualified total.",
+      "Don't link Django administration from the platform navigation."
     ]
   }
 }

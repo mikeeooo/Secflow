@@ -1,0 +1,332 @@
+{
+  "prepared_rows": 54520,
+  "csv_sha256": "d7c1594fe30aaba35408c7755113eb82b86427d1b77cf6fb93b71bd4234b9c46",
+  "assessments": 54264,
+  "replay_seconds": 51.261,
+  "manual_seconds": 0.108,
+  "manual_assessments": 1,
+  "metrics": {
+    "Generated scenario": {
+      "fit_seconds": 0.0244,
+      "reference_rows": 128,
+      "validation_rows": 64,
+      "test_rows": 4328,
+      "methods": {
+        "validation": {
+          "Isolation Forest": {
+            "tp": 0,
+            "fp": 1,
+            "fn": 0,
+            "tn": 63,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.016,
+            "n": 64
+          },
+          "LOF": {
+            "tp": 0,
+            "fp": 2,
+            "fn": 0,
+            "tn": 62,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.031,
+            "n": 64
+          },
+          "DBSCAN noise": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Rules": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Algorithms only": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Combined": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          }
+        },
+        "test": {
+          "Isolation Forest": {
+            "tp": 430,
+            "fp": 253,
+            "fn": 150,
+            "tn": 3495,
+            "precision": 0.63,
+            "recall": 0.741,
+            "f1": 0.681,
+            "false_positive_rate": 0.068,
+            "n": 4328
+          },
+          "LOF": {
+            "tp": 580,
+            "fp": 3740,
+            "fn": 0,
+            "tn": 8,
+            "precision": 0.134,
+            "recall": 1.0,
+            "f1": 0.237,
+            "false_positive_rate": 0.998,
+            "n": 4328
+          },
+          "DBSCAN noise": {
+            "tp": 247,
+            "fp": 49,
+            "fn": 333,
+            "tn": 3699,
+            "precision": 0.834,
+            "recall": 0.426,
+            "f1": 0.564,
+            "false_positive_rate": 0.013,
+            "n": 4328
+          },
+          "Rules": {
+            "tp": 145,
+            "fp": 10,
+            "fn": 435,
+            "tn": 3738,
+            "precision": 0.935,
+            "recall": 0.25,
+            "f1": 0.395,
+            "false_positive_rate": 0.003,
+            "n": 4328
+          },
+          "Algorithms only": {
+            "tp": 580,
+            "fp": 3740,
+            "fn": 0,
+            "tn": 8,
+            "precision": 0.134,
+            "recall": 1.0,
+            "f1": 0.237,
+            "false_positive_rate": 0.998,
+            "n": 4328
+          },
+          "Combined": {
+            "tp": 511,
+            "fp": 270,
+            "fn": 69,
+            "tn": 3478,
+            "precision": 0.654,
+            "recall": 0.881,
+            "f1": 0.751,
+            "false_positive_rate": 0.072,
+            "n": 4328
+          }
+        }
+      }
+    },
+    "PaySim": {
+      "fit_seconds": 0.0223,
+      "reference_rows": 128,
+      "validation_rows": 64,
+      "test_rows": 49808,
+      "methods": {
+        "validation": {
+          "Isolation Forest": {
+            "tp": 0,
+            "fp": 5,
+            "fn": 0,
+            "tn": 59,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.078,
+            "n": 64
+          },
+          "LOF": {
+            "tp": 0,
+            "fp": 7,
+            "fn": 0,
+            "tn": 57,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.109,
+            "n": 64
+          },
+          "DBSCAN noise": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Rules": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Algorithms only": {
+            "tp": 0,
+            "fp": 5,
+            "fn": 0,
+            "tn": 59,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.078,
+            "n": 64
+          },
+          "Combined": {
+            "tp": 0,
+            "fp": 4,
+            "fn": 0,
+            "tn": 60,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.062,
+            "n": 64
+          }
+        },
+        "test": {
+          "Isolation Forest": {
+            "tp": 26,
+            "fp": 5735,
+            "fn": 72,
+            "tn": 43975,
+            "precision": 0.005,
+            "recall": 0.265,
+            "f1": 0.009,
+            "false_positive_rate": 0.115,
+            "n": 49808
+          },
+          "LOF": {
+            "tp": 35,
+            "fp": 8467,
+            "fn": 63,
+            "tn": 41243,
+            "precision": 0.004,
+            "recall": 0.357,
+            "f1": 0.008,
+            "false_positive_rate": 0.17,
+            "n": 49808
+          },
+          "DBSCAN noise": {
+            "tp": 8,
+            "fp": 850,
+            "fn": 90,
+            "tn": 48860,
+            "precision": 0.009,
+            "recall": 0.082,
+            "f1": 0.017,
+            "false_positive_rate": 0.017,
+            "n": 49808
+          },
+          "Rules": {
+            "tp": 3,
+            "fp": 492,
+            "fn": 95,
+            "tn": 49218,
+            "precision": 0.006,
+            "recall": 0.031,
+            "f1": 0.01,
+            "false_positive_rate": 0.01,
+            "n": 49808
+          },
+          "Algorithms only": {
+            "tp": 22,
+            "fp": 5032,
+            "fn": 76,
+            "tn": 44678,
+            "precision": 0.004,
+            "recall": 0.224,
+            "f1": 0.009,
+            "false_positive_rate": 0.101,
+            "n": 49808
+          },
+          "Combined": {
+            "tp": 16,
+            "fp": 4109,
+            "fn": 82,
+            "tn": 45601,
+            "precision": 0.004,
+            "recall": 0.163,
+            "f1": 0.008,
+            "false_positive_rate": 0.083,
+            "n": 49808
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "trees": 32,
+    "sample_size": 64,
+    "seed": 42,
+    "eps": 1.8,
+    "min_samples": 4,
+    "k": 10,
+    "reference": 128,
+    "validation": 64,
+    "dbscan_window": 24,
+    "features": [
+      "log amount",
+      "amount / prior mean",
+      "prior transfers in 60s",
+      "prior transfers in 5m",
+      "log prior 5m amount",
+      "new beneficiary",
+      "new device",
+      "failed logins",
+      "recent incoming transfers"
+    ],
+    "score": "0.30 IF + 0.25 LOF + 0.15 DBSCAN noise + 0.30 rules",
+    "review_threshold": 45,
+    "block_threshold": 65,
+    "calibration": "Fixed demonstration thresholds; not a fraud probability",
+    "mode": "replay",
+    "datasets": [
+      {
+        "checksum": "1eb9d473b63ae5d9663ec19152f35572192803b8eab2bfb28401b4ca84db90d2",
+        "rows": 54520
+      }
+    ]
+  },
+  "database": "Temporary isolated SQLite database; operational database unchanged"
+}

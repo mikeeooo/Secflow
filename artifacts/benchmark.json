@@ -93,64 +93,64 @@
       "algorithm": "Isolation Forest",
       "n": 100,
       "dimensions": 4,
-      "seconds": 0.01461,
-      "peak_python_bytes": 84240
+      "seconds": 0.01722,
+      "peak_python_bytes": 84560
     },
     {
       "algorithm": "DBSCAN",
       "n": 100,
       "dimensions": 4,
-      "seconds": 0.00977,
-      "peak_python_bytes": 14488
+      "seconds": 0.01332,
+      "peak_python_bytes": 14536
     },
     {
       "algorithm": "LOF",
       "n": 100,
       "dimensions": 4,
-      "seconds": 0.01828,
-      "peak_python_bytes": 88752
+      "seconds": 0.01969,
+      "peak_python_bytes": 83408
     },
     {
       "algorithm": "Isolation Forest",
       "n": 200,
       "dimensions": 4,
-      "seconds": 0.01503,
-      "peak_python_bytes": 32584
+      "seconds": 0.01836,
+      "peak_python_bytes": 91464
     },
     {
       "algorithm": "DBSCAN",
       "n": 200,
       "dimensions": 4,
-      "seconds": 0.03928,
-      "peak_python_bytes": 19384
+      "seconds": 0.05307,
+      "peak_python_bytes": 19432
     },
     {
       "algorithm": "LOF",
       "n": 200,
       "dimensions": 4,
-      "seconds": 0.07394,
-      "peak_python_bytes": 181904
+      "seconds": 0.07904,
+      "peak_python_bytes": 181816
     },
     {
       "algorithm": "Isolation Forest",
       "n": 400,
       "dimensions": 4,
-      "seconds": 0.01524,
-      "peak_python_bytes": 26632
+      "seconds": 0.01795,
+      "peak_python_bytes": 26952
     },
     {
       "algorithm": "DBSCAN",
       "n": 400,
       "dimensions": 4,
-      "seconds": 0.16044,
-      "peak_python_bytes": 63720
+      "seconds": 0.21537,
+      "peak_python_bytes": 63768
     },
     {
       "algorithm": "LOF",
       "n": 400,
       "dimensions": 4,
-      "seconds": 0.31193,
-      "peak_python_bytes": 446320
+      "seconds": 0.34745,
+      "peak_python_bytes": 446480
     }
   ]
 }

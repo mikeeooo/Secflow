@@ -1,30 +1,27 @@
 # Overview surface
 
-Status: implemented directly in code, following BLUEPRINT.md and the user-approved minimalist blue and white analyst workspace. No approved image comp. Launcher unavailable; this record is derived from source, not a launcher review.
+Status: shipped refinement of the incumbent minimalist blue and white workspace. User-facing title: Monitorizare. No approved image comp. Context loader and detector remain unavailable because the bundled engine is missing. This record uses current source and the completed visual review.
 
 ## Purpose
-Help an analyst see the scope of simulated payments, identify unresolved investigations, and open a case. The user-facing page title is Overview; it is the blueprint's Dashboard surface.
+Prioritize current risk signals and active cases in a fictional MIA payment portfolio. Open a named customer for history and the on-demand alert estimate.
 
 ## Composition
-1. Shared sidebar and top bar establish location and signed-in role.
-2. Heading and supporting sentence sit beside Print report and Export transactions.
-3. Demo workspace notice identifies PaySim plus generated scenarios and the current analysis.
-4. Four flat summary metrics show transfers, awaiting review, restricted accounts, and allowed transfers.
-5. A wider transfer-activity chart sits beside workspace coverage and amounts separated by currency unit.
-6. Needs attention lists open investigations ordered by initial risk, with direct Investigate links.
-7. Simulated decision impact reports blocked fraudulent value, allowed fraudulent value, and legitimate transfers blocked, separated by currency.
+1. Primary navigation reads Monitorizare, Tranzacții, Cazuri, Clienți și conturi, Rezultate. The top bar identifies MIA instant payments; the footer identifies the simulation and fictional clients.
+2. Heading and supporting sentence sit beside Vezi tranzacțiile.
+3. A muted status row shows Analiză automată în fundal, the simulation clock, and a queued-request count when present.
+4. Three metrics show Tranzacții MIA, Cazuri active, and Conturi blocate; the latter two link to their lists.
+5. Necesită atenție lists fictional customer names and public account identifiers alongside amount/currency, current risk, Romanian decision badges, and case links. Customer names open their profiles.
+6. Ultimele transferuri shows simulation dates, named senders and recipients, amounts, and current decisions.
 
 ## States and behavior
-- Missing analysis is labeled Awaiting analysis.
-- Empty activity invites importing the demo dataset.
-- Empty investigations explain that analysis is required to evaluate imported transfers.
-- Decisions retain text in addition to badge color; risk is shown out of 100.
-- Chart bars have visible values, day labels, tooltips, and a chart label.
-- At 760px the chart/coverage split becomes one column and metrics use two columns. Tables scroll horizontally with a visible hint. Actions wrap and navigation becomes horizontal.
-- Print hides application chrome and controls. Export links to the transaction CSV endpoint.
+- No active cases: Niciun caz activ în portofoliu.
+- Background scoring uses a persistent queue; this analyst surface offers no algorithm run, parameter, or import controls.
+- Read-only monitoring pages check for changed results every seven seconds, skip hidden pages or focused fields, and reload when the revision changes. Temporary connection failures retain existing results.
+- At 760px all three metrics remain in one row with smaller spacing and type. Tables scroll with the Romanian swipe hint; actions wrap and navigation becomes horizontal.
+- Lists show current risk signals, never forecast values. Estimates appear only after opening a selected customer profile.
 
 ## Authority and verification
-Visual tokens and reusable components: DESIGN.md and .impeccable/design.json. Implementation: static/app.css, templates/base.html, templates/dashboard.html. Source consistency was checked after independent review fixes. This documentation pass does not claim screenshot comparison or launcher-based validation.
+Implementation: templates/base.html, templates/dashboard.html, static/app.css, and static/app.js. Reusable system: DESIGN.md and .impeccable/design.json. Visual review reports no material UI findings. Current evidence: .impeccable/review/mia-desktop-dashboard.jpg (1440px) and .impeccable/review/mia-mobile-dashboard.jpg (390px). This pass verified source consistency without changing the UI.
 
 ## Content guardrails
-Keep simulated timestamp/security provenance visible. Keep source and currency distinctions. Ground truth is used only for retrospective impact evaluation. Review is not counted as prevented loss. Risk scores are not fraud probabilities.
+Keep names, public account identifiers, MDL demo amounts, and calendar dates within the clearly simulated portfolio context. Preserve source/currency distinctions. Show current risk rather than forecast data in every list. Risk scores are not fraud probabilities. Algorithm theory belongs only in docs/ALGORITHMS.md.

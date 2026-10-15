@@ -1,11 +1,26 @@
 from django.db import models
 from django.conf import settings
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
+SIMULATION_START = datetime(2026, 10, 1, tzinfo=ZoneInfo('Europe/Chisinau'))
 
 class Account(models.Model):
     id = models.CharField(primary_key=True,max_length=80)
+    display_name = models.CharField(max_length=100, blank=True)
     blocked = models.BooleanField(default=False)
     risk = models.IntegerField(default=0)
-    def __str__(self): return self.pk
+    @property
+    def public_id(self):
+        import hashlib
+        return 'MIA-' + hashlib.sha256(self.pk.encode()).hexdigest()[:8].upper()
+
+    @property
+    def name(self):
+        return self.display_name or self.pk
+
+    def __str__(self):
+        return f'{self.name} · {self.public_id}'
 
 class DatasetImport(models.Model):
     checksum = models.CharField(max_length=64,unique=True)
@@ -32,6 +47,20 @@ class Transaction(models.Model):
     decision = models.CharField(max_length=20,default='Pending')
     class Meta: ordering = ['-timestamp','id']
 
+    @property
+    def occurred_at(self):
+        return SIMULATION_START + timedelta(seconds=self.timestamp)
+
+    @property
+    def currency_label(self):
+        return 'MDL demo' if self.currency == 'DEMO_UNIT' else 'unități PaySim'
+
+    @property
+    def decision_label(self):
+        if self.decision == 'Pending':
+            return 'Referință' if self.features else 'În analiză'
+        return {'Allow': 'Permisă', 'Review': 'De verificat', 'Block': 'Blocată'}[self.decision]
+
 class DetectionRun(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     parameters = models.JSONField(default=dict)
@@ -57,6 +86,12 @@ class FraudCase(models.Model):
     outcome = models.CharField(max_length=30,blank=True)
     assignee = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.SET_NULL,null=True,blank=True)
     updated = models.DateTimeField(auto_now=True)
+    closed_at = models.IntegerField(null=True, blank=True)
+    demo_history = models.BooleanField(default=False)
+
+    @property
+    def closed_date(self):
+        return SIMULATION_START + timedelta(seconds=self.closed_at) if self.closed_at is not None else None
 
 class CaseNote(models.Model):
     case = models.ForeignKey(FraudCase,on_delete=models.CASCADE,related_name='notes')
@@ -72,3 +107,22 @@ class AuditEvent(models.Model):
     before = models.CharField(max_length=100,blank=True)
     after = models.CharField(max_length=100,blank=True)
     created = models.DateTimeField(auto_now_add=True)
+
+
+class AnalysisJob(models.Model):
+    """A durable local queue, processed by one background worker."""
+    kind = models.CharField(max_length=12, choices=[('single', 'Tranzacție'), ('replay', 'Set de date')])
+    transaction = models.ForeignKey(Transaction, on_delete=models.CASCADE, null=True, blank=True)
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    status = models.CharField(max_length=12, default='queued', db_index=True,
+                              choices=[('queued', 'În așteptare'), ('running', 'În analiză'),
+                                       ('completed', 'Finalizată'), ('failed', 'Eșuată')])
+    created = models.DateTimeField(auto_now_add=True)
+    started = models.DateTimeField(null=True)
+    finished = models.DateTimeField(null=True)
+    error = models.TextField(blank=True)
+    parameters = models.JSONField(default=dict)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['transaction'], condition=models.Q(kind='single'),
+                                                name='one_analysis_job_per_transfer')]

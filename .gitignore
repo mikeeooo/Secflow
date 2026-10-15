@@ -15,3 +15,5 @@ data/generated/*
 !data/generated/.gitkeep
 
 .impeccable/review/
+
+.secflow-worker.lock

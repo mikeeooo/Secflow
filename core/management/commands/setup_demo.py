@@ -21,3 +21,6 @@ class Command(BaseCommand):
         if not opts['skip_analysis']:
             run=analyze(User.objects.get(username='admin'))
             self.stdout.write(f'Run {run.pk}: {run.count} assessments in {run.duration:.1f}s')
+        from core.demo import prepare_profiles
+        names, cases = prepare_profiles()
+        self.stdout.write(f'Fictional profiles: {names}; historical demo cases: {cases}')

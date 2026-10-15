@@ -1,5 +1,26 @@
 from django.contrib import admin
 from django.contrib.auth import views as auth
 from django.urls import path
-from core import views as v
-urlpatterns = [path('simulate/',v.simulate,name='simulate'),path('admin/',admin.site.urls),path('login/',auth.LoginView.as_view(),name='login'),path('logout/',auth.LogoutView.as_view(),name='logout'),path('',v.dashboard,name='dashboard'),path('transactions/',v.transactions,name='transactions'),path('transactions/<str:pk>/',v.detail,name='detail'),path('cases/',v.cases,name='cases'),path('cases/<int:pk>/',v.case_detail,name='case'),path('accounts/',v.accounts,name='accounts'),path('accounts/<str:pk>/',v.account,name='account'),path('algorithms/',v.algorithms,name='algorithms'),path('analysis/run/',v.run_analysis,name='run_analysis'),path('data/import/',v.import_data,name='import_data'),path('audit/',v.audit,name='audit'),path('export/',v.export,name='export')]
+
+from core import views
+
+urlpatterns = [
+    path('', views.dashboard, name='dashboard'),
+    path('login/', auth.LoginView.as_view(), name='login'),
+    path('logout/', auth.LogoutView.as_view(), name='logout'),
+    path('admin/', admin.site.urls),
+    path('transactions/', views.transactions, name='transactions'),
+    path('transactions/<str:pk>/', views.detail, name='detail'),
+    path('monitor/status/', views.monitor_status, name='monitor_status'),
+    path('analysis/status/<str:pk>/', views.analysis_status, name='analysis_status'),
+    path('cases/', views.cases, name='cases'),
+    path('cases/<int:pk>/', views.case_detail, name='case'),
+    path('accounts/', views.accounts, name='accounts'),
+    path('accounts/<str:pk>/', views.account, name='account'),
+    path('algorithms/', views.algorithms, name='algorithms'),
+    path('analysis/run/', views.run_analysis, name='run_analysis'),
+    path('data/import/', views.import_data, name='import_data'),
+    path('simulate/', views.simulate, name='simulate'),
+    path('audit/', views.audit, name='audit'),
+    path('export/', views.export, name='export'),
+]

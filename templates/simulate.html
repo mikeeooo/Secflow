@@ -1,1 +1,4 @@
-{% extends 'base.html' %}{% block subtitle %}Create a local test transfer and follow its decision through the system.{% endblock %}{% block content %}<section class="panel padded" style="max-width:720px"><h2>Transfer request</h2><p>Uses generated accounts and DEMO_UNIT. There is no bank connection and no real money is moved. A fresh analysis run evaluates the request against earlier activity.</p><form method="post" class="stack" data-busy>{% csrf_token %}{{ form.as_div }}<button>Evaluate simulated transfer</button></form></section>{% endblock %}
+{% extends 'base.html' %}
+{% block subtitle %}Testează o cerere folosind conturile din setul generat.{% endblock %}
+{% block actions %}<a class="button secondary" href="/transactions/">Înapoi la tranzacții</a>{% endblock %}
+{% block content %}<section class="panel padded simulation-form"><h2>Tranzacție nouă</h2><p>Sumele sunt exprimate în MDL demonstrativi. Cererea intră în coada automată de analiză.</p><form method="post" class="stack" data-busy="Se înregistrează cererea…">{% csrf_token %}{{ form.as_div }}<button>Trimite cererea de test</button></form></section>{% endblock %}

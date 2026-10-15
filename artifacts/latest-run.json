@@ -1,7 +1,7 @@
 {
-  "run": 2,
+  "id": 3,
+  "duration": 5.311084415996447,
   "count": 6265,
-  "duration_seconds": 4.787341916991863,
   "parameters": {
     "trees": 32,
     "sample_size": 64,
@@ -23,9 +23,11 @@
       "failed logins",
       "recent incoming transfers"
     ],
-    "mode": "Chronological replay; fixed earlier reference, causal DBSCAN window",
-    "score": "0.30 IF + 0.25 LOF + 0.15 DBSCAN noise + 0.30 rules; review >=45, block >=65",
-    "calibration": "Not calibrated; fixed demonstrator thresholds",
+    "score": "0.30 IF + 0.25 LOF + 0.15 DBSCAN noise + 0.30 rules",
+    "review_threshold": 45,
+    "block_threshold": 65,
+    "calibration": "Fixed demonstration thresholds; not a fraud probability",
+    "mode": "replay",
     "datasets": [
       {
         "checksum": "33e91572efc31d8294ef8e7a5ed9eeae6078f438e0a04f495b1c1e75cd2194f5",
@@ -34,152 +36,8 @@
     ]
   },
   "metrics": {
-    "PaySim": {
-      "fit_seconds": 0.0206,
-      "reference_rows": 128,
-      "validation_rows": 64,
-      "test_rows": 1808,
-      "methods": {
-        "validation": {
-          "Isolation Forest": {
-            "tp": 0,
-            "fp": 5,
-            "fn": 0,
-            "tn": 59,
-            "precision": 0.0,
-            "recall": 0,
-            "f1": 0,
-            "false_positive_rate": 0.078,
-            "n": 64
-          },
-          "LOF": {
-            "tp": 0,
-            "fp": 7,
-            "fn": 0,
-            "tn": 57,
-            "precision": 0.0,
-            "recall": 0,
-            "f1": 0,
-            "false_positive_rate": 0.109,
-            "n": 64
-          },
-          "DBSCAN noise": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0,
-            "tn": 64,
-            "precision": 0,
-            "recall": 0,
-            "f1": 0,
-            "false_positive_rate": 0.0,
-            "n": 64
-          },
-          "Rules": {
-            "tp": 0,
-            "fp": 0,
-            "fn": 0,
-            "tn": 64,
-            "precision": 0,
-            "recall": 0,
-            "f1": 0,
-            "false_positive_rate": 0.0,
-            "n": 64
-          },
-          "Algorithms only": {
-            "tp": 0,
-            "fp": 5,
-            "fn": 0,
-            "tn": 59,
-            "precision": 0.0,
-            "recall": 0,
-            "f1": 0,
-            "false_positive_rate": 0.078,
-            "n": 64
-          },
-          "Combined": {
-            "tp": 0,
-            "fp": 4,
-            "fn": 0,
-            "tn": 60,
-            "precision": 0.0,
-            "recall": 0,
-            "f1": 0,
-            "false_positive_rate": 0.062,
-            "n": 64
-          }
-        },
-        "test": {
-          "Isolation Forest": {
-            "tp": 4,
-            "fp": 197,
-            "fn": 8,
-            "tn": 1599,
-            "precision": 0.02,
-            "recall": 0.333,
-            "f1": 0.038,
-            "false_positive_rate": 0.11,
-            "n": 1808
-          },
-          "LOF": {
-            "tp": 5,
-            "fp": 255,
-            "fn": 7,
-            "tn": 1541,
-            "precision": 0.019,
-            "recall": 0.417,
-            "f1": 0.037,
-            "false_positive_rate": 0.142,
-            "n": 1808
-          },
-          "DBSCAN noise": {
-            "tp": 1,
-            "fp": 29,
-            "fn": 11,
-            "tn": 1767,
-            "precision": 0.033,
-            "recall": 0.083,
-            "f1": 0.048,
-            "false_positive_rate": 0.016,
-            "n": 1808
-          },
-          "Rules": {
-            "tp": 1,
-            "fp": 17,
-            "fn": 11,
-            "tn": 1779,
-            "precision": 0.056,
-            "recall": 0.083,
-            "f1": 0.067,
-            "false_positive_rate": 0.009,
-            "n": 1808
-          },
-          "Algorithms only": {
-            "tp": 3,
-            "fp": 188,
-            "fn": 9,
-            "tn": 1608,
-            "precision": 0.016,
-            "recall": 0.25,
-            "f1": 0.03,
-            "false_positive_rate": 0.105,
-            "n": 1808
-          },
-          "Combined": {
-            "tp": 3,
-            "fp": 162,
-            "fn": 9,
-            "tn": 1634,
-            "precision": 0.018,
-            "recall": 0.25,
-            "f1": 0.034,
-            "false_positive_rate": 0.09,
-            "n": 1808
-          }
-        }
-      }
-    },
     "Generated scenario": {
-      "fit_seconds": 0.0232,
+      "fit_seconds": 0.0235,
       "reference_rows": 128,
       "validation_rows": 64,
       "test_rows": 4329,
@@ -318,6 +176,150 @@
             "f1": 0.751,
             "false_positive_rate": 0.072,
             "n": 4328
+          }
+        }
+      }
+    },
+    "PaySim": {
+      "fit_seconds": 0.0215,
+      "reference_rows": 128,
+      "validation_rows": 64,
+      "test_rows": 1808,
+      "methods": {
+        "validation": {
+          "Isolation Forest": {
+            "tp": 0,
+            "fp": 5,
+            "fn": 0,
+            "tn": 59,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.078,
+            "n": 64
+          },
+          "LOF": {
+            "tp": 0,
+            "fp": 7,
+            "fn": 0,
+            "tn": 57,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.109,
+            "n": 64
+          },
+          "DBSCAN noise": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Rules": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "tn": 64,
+            "precision": 0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.0,
+            "n": 64
+          },
+          "Algorithms only": {
+            "tp": 0,
+            "fp": 5,
+            "fn": 0,
+            "tn": 59,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.078,
+            "n": 64
+          },
+          "Combined": {
+            "tp": 0,
+            "fp": 4,
+            "fn": 0,
+            "tn": 60,
+            "precision": 0.0,
+            "recall": 0,
+            "f1": 0,
+            "false_positive_rate": 0.062,
+            "n": 64
+          }
+        },
+        "test": {
+          "Isolation Forest": {
+            "tp": 4,
+            "fp": 197,
+            "fn": 8,
+            "tn": 1599,
+            "precision": 0.02,
+            "recall": 0.333,
+            "f1": 0.038,
+            "false_positive_rate": 0.11,
+            "n": 1808
+          },
+          "LOF": {
+            "tp": 5,
+            "fp": 255,
+            "fn": 7,
+            "tn": 1541,
+            "precision": 0.019,
+            "recall": 0.417,
+            "f1": 0.037,
+            "false_positive_rate": 0.142,
+            "n": 1808
+          },
+          "DBSCAN noise": {
+            "tp": 1,
+            "fp": 29,
+            "fn": 11,
+            "tn": 1767,
+            "precision": 0.033,
+            "recall": 0.083,
+            "f1": 0.048,
+            "false_positive_rate": 0.016,
+            "n": 1808
+          },
+          "Rules": {
+            "tp": 1,
+            "fp": 17,
+            "fn": 11,
+            "tn": 1779,
+            "precision": 0.056,
+            "recall": 0.083,
+            "f1": 0.067,
+            "false_positive_rate": 0.009,
+            "n": 1808
+          },
+          "Algorithms only": {
+            "tp": 3,
+            "fp": 188,
+            "fn": 9,
+            "tn": 1608,
+            "precision": 0.016,
+            "recall": 0.25,
+            "f1": 0.03,
+            "false_positive_rate": 0.105,
+            "n": 1808
+          },
+          "Combined": {
+            "tp": 3,
+            "fp": 162,
+            "fn": 9,
+            "tn": 1634,
+            "precision": 0.018,
+            "recall": 0.25,
+            "f1": 0.034,
+            "false_positive_rate": 0.09,
+            "n": 1808
           }
         }
       }
