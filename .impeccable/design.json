@@ -1,105 +1,91 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-15T20:04:30.488179+00:00",
+  "generatedAt": "2026-10-15T21:27:48.768009+00:00",
   "title": "Design System: SecFlow",
   "extensions": {
     "colorMeta": {
-      "primary": {
+      "blue": {
         "displayName": "Action Blue",
         "role": "primary",
         "tonalRamp": [
-          "oklch(15.00% 0.20597 263.39)",
-          "oklch(26.43% 0.20597 263.39)",
-          "oklch(37.86% 0.20597 263.39)",
-          "oklch(49.29% 0.20597 263.39)",
-          "oklch(60.71% 0.20597 263.39)",
-          "oklch(72.14% 0.20597 263.39)",
-          "oklch(83.57% 0.20597 263.39)",
-          "oklch(95.00% 0.20597 263.39)"
+          "oklch(15.00% 0.17709 255.83)",
+          "oklch(26.43% 0.17709 255.83)",
+          "oklch(37.86% 0.17709 255.83)",
+          "oklch(49.29% 0.17709 255.83)",
+          "oklch(60.71% 0.17709 255.83)",
+          "oklch(72.14% 0.17709 255.83)",
+          "oklch(83.57% 0.17709 255.83)",
+          "oklch(95.00% 0.17709 255.83)"
         ]
       },
-      "primary-hover": {
+      "blue-hover": {
         "displayName": "Deep Action Blue",
         "role": "primary",
         "tonalRamp": [
-          "oklch(15.00% 0.17371 263.09)",
-          "oklch(26.43% 0.17371 263.09)",
-          "oklch(37.86% 0.17371 263.09)",
-          "oklch(49.29% 0.17371 263.09)",
-          "oklch(60.71% 0.17371 263.09)",
-          "oklch(72.14% 0.17371 263.09)",
-          "oklch(83.57% 0.17371 263.09)",
-          "oklch(95.00% 0.17371 263.09)"
-        ]
-      },
-      "nav": {
-        "displayName": "Navigation Mist",
-        "role": "neutral",
-        "tonalRamp": [
-          "oklch(15.00% 0.00573 264.53)",
-          "oklch(26.43% 0.00573 264.53)",
-          "oklch(37.86% 0.00573 264.53)",
-          "oklch(49.29% 0.00573 264.53)",
-          "oklch(60.71% 0.00573 264.53)",
-          "oklch(72.14% 0.00573 264.53)",
-          "oklch(83.57% 0.00573 264.53)",
-          "oklch(95.00% 0.00573 264.53)"
+          "oklch(15.00% 0.15186 255.41)",
+          "oklch(26.43% 0.15186 255.41)",
+          "oklch(37.86% 0.15186 255.41)",
+          "oklch(49.29% 0.15186 255.41)",
+          "oklch(60.71% 0.15186 255.41)",
+          "oklch(72.14% 0.15186 255.41)",
+          "oklch(83.57% 0.15186 255.41)",
+          "oklch(95.00% 0.15186 255.41)"
         ]
       },
       "ink": {
-        "displayName": "Ink Navy",
+        "displayName": "Graphite",
         "role": "neutral",
         "tonalRamp": [
-          "oklch(15.00% 0.05457 261.42)",
-          "oklch(26.43% 0.05457 261.42)",
-          "oklch(37.86% 0.05457 261.42)",
-          "oklch(49.29% 0.05457 261.42)",
-          "oklch(60.71% 0.05457 261.42)",
-          "oklch(72.14% 0.05457 261.42)",
-          "oklch(83.57% 0.05457 261.42)",
-          "oklch(95.00% 0.05457 261.42)"
+          "oklch(15.00% 0.00381 286.10)",
+          "oklch(26.43% 0.00381 286.10)",
+          "oklch(37.86% 0.00381 286.10)",
+          "oklch(49.29% 0.00381 286.10)",
+          "oklch(60.71% 0.00381 286.10)",
+          "oklch(72.14% 0.00381 286.10)",
+          "oklch(83.57% 0.00381 286.10)",
+          "oklch(95.00% 0.00381 286.10)"
         ]
       },
       "muted": {
-        "displayName": "Slate Text",
+        "displayName": "Slate",
         "role": "neutral",
         "tonalRamp": [
-          "oklch(15.00% 0.03988 260.31)",
-          "oklch(26.43% 0.03988 260.31)",
-          "oklch(37.86% 0.03988 260.31)",
-          "oklch(49.29% 0.03988 260.31)",
-          "oklch(60.71% 0.03988 260.31)",
-          "oklch(72.14% 0.03988 260.31)",
-          "oklch(83.57% 0.03988 260.31)",
-          "oklch(95.00% 0.03988 260.31)"
-        ]
-      },
-      "line": {
-        "displayName": "Cool Divider",
-        "role": "neutral",
-        "tonalRamp": [
-          "oklch(15.00% 0.01380 258.35)",
-          "oklch(26.43% 0.01380 258.35)",
-          "oklch(37.86% 0.01380 258.35)",
-          "oklch(49.29% 0.01380 258.35)",
-          "oklch(60.71% 0.01380 258.35)",
-          "oklch(72.14% 0.01380 258.35)",
-          "oklch(83.57% 0.01380 258.35)",
-          "oklch(95.00% 0.01380 258.35)"
+          "oklch(15.00% 0.01888 262.69)",
+          "oklch(26.43% 0.01888 262.69)",
+          "oklch(37.86% 0.01888 262.69)",
+          "oklch(49.29% 0.01888 262.69)",
+          "oklch(60.71% 0.01888 262.69)",
+          "oklch(72.14% 0.01888 262.69)",
+          "oklch(83.57% 0.01888 262.69)",
+          "oklch(95.00% 0.01888 262.69)"
         ]
       },
       "wash": {
-        "displayName": "Blue Wash",
+        "displayName": "Soft Canvas",
         "role": "neutral",
         "tonalRamp": [
-          "oklch(15.00% 0.00861 264.52)",
-          "oklch(26.43% 0.00861 264.52)",
-          "oklch(37.86% 0.00861 264.52)",
-          "oklch(49.29% 0.00861 264.52)",
-          "oklch(60.71% 0.00861 264.52)",
-          "oklch(72.14% 0.00861 264.52)",
-          "oklch(83.57% 0.00861 264.52)",
-          "oklch(95.00% 0.00861 264.52)"
+          "oklch(15.00% 0.00265 286.35)",
+          "oklch(26.43% 0.00265 286.35)",
+          "oklch(37.86% 0.00265 286.35)",
+          "oklch(49.29% 0.00265 286.35)",
+          "oklch(60.71% 0.00265 286.35)",
+          "oklch(72.14% 0.00265 286.35)",
+          "oklch(83.57% 0.00265 286.35)",
+          "oklch(95.00% 0.00265 286.35)"
+        ]
+      },
+      "nav": {
+        "displayName": "Navigation Gray",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.00415 271.37)",
+          "oklch(26.43% 0.00415 271.37)",
+          "oklch(37.86% 0.00415 271.37)",
+          "oklch(49.29% 0.00415 271.37)",
+          "oklch(60.71% 0.00415 271.37)",
+          "oklch(72.14% 0.00415 271.37)",
+          "oklch(83.57% 0.00415 271.37)",
+          "oklch(95.00% 0.00415 271.37)"
         ]
       },
       "surface": {
@@ -116,236 +102,241 @@
           "oklch(95.00% 0.00000 89.88)"
         ]
       },
+      "line": {
+        "displayName": "Fine Divider",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.00710 268.54)",
+          "oklch(26.43% 0.00710 268.54)",
+          "oklch(37.86% 0.00710 268.54)",
+          "oklch(49.29% 0.00710 268.54)",
+          "oklch(60.71% 0.00710 268.54)",
+          "oklch(72.14% 0.00710 268.54)",
+          "oklch(83.57% 0.00710 268.54)",
+          "oklch(95.00% 0.00710 268.54)"
+        ]
+      },
+      "field": {
+        "displayName": "Field Edge",
+        "role": "neutral",
+        "tonalRamp": [
+          "oklch(15.00% 0.01714 262.74)",
+          "oklch(26.43% 0.01714 262.74)",
+          "oklch(37.86% 0.01714 262.74)",
+          "oklch(49.29% 0.01714 262.74)",
+          "oklch(60.71% 0.01714 262.74)",
+          "oklch(72.14% 0.01714 262.74)",
+          "oklch(83.57% 0.01714 262.74)",
+          "oklch(95.00% 0.01714 262.74)"
+        ]
+      },
+      "selection": {
+        "displayName": "Selection Tint",
+        "role": "primary",
+        "tonalRamp": [
+          "oklch(15.00% 0.01767 253.34)",
+          "oklch(26.43% 0.01767 253.34)",
+          "oklch(37.86% 0.01767 253.34)",
+          "oklch(49.29% 0.01767 253.34)",
+          "oklch(60.71% 0.01767 253.34)",
+          "oklch(72.14% 0.01767 253.34)",
+          "oklch(83.57% 0.01767 253.34)",
+          "oklch(95.00% 0.01767 253.34)"
+        ]
+      },
       "danger": {
-        "displayName": "Muted Red",
+        "displayName": "Status Red",
         "role": "semantic",
         "tonalRamp": [
-          "oklch(15.00% 0.14516 23.58)",
-          "oklch(26.43% 0.14516 23.58)",
-          "oklch(37.86% 0.14516 23.58)",
-          "oklch(49.29% 0.14516 23.58)",
-          "oklch(60.71% 0.14516 23.58)",
-          "oklch(72.14% 0.14516 23.58)",
-          "oklch(83.57% 0.14516 23.58)",
-          "oklch(95.00% 0.14516 23.58)"
+          "oklch(15.00% 0.17935 21.80)",
+          "oklch(26.43% 0.17935 21.80)",
+          "oklch(37.86% 0.17935 21.80)",
+          "oklch(49.29% 0.17935 21.80)",
+          "oklch(60.71% 0.17935 21.80)",
+          "oklch(72.14% 0.17935 21.80)",
+          "oklch(83.57% 0.17935 21.80)",
+          "oklch(95.00% 0.17935 21.80)"
+        ]
+      },
+      "danger-bg": {
+        "displayName": "Red Tint",
+        "role": "semantic",
+        "tonalRamp": [
+          "oklch(15.00% 0.01627 12.78)",
+          "oklch(26.43% 0.01627 12.78)",
+          "oklch(37.86% 0.01627 12.78)",
+          "oklch(49.29% 0.01627 12.78)",
+          "oklch(60.71% 0.01627 12.78)",
+          "oklch(72.14% 0.01627 12.78)",
+          "oklch(83.57% 0.01627 12.78)",
+          "oklch(95.00% 0.01627 12.78)"
         ]
       },
       "success": {
-        "displayName": "Forest Green",
+        "displayName": "Status Green",
         "role": "semantic",
         "tonalRamp": [
-          "oklch(15.00% 0.08500 161.26)",
-          "oklch(26.43% 0.08500 161.26)",
-          "oklch(37.86% 0.08500 161.26)",
-          "oklch(49.29% 0.08500 161.26)",
-          "oklch(60.71% 0.08500 161.26)",
-          "oklch(72.14% 0.08500 161.26)",
-          "oklch(83.57% 0.08500 161.26)",
-          "oklch(95.00% 0.08500 161.26)"
+          "oklch(15.00% 0.09407 158.80)",
+          "oklch(26.43% 0.09407 158.80)",
+          "oklch(37.86% 0.09407 158.80)",
+          "oklch(49.29% 0.09407 158.80)",
+          "oklch(60.71% 0.09407 158.80)",
+          "oklch(72.14% 0.09407 158.80)",
+          "oklch(83.57% 0.09407 158.80)",
+          "oklch(95.00% 0.09407 158.80)"
+        ]
+      },
+      "success-bg": {
+        "displayName": "Green Tint",
+        "role": "semantic",
+        "tonalRamp": [
+          "oklch(15.00% 0.01319 159.92)",
+          "oklch(26.43% 0.01319 159.92)",
+          "oklch(37.86% 0.01319 159.92)",
+          "oklch(49.29% 0.01319 159.92)",
+          "oklch(60.71% 0.01319 159.92)",
+          "oklch(72.14% 0.01319 159.92)",
+          "oklch(83.57% 0.01319 159.92)",
+          "oklch(95.00% 0.01319 159.92)"
         ]
       },
       "warning": {
-        "displayName": "Ochre",
+        "displayName": "Status Amber",
         "role": "semantic",
         "tonalRamp": [
-          "oklch(15.00% 0.10180 75.46)",
-          "oklch(26.43% 0.10180 75.46)",
-          "oklch(37.86% 0.10180 75.46)",
-          "oklch(49.29% 0.10180 75.46)",
-          "oklch(60.71% 0.10180 75.46)",
-          "oklch(72.14% 0.10180 75.46)",
-          "oklch(83.57% 0.10180 75.46)",
-          "oklch(95.00% 0.10180 75.46)"
+          "oklch(15.00% 0.10854 69.63)",
+          "oklch(26.43% 0.10854 69.63)",
+          "oklch(37.86% 0.10854 69.63)",
+          "oklch(49.29% 0.10854 69.63)",
+          "oklch(60.71% 0.10854 69.63)",
+          "oklch(72.14% 0.10854 69.63)",
+          "oklch(83.57% 0.10854 69.63)",
+          "oklch(95.00% 0.10854 69.63)"
         ]
       },
-      "focus": {
-        "displayName": "Focus Blue",
-        "role": "primary",
+      "warning-bg": {
+        "displayName": "Amber Tint",
+        "role": "semantic",
         "tonalRamp": [
-          "oklch(15.00% 0.13522 266.81)",
-          "oklch(26.43% 0.13522 266.81)",
-          "oklch(37.86% 0.13522 266.81)",
-          "oklch(49.29% 0.13522 266.81)",
-          "oklch(60.71% 0.13522 266.81)",
-          "oklch(72.14% 0.13522 266.81)",
-          "oklch(83.57% 0.13522 266.81)",
-          "oklch(95.00% 0.13522 266.81)"
+          "oklch(15.00% 0.02600 82.39)",
+          "oklch(26.43% 0.02600 82.39)",
+          "oklch(37.86% 0.02600 82.39)",
+          "oklch(49.29% 0.02600 82.39)",
+          "oklch(60.71% 0.02600 82.39)",
+          "oklch(72.14% 0.02600 82.39)",
+          "oklch(83.57% 0.02600 82.39)",
+          "oklch(95.00% 0.02600 82.39)"
         ]
       },
-      "nav-active": {
-        "displayName": "Selection Blue Background",
-        "role": "primary",
-        "tonalRamp": [
-          "oklch(15.00% 0.02543 268.85)",
-          "oklch(26.43% 0.02543 268.85)",
-          "oklch(37.86% 0.02543 268.85)",
-          "oklch(49.29% 0.02543 268.85)",
-          "oklch(60.71% 0.02543 268.85)",
-          "oklch(72.14% 0.02543 268.85)",
-          "oklch(83.57% 0.02543 268.85)",
-          "oklch(95.00% 0.02543 268.85)"
-        ]
-      },
-      "nav-active-text": {
-        "displayName": "Selection Blue Text",
-        "role": "primary",
-        "tonalRamp": [
-          "oklch(15.00% 0.18605 262.63)",
-          "oklch(26.43% 0.18605 262.63)",
-          "oklch(37.86% 0.18605 262.63)",
-          "oklch(49.29% 0.18605 262.63)",
-          "oklch(60.71% 0.18605 262.63)",
-          "oklch(72.14% 0.18605 262.63)",
-          "oklch(83.57% 0.18605 262.63)",
-          "oklch(95.00% 0.18605 262.63)"
-        ]
-      },
-      "nav-hover": {
-        "displayName": "Navigation Hover",
-        "role": "primary",
-        "tonalRamp": [
-          "oklch(15.00% 0.01444 264.50)",
-          "oklch(26.43% 0.01444 264.50)",
-          "oklch(37.86% 0.01444 264.50)",
-          "oklch(49.29% 0.01444 264.50)",
-          "oklch(60.71% 0.01444 264.50)",
-          "oklch(72.14% 0.01444 264.50)",
-          "oklch(83.57% 0.01444 264.50)",
-          "oklch(95.00% 0.01444 264.50)"
-        ]
-      },
-      "field-border": {
-        "displayName": "Field Border",
+      "range-track": {
+        "displayName": "Segment Track",
         "role": "neutral",
         "tonalRamp": [
-          "oklch(15.00% 0.02168 259.19)",
-          "oklch(26.43% 0.02168 259.19)",
-          "oklch(37.86% 0.02168 259.19)",
-          "oklch(49.29% 0.02168 259.19)",
-          "oklch(60.71% 0.02168 259.19)",
-          "oklch(72.14% 0.02168 259.19)",
-          "oklch(83.57% 0.02168 259.19)",
-          "oklch(95.00% 0.02168 259.19)"
-        ]
-      },
-      "block-bg": {
-        "displayName": "Blocked Background",
-        "role": "semantic",
-        "tonalRamp": [
-          "oklch(15.00% 0.01741 13.10)",
-          "oklch(26.43% 0.01741 13.10)",
-          "oklch(37.86% 0.01741 13.10)",
-          "oklch(49.29% 0.01741 13.10)",
-          "oklch(60.71% 0.01741 13.10)",
-          "oklch(72.14% 0.01741 13.10)",
-          "oklch(83.57% 0.01741 13.10)",
-          "oklch(95.00% 0.01741 13.10)"
-        ]
-      },
-      "review-bg": {
-        "displayName": "Review Background",
-        "role": "semantic",
-        "tonalRamp": [
-          "oklch(15.00% 0.03480 87.07)",
-          "oklch(26.43% 0.03480 87.07)",
-          "oklch(37.86% 0.03480 87.07)",
-          "oklch(49.29% 0.03480 87.07)",
-          "oklch(60.71% 0.03480 87.07)",
-          "oklch(72.14% 0.03480 87.07)",
-          "oklch(83.57% 0.03480 87.07)",
-          "oklch(95.00% 0.03480 87.07)"
-        ]
-      },
-      "allow-bg": {
-        "displayName": "Allowed Background",
-        "role": "semantic",
-        "tonalRamp": [
-          "oklch(15.00% 0.01405 155.59)",
-          "oklch(26.43% 0.01405 155.59)",
-          "oklch(37.86% 0.01405 155.59)",
-          "oklch(49.29% 0.01405 155.59)",
-          "oklch(60.71% 0.01405 155.59)",
-          "oklch(72.14% 0.01405 155.59)",
-          "oklch(83.57% 0.01405 155.59)",
-          "oklch(95.00% 0.01405 155.59)"
+          "oklch(15.00% 0.00579 264.53)",
+          "oklch(26.43% 0.00579 264.53)",
+          "oklch(37.86% 0.00579 264.53)",
+          "oklch(49.29% 0.00579 264.53)",
+          "oklch(60.71% 0.00579 264.53)",
+          "oklch(72.14% 0.00579 264.53)",
+          "oklch(83.57% 0.00579 264.53)",
+          "oklch(95.00% 0.00579 264.53)"
         ]
       },
       "historical-bar": {
         "displayName": "Historical Blue",
         "role": "primary",
         "tonalRamp": [
-          "oklch(15.00% 0.04978 266.51)",
-          "oklch(26.43% 0.04978 266.51)",
-          "oklch(37.86% 0.04978 266.51)",
-          "oklch(49.29% 0.04978 266.51)",
-          "oklch(60.71% 0.04978 266.51)",
-          "oklch(72.14% 0.04978 266.51)",
-          "oklch(83.57% 0.04978 266.51)",
-          "oklch(95.00% 0.04978 266.51)"
+          "oklch(15.00% 0.07286 256.65)",
+          "oklch(26.43% 0.07286 256.65)",
+          "oklch(37.86% 0.07286 256.65)",
+          "oklch(49.29% 0.07286 256.65)",
+          "oklch(60.71% 0.07286 256.65)",
+          "oklch(72.14% 0.07286 256.65)",
+          "oklch(83.57% 0.07286 256.65)",
+          "oklch(95.00% 0.07286 256.65)"
         ]
       }
     },
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Login introduction; 32px at the mobile breakpoint."
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
       },
       "headline": {
         "displayName": "Headline",
-        "purpose": "Page headings; 26px at the mobile breakpoint."
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Section headings and panel titles."
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "General interface content, with paragraphs limited to 72ch."
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
       },
-      "metric": {
-        "displayName": "Metric",
-        "purpose": "Workspace counts with tabular numerals; 27px on mobile."
+      "label": {
+        "displayName": "Label",
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
       },
       "table-label": {
         "displayName": "Table Label",
-        "purpose": "Sentence-case column headings; normal tracking."
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
       },
-      "forecast": {
-        "displayName": "Forecast",
-        "purpose": "Approximate next-hour alert count, with a smaller unit label."
+      "metric": {
+        "displayName": "Metric",
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
       },
       "monitor-metric": {
         "displayName": "Monitor Metric",
-        "purpose": "Four-value monitoring summary; 25px at compact desktop and 24px on mobile."
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
       },
-      "table-body": {
-        "displayName": "Table Body",
-        "purpose": "Shared transaction and investigation table rows."
+      "phone-monitor-metric": {
+        "displayName": "Phone Monitor Metric",
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
       },
       "risk-score": {
         "displayName": "Risk Score",
-        "purpose": "Current explanatory risk; 40px on desktop and 36px on mobile."
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
+      },
+      "forecast": {
+        "displayName": "Forecast",
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
+      },
+      "result-metric": {
+        "displayName": "Result Metric",
+        "purpose": "See Typography in DESIGN.md for the implemented role and responsive behavior."
       }
     },
+    "shadows": [
+      {
+        "name": "selected-time-segment",
+        "value": "0 1px 3px #1d1d1f14",
+        "purpose": "Only the selected time segment; panels remain flat."
+      }
+    ],
     "motion": [
       {
-        "name": "button-background",
-        "value": "background .18s",
-        "purpose": "Button background changes; transitions are disabled for reduced-motion preferences."
+        "name": "state-transition",
+        "value": "background .18s cubic-bezier(.2,.8,.2,1), color .18s cubic-bezier(.2,.8,.2,1)",
+        "purpose": "Buttons and navigation; removed with reduced motion."
       }
     ],
     "breakpoints": [
       {
         "name": "compact-desktop",
-        "value": "1100px"
+        "value": "1250px"
       },
       {
-        "name": "mobile",
-        "value": "760px"
+        "name": "compact-navigation",
+        "value": "1023px"
       },
       {
-        "name": "narrow-mobile",
-        "value": "360px"
+        "name": "stacked-monitoring",
+        "value": "850px"
+      },
+      {
+        "name": "phone-records",
+        "value": "620px"
       }
     ]
   },
@@ -354,126 +345,123 @@
       "name": "Primary action",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "The main operational action inside a customer restriction form.",
-      "html": "<button class=\"ds-button-primary\">Blochează contul</button>",
-      "css": ".ds-button-primary{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;border:1px solid transparent;border-radius:7px;padding:10px 17px;font-weight:600;cursor:pointer;text-align:center;transition:background .18s;background:var(--blue,#2259da);color:#fff}.ds-button-primary:hover{background:var(--blue-hover,#1745ad)}.ds-button-primary:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-button-primary:disabled{opacity:.65;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-button-primary{transition:none}}.ds-button-primary:active{background:var(--blue-hover,#1745ad)}"
+      "description": "The main operational action.",
+      "html": "<div class=\"ds-sample\"><button class=\"ds-button\">Pornește scenariul</button></div>",
+      "css": ".ds-sample{font:14px/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--ink,#1d1d1f)}.ds-sample :focus-visible{outline:3px solid var(--blue,#0066cc);outline-offset:3px}.ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1px solid transparent;border-radius:var(--control-radius,10px);padding:10px 17px;font:550 14px/1.4 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;cursor:pointer;transition:background .18s var(--ease,cubic-bezier(.2,.8,.2,1)),color .18s var(--ease,cubic-bezier(.2,.8,.2,1))}.ds-button:disabled{opacity:.55;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-button{transition:none}}.ds-button{background:var(--blue,#0066cc);color:var(--surface,#ffffff)}.ds-button:hover,.ds-button:active{background:var(--blue-hover,#0054a8)}"
     },
     {
       "name": "Secondary action",
       "kind": "button",
       "refersTo": "button-secondary",
-      "description": "A supporting action beside the primary task.",
-      "html": "<button class=\"ds-button-secondary\">Exportă rezultate</button>",
-      "css": ".ds-button-secondary{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;border:1px solid transparent;border-radius:7px;padding:10px 17px;font-weight:600;cursor:pointer;text-align:center;transition:background .18s;background:#fff;color:var(--ink,#172641);border-color:var(--line,#e2e8f1)}.ds-button-secondary:hover{background:var(--wash,#f5f8fe)}.ds-button-secondary:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-button-secondary:disabled{opacity:.65;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-button-secondary{transition:none}}.ds-button-secondary:active{background:#e6edff}"
+      "description": "A supporting export or navigation action.",
+      "html": "<div class=\"ds-sample\"><button class=\"ds-button\">Exportă rezultate</button></div>",
+      "css": ".ds-sample{font:14px/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--ink,#1d1d1f)}.ds-sample :focus-visible{outline:3px solid var(--blue,#0066cc);outline-offset:3px}.ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1px solid transparent;border-radius:var(--control-radius,10px);padding:10px 17px;font:550 14px/1.4 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;cursor:pointer;transition:background .18s var(--ease,cubic-bezier(.2,.8,.2,1)),color .18s var(--ease,cubic-bezier(.2,.8,.2,1))}.ds-button:disabled{opacity:.55;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-button{transition:none}}.ds-button{background:var(--surface,#ffffff);color:var(--ink,#1d1d1f);border-color:var(--line,#e1e3e8)}.ds-button:hover{background:var(--nav,#f0f1f4)}.ds-button:active{background:var(--selection,#e8f1fc)}"
     },
     {
-      "name": "Labeled search field",
+      "name": "Quiet list update",
+      "kind": "button",
+      "refersTo": "button-list-update",
+      "description": "An explicit update that preserves the current reading position until chosen.",
+      "html": "<div class=\"ds-sample\"><div class=\"ds-update\"><span>Sunt disponibile date noi.</span><button class=\"ds-button\">Actualizează lista</button></div></div>",
+      "css": ".ds-sample{font:14px/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--ink,#1d1d1f)}.ds-sample :focus-visible{outline:3px solid var(--blue,#0066cc);outline-offset:3px}.ds-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border:1px solid transparent;border-radius:var(--control-radius,10px);padding:10px 17px;font:550 14px/1.4 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;cursor:pointer;transition:background .18s var(--ease,cubic-bezier(.2,.8,.2,1)),color .18s var(--ease,cubic-bezier(.2,.8,.2,1))}.ds-button:disabled{opacity:.55;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-button{transition:none}}.ds-update{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:10px 16px;border:1px solid var(--line,#e1e3e8);border-radius:var(--control-radius,10px);background:var(--surface,#ffffff)}.ds-update span{font-size:13px;color:var(--muted,#626873)}.ds-update .ds-button{background:transparent;color:var(--blue,#0066cc);padding:9px 10px;font-size:13px}.ds-update .ds-button:hover,.ds-update .ds-button:active{background:var(--wash,#f5f5f7)}"
+    },
+    {
+      "name": "Labeled field",
       "kind": "input",
       "refersTo": "input",
-      "description": "A compact search input for fictional customer names or source identifiers.",
-      "html": "<label class=\"ds-label\">Caută un client<input class=\"ds-input\" name=\"q\" placeholder=\"Nume sau identificator sursă\"></label>",
-      "css": ".ds-label{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:flex;flex-direction:column;gap:7px;font-size:12px;font-weight:550;color:#46546d}.ds-input{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;border:1px solid #ccd5e3;border-radius:7px;padding:10px 12px;min-width:0;min-height:42px;background:#fff;color:var(--ink,#172641);font-size:13px;caret-color:var(--blue,#2259da)}.ds-input::placeholder{color:var(--muted,#627087)}.ds-input:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-input:disabled{background:var(--nav,#f7f9fd);color:var(--muted,#627087);cursor:not-allowed}.ds-input[aria-invalid=\"true\"]{border-color:var(--danger,#a53738)}"
+      "description": "Search and form fields with visible labels and invalid states.",
+      "html": "<div class=\"ds-sample\"><label class=\"ds-label\">Caută un client<input class=\"ds-input\" placeholder=\"Nume sau identificator\"></label></div>",
+      "css": ".ds-sample{font:14px/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--ink,#1d1d1f)}.ds-sample :focus-visible{outline:3px solid var(--blue,#0066cc);outline-offset:3px}.ds-label{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:500}.ds-input{font:14px/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;border:1px solid var(--field,#a9afba);border-radius:var(--control-radius,10px);padding:10px 12px;min-width:0;min-height:44px;background:var(--surface,#ffffff);color:var(--ink,#1d1d1f);caret-color:var(--blue,#0066cc)}.ds-input::placeholder{color:var(--muted,#626873);opacity:1}.ds-input:disabled{background:var(--nav,#f0f1f4);color:var(--muted,#626873);cursor:not-allowed}.ds-input[aria-invalid=\"true\"]{border-color:var(--danger,#b42332)}@media(max-width:620px){.ds-input{font-size:16px}}"
     },
     {
       "name": "Primary navigation",
       "kind": "nav",
       "refersTo": "navigation-active",
-      "description": "Current destination and a neighboring destination.",
-      "html": "<nav class=\"ds-nav\" aria-label=\"Navigare principală\"><a href=\"#monitoring\" aria-current=\"page\"><svg class=\"ds-nav-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 17l5-6 4 3 8-10\"/><path d=\"M3 4v16h18\"/></svg><span>Monitorizare</span></a><a href=\"#customers\"><svg class=\"ds-nav-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"9\" cy=\"8\" r=\"3\"/><path d=\"M3 21v-3a6 6 0 0 1 12 0v3M16 5a3 3 0 0 1 0 6M21 21v-3a6 6 0 0 0-3-5\"/></svg><span>Clienți și conturi</span></a></nav>",
-      "css": ".ds-nav{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:grid;gap:6px;background:var(--nav,#f7f9fd)}.ds-nav a{color:#53617b;padding:11px 14px;border-radius:7px;font-weight:550;font-size:13px;text-decoration:none}.ds-nav a:hover{background:#edf2fc}.ds-nav a[aria-current]{background:#e6edff;color:#194ebf}.ds-nav a:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}@media(max-width:760px){.ds-nav{display:flex;overflow:auto;gap:3px;padding-bottom:5px}.ds-nav a{padding:9px 12px;white-space:nowrap;font-size:12px}}.ds-nav a{display:flex;align-items:center;gap:11px}.ds-nav-icon{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}@media(max-width:760px){.ds-nav a{gap:7px}.ds-nav-icon{width:16px;height:16px}}"
+      "description": "Solid blue identifies the current destination.",
+      "html": "<div class=\"ds-sample\"><nav class=\"ds-nav\" aria-label=\"Navigare principală\"><a href=\"#monitoring\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 17l5-6 4 3 8-10M3 4v16h18\"/></svg>Monitorizare</a><a href=\"#transactions\">Tranzacții</a></nav></div>",
+      "css": ".ds-sample{font:14px/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--ink,#1d1d1f)}.ds-sample :focus-visible{outline:3px solid var(--blue,#0066cc);outline-offset:3px}.ds-nav{display:grid;gap:5px;background:var(--nav,#f0f1f4)}.ds-nav a{display:flex;align-items:center;gap:11px;min-height:44px;padding:10px 12px;border-radius:9px;color:#515764;font-size:14px;font-weight:500;text-decoration:none;transition:background .18s var(--ease,cubic-bezier(.2,.8,.2,1)),color .18s var(--ease,cubic-bezier(.2,.8,.2,1))}.ds-nav a:hover{background:var(--line,#e1e3e8)}.ds-nav a[aria-current]{color:var(--surface,#ffffff);background:var(--blue,#0066cc)}.ds-nav svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}@media(prefers-reduced-motion:reduce){.ds-nav a{transition:none}}"
     },
     {
       "name": "Decision badges",
       "kind": "chip",
       "refersTo": "badge-block",
-      "description": "Explicit noninteractive Romanian decision states.",
-      "html": "<span class=\"ds-badge ds-block\">Blocată</span> <span class=\"ds-badge ds-review\">De verificat</span> <span class=\"ds-badge ds-allow\">Permisă</span>",
-      "css": ".ds-badge{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:inline-block;padding:4px 9px;border-radius:5px;background:#f0f3f8;color:#53617b;font-size:11px;font-weight:550;white-space:nowrap}.ds-block{background:#fceced;color:var(--danger,#a53738)}.ds-review{background:#fff4db;color:var(--warning,#895e12)}.ds-allow{background:#ebf5ee;color:var(--success,#226749)}.ds-badge{font-size:12px}"
+      "description": "Explicit noninteractive Romanian states.",
+      "html": "<div class=\"ds-sample\"><span class=\"ds-badge ds-block\">Blocată</span> <span class=\"ds-badge ds-review\">De verificat</span> <span class=\"ds-badge ds-allow\">Permisă</span></div>",
+      "css": ".ds-sample{font:14px/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--ink,#1d1d1f)}.ds-sample :focus-visible{outline:3px solid var(--blue,#0066cc);outline-offset:3px}.ds-badge{display:inline-flex;align-items:center;padding:4px 9px;border-radius:6px;font-size:12px;font-weight:500;white-space:nowrap}.ds-block{background:var(--danger-bg,#fff0f1);color:var(--danger,#b42332)}.ds-review{background:var(--warning-bg,#fff5e3);color:var(--warning,#8a5600)}.ds-allow{background:var(--success-bg,#edf7f1);color:var(--success,#25704c)}"
     },
     {
       "name": "Investigation panel",
       "kind": "card",
       "refersTo": "panel",
-      "description": "A flat container whose heading introduces operational content.",
-      "html": "<section class=\"ds-panel\"><div class=\"ds-section-heading\"><div><h2>Alerte recente</h2><p>Deschide clientul pentru istoric și estimarea alertelor.</p></div><a href=\"#cases\">Toate cazurile active</a></div></section>",
-      "css": ".ds-panel{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;border:1px solid var(--line,#e2e8f1);border-radius:var(--radius,12px);background:#fff;margin-bottom:24px;overflow:hidden;color:var(--ink,#172641)}.ds-section-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:23px 24px 18px}.ds-section-heading h2{font-size:17px;line-height:1.4;letter-spacing:-.015em;font-weight:650;margin:0 0 4px}.ds-section-heading p{color:var(--muted,#627087);font-size:12px;margin:0;max-width:72ch}.ds-section-heading>a{font-size:12px;white-space:nowrap;color:var(--blue,#2259da);text-decoration:none;text-underline-offset:3px}.ds-section-heading>a:hover{text-decoration:underline}.ds-section-heading>a:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}@media(max-width:760px){.ds-section-heading{padding:20px 18px;flex-wrap:wrap}}"
+      "description": "A flat white group with a restrained heading.",
+      "html": "<div class=\"ds-sample\"><section class=\"ds-panel\"><div class=\"ds-heading\"><h2>Alerte recente</h2><p>Deschide clientul pentru istoric.</p></div></section></div>",
+      "css": ".ds-sample{font:14px/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--ink,#1d1d1f)}.ds-sample :focus-visible{outline:3px solid var(--blue,#0066cc);outline-offset:3px}.ds-panel{border:1px solid var(--line,#e1e3e8);border-radius:var(--radius,16px);background:var(--surface,#ffffff);overflow:hidden}.ds-heading{padding:24px 24px 20px}.ds-heading h2{font-size:18px;line-height:1.4;letter-spacing:-.02em;font-weight:600;margin:0 0 4px}.ds-heading p{font-size:13px;margin:0;color:var(--muted,#626873)}@media(max-width:620px){.ds-heading{padding:22px 20px 18px}.ds-heading h2{font-size:17px}}"
     },
     {
       "name": "Secondary detail disclosure",
       "kind": "custom",
       "refersTo": "disclosure-summary",
-      "description": "A native closed disclosure for secondary operational detail.",
-      "html": "<details class=\"ds-disclosure\"><summary>Istoricul cererii și datele sursă</summary><div class=\"ds-disclosure-body\"><p>Risc inițial și metadatele cererii originale.</p></div></details>",
-      "css": ".ds-disclosure{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;border-bottom:1px solid var(--line,#e2e8f1);margin-bottom:4px;color:var(--ink,#172641)}.ds-disclosure summary{color:var(--ink,#172641);cursor:pointer;padding:18px 0;font-size:13px;font-weight:550}.ds-disclosure summary::marker{color:var(--blue,#2259da)}.ds-disclosure summary:hover{color:var(--blue,#2259da)}.ds-disclosure summary:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-disclosure-body{padding:7px 0 24px}.ds-disclosure-body p{font-size:13px;margin:0 0 1em;color:var(--muted,#627087);max-width:72ch}"
+      "description": "Native expandable secondary evidence.",
+      "html": "<div class=\"ds-sample\"><details class=\"ds-disclosure\"><summary>Istoricul cererii și datele sursă</summary><div class=\"ds-body\">Risc inițial și metadatele cererii originale.</div></details></div>",
+      "css": ".ds-sample{font:14px/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--ink,#1d1d1f)}.ds-sample :focus-visible{outline:3px solid var(--blue,#0066cc);outline-offset:3px}.ds-disclosure{border-bottom:1px solid var(--line,#e1e3e8);margin-bottom:4px}.ds-disclosure summary{color:var(--ink,#1d1d1f);cursor:pointer;padding:18px 0;font-size:14px;font-weight:500;min-height:44px}.ds-disclosure summary::marker{color:var(--muted,#626873)}.ds-disclosure summary:hover{color:var(--blue,#0066cc)}.ds-body{padding:8px 0 24px;color:var(--muted,#626873)}"
     },
     {
-      "name": "Customer alert estimate",
+      "name": "Time selector",
       "kind": "custom",
-      "refersTo": "forecast-panel",
-      "description": "Six observed hourly alert counts and one next-hour estimate on the customer profile.",
-      "html": "<section class=\"ds-forecast-panel\"><div><h2>Estimarea alertelor · următoarea oră</h2><p class=\"ds-forecast-number\">≈ 2 <span>alerte</span></p><p class=\"ds-caption\">Estimare orientativă, fără probabilitate de fraudă.</p></div><div class=\"ds-forecast-chart\" role=\"img\" aria-label=\"Alerte pe ultimele șase ore și estimarea pentru ora următoare\"><div><span>1</span><i style=\"height:30%\"></i><small>−6h</small></div><div><span>2</span><i style=\"height:60%\"></i><small>−5h</small></div><div><span>1</span><i style=\"height:30%\"></i><small>−4h</small></div><div><span>3</span><i style=\"height:85%\"></i><small>−3h</small></div><div><span>2</span><i style=\"height:60%\"></i><small>−2h</small></div><div><span>1</span><i style=\"height:30%\"></i><small>−1h</small></div><div class=\"ds-forecast-next\"><span>2</span><i style=\"height:60%\"></i><small>+1h</small></div></div></section>",
-      "css": ".ds-forecast-panel{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;border:1px solid var(--line,#e2e8f1);border-radius:var(--radius,12px);background:#fff;padding:25px;color:var(--ink,#172641);overflow:hidden}.ds-forecast-panel h2{font-size:17px;line-height:1.4;letter-spacing:-.015em;font-weight:650;margin:0 0 10px}.ds-forecast-number{margin:18px 0;font-size:32px;line-height:1.3;color:var(--ink,#172641);font-variant-numeric:tabular-nums}.ds-forecast-number span{font-size:14px;color:var(--muted,#627087)}.ds-caption{font-size:12px;color:var(--muted,#627087);line-height:1.65;margin:18px 0 0;max-width:72ch}.ds-forecast-chart{display:flex;height:140px;gap:14px;align-items:end;padding-bottom:22px}.ds-forecast-chart>div{flex:1;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:end;position:relative;gap:5px;font-size:11px;color:var(--muted,#627087)}.ds-forecast-chart i{background:#c9d8fa;width:65%;min-height:3px;border-radius:3px 3px 0 0;max-height:85%}.ds-forecast-chart small{position:absolute;bottom:-23px;white-space:nowrap;display:block;font-size:11px;color:var(--muted,#627087);font-weight:400}.ds-forecast-chart .ds-forecast-next i{background:var(--blue,#2259da)}@media(max-width:760px){.ds-forecast-panel{grid-template-columns:1fr;gap:25px;padding:20px}.ds-forecast-chart{margin-top:5px}}"
+      "refersTo": "time-range",
+      "description": "Direct simulation intervals outside live replacement regions.",
+      "html": "<div class=\"ds-sample\"><nav class=\"ds-range\" aria-label=\"Intervalul din simulare\"><a href=\"?hours=1\">1 oră</a><a href=\"?hours=6\" aria-current=\"true\">6 ore</a><a href=\"?hours=24\">24 ore</a></nav></div>",
+      "css": ".ds-sample{font:14px/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--ink,#1d1d1f)}.ds-sample :focus-visible{outline:3px solid var(--blue,#0066cc);outline-offset:3px}.ds-range{display:inline-flex;gap:2px;padding:4px;background:#e9ebef;border-radius:var(--control-radius,10px)}.ds-range a{display:grid;place-items:center;min-height:36px;padding:6px 18px;border-radius:7px;color:var(--muted,#626873);font-size:13px;font-weight:550;font-variant-numeric:tabular-nums;text-decoration:none}.ds-range a:hover{color:var(--ink,#1d1d1f)}.ds-range a[aria-current]{background:var(--surface,#ffffff);color:var(--ink,#1d1d1f);box-shadow:0 1px 3px #1d1d1f14}@media(max-width:620px){.ds-range a{padding:6px 15px}}"
     },
     {
-      "name": "Monitoring controls and status",
+      "name": "Monitoring value",
       "kind": "custom",
-      "description": "Direct interval links, stateful playback styling and measured processing status outside live panel replacement.",
-      "html": "<div class=\"ds-monitor-page\"><div class=\"ds-monitor-toolbar\"><nav class=\"ds-time-range\" aria-label=\"Intervalul din simulare\"><a href=\"?hours=1\" aria-label=\"Ultima oră\">1 oră</a><a href=\"?hours=6\" aria-current=\"true\" aria-label=\"Ultimele 6 ore\">6 ore</a><a href=\"?hours=24\" aria-label=\"Ultimele 24 de ore\">24 ore</a></nav><button class=\"ds-playback\">Pornește scenariul</button></div><p class=\"ds-connection-status\">Actualizare automată la 3 secunde · Date sintetice</p><div class=\"ds-monitor-status\"><span><span class=\"ds-status-dot\"></span>Procesare activă</span><time>Ora simulării: 01.10.2026, 14:30:00</time><span>Scenariu în pauză</span></div></div>",
-      "css": ".ds-monitor-page{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;color:var(--ink,#172641)}.ds-monitor-toolbar{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}.ds-time-range{display:inline-flex;align-items:center;gap:4px;padding:4px;background:#fff;border:1px solid var(--line,#e2e8f1);border-radius:9px}.ds-time-range a{display:grid;place-items:center;min-height:34px;padding:5px 15px;border-radius:5px;color:var(--muted,#627087);font-size:12px;font-weight:550;font-variant-numeric:tabular-nums;text-decoration:none}.ds-time-range a:hover{background:var(--wash,#f5f8fe);color:var(--blue,#2259da)}.ds-time-range a[aria-current]{background:#e6edff;color:#194ebf}.ds-time-range a:focus-visible,.ds-playback:focus-visible{outline:3px solid #83a6ff;outline-offset:3px;}.ds-playback{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;border:1px solid transparent;border-radius:7px;padding:10px 17px;background:var(--blue,#2259da);color:#fff;font-weight:600;cursor:pointer;text-align:center;transition:background .18s}.ds-playback:hover,.ds-playback:active{background:var(--blue-hover,#1745ad)}.ds-playback.ds-secondary{background:#fff;color:var(--ink,#172641);border-color:var(--line,#e2e8f1)}.ds-playback.ds-secondary:hover{background:var(--wash,#f5f8fe)}.ds-playback.ds-secondary:active{background:#e6edff}.ds-playback:disabled{opacity:.65;cursor:wait}.ds-connection-status{font-size:11px;margin:12px 0 20px;color:var(--muted,#627087);max-width:72ch}.ds-monitor-status{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--muted,#627087);font-size:12px;margin-bottom:24px}.ds-status-dot{display:inline-block;width:7px;height:7px;background:var(--blue,#2259da);border-radius:50%;margin-right:6px;flex-shrink:0}.ds-status-dot.ds-offline{background:var(--warning,#895e12)}@media(max-width:760px){.ds-monitor-toolbar{flex-wrap:wrap;gap:10px;align-items:center}.ds-time-range a{padding:5px 12px;min-height:34px}.ds-playback{padding:8px 10px;font-size:12px;min-height:44px;white-space:nowrap}.ds-connection-status{margin:10px 0 14px}.ds-monitor-status{margin-bottom:18px;gap:6px;font-size:11px}}@media(prefers-reduced-motion:reduce){.ds-playback{transition:none}}"
-    },
-    {
-      "name": "Observed activity chart",
-      "kind": "custom",
-      "description": "Observed solid blue transfers and dashed ochre alerts with endpoint counts, scale and simulation time labels.",
-      "html": "<div class=\"ds-activity\"><div class=\"ds-chart-legend\"><span>Transferuri</span><span>Alerte</span></div><div class=\"ds-time-chart\"><span class=\"ds-axis-top\">6</span><span class=\"ds-axis-zero\">0</span><svg viewBox=\"0 0 730 175\" preserveAspectRatio=\"none\" role=\"img\" aria-label=\"Transferuri și alerte în ultimele șase ore; maximum 6 cereri pe interval\"><path class=\"ds-chart-grid\" d=\"M25 27H685M25 89.5H685M25 152H685\"/><polyline class=\"ds-volume-line\" points=\"25,152 85,110 145,131 205,89 265,110 325,68 385,89 445,48 505,27 565,68 625,48 685,89\"/><polyline class=\"ds-alerts-line\" points=\"25,152 85,152 145,152 205,131 265,152 325,131 385,152 445,110 505,131 565,152 625,131 685,152\"/><text class=\"ds-endpoint-label\" x=\"700\" y=\"89\" dy=\"4\">3</text><text class=\"ds-endpoint-label ds-alert-endpoint\" x=\"700\" y=\"152\" dy=\"4\">0</text></svg><div class=\"ds-chart-times\"><span>09:00</span><span>11:30</span><span>14:30</span></div></div></div>",
-      "css": ".ds-activity{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;color:var(--ink,#172641)}.ds-chart-legend{display:flex;gap:15px;font-size:11px;color:var(--muted,#627087)}.ds-chart-legend span::before{content:\"\";display:inline-block;width:14px;height:2px;background:var(--blue,#2259da);vertical-align:middle;margin-right:5px}.ds-chart-legend span:last-child::before{background:var(--warning,#895e12)}.ds-time-chart{position:relative;padding:0 20px 10px 32px}.ds-time-chart svg{display:block;width:100%;height:180px;overflow:visible}.ds-chart-grid{fill:none;stroke:var(--line,#e2e8f1);stroke-width:1}.ds-volume-line,.ds-alerts-line{fill:none;stroke:var(--blue,#2259da);stroke-width:2.5;stroke-linejoin:round;vector-effect:non-scaling-stroke}.ds-alerts-line{stroke:var(--warning,#895e12);stroke-width:2;stroke-dasharray:5 4}.ds-axis-top,.ds-axis-zero{position:absolute;left:20px;color:var(--muted,#627087);font-size:10px}.ds-axis-top{top:22px}.ds-axis-zero{bottom:40px}.ds-chart-times{display:flex;justify-content:space-between;padding:0 4%;font-size:10px;color:var(--muted,#627087);font-variant-numeric:tabular-nums}@media(max-width:1100px){.ds-chart-legend{gap:9px}}@media(max-width:760px){.ds-time-chart svg{height:160px}}.ds-chart-legend span:last-child::before{height:0;background:none;border-top:2px dashed var(--warning,#895e12)}.ds-endpoint-label{fill:var(--blue,#2259da);font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}.ds-alert-endpoint{fill:var(--warning,#895e12)}"
-    },
-    {
-      "name": "Explainable risk",
-      "kind": "card",
-      "refersTo": "risk-panel",
-      "description": "Current score, explicit status, concrete risk and favorable facts, plus full stored contributions. Example copied from a current stored explanation.",
-      "html": "<section class=\"ds-risk-panel\"><h2>De ce acest risc?</h2><div class=\"ds-risk-heading\"><div><span class=\"ds-muted\">Scor actual</span><p class=\"ds-risk-score\">68<span> / 100</span></p></div><span class=\"ds-risk-badge ds-block\">Risc ridicat</span></div><meter class=\"ds-risk-meter ds-block\" min=\"0\" max=\"100\" value=\"68\" aria-label=\"Scor de risc 68 din 100\">68/100</meter><p class=\"ds-risk-summary\">Frecvența transferurilor: 4 cereri anterioare în 60 secunde; 4 în 5 minute.</p><div class=\"ds-risk-evidence\"><div><h3>Indicatori de risc</h3><ul><li><div><strong>Frecvența transferurilor</strong><span class=\"ds-factor-points\">+8,00</span></div><p>4 cereri anterioare în 60 secunde; 4 în 5 minute.</p></li><li><div><strong>Autentificări eșuate</strong><span class=\"ds-factor-points\">+6,67</span></div><p>5 încercări eșuate asociate cererii.</p></li><li><div><strong>Dispozitiv</strong><span class=\"ds-factor-points\">+6,00</span></div><p>Prima cerere de pe acest dispozitiv.</p></li></ul></div><div><h3>Elemente favorabile</h3><ul><li><strong>Suma față de istoricul propriu</strong><p>2.702,42 MDL; 1,35× media anterioară de 1.995,88 MDL.</p></li><li><strong>Încasări recente</strong><p>0 cereri primite în ultimele 5 minute, înaintea acestei plăți.</p></li></ul></div></div><details class=\"ds-risk-calculation\"><summary>Toți factorii și contribuțiile</summary><div class=\"ds-disclosure-body\"><div class=\"ds-factor-list\"><div><div><strong>Tiparul tranzacției</strong><p>Mai multe semnale statistice indică o abatere față de tranzacțiile obișnuite.</p></div><span>41,69 <small>din 55 puncte</small></span></div><div><div><strong>Suma față de istoricul propriu</strong><p>2.702,42 MDL; 1,35× media anterioară de 1.995,88 MDL.</p></div><span>1,30 <small>din 12 puncte</small></span></div><div><div><strong>Frecvența transferurilor</strong><p>4 cereri anterioare în 60 secunde; 4 în 5 minute.</p></div><span>8,00 <small>din 8 puncte</small></span></div><div><div><strong>Dispozitiv</strong><p>Prima cerere de pe acest dispozitiv.</p></div><span>6,00 <small>din 6 puncte</small></span></div><div><div><strong>Autentificări eșuate</strong><p>5 încercări eșuate asociate cererii.</p></div><span>6,67 <small>din 8 puncte</small></span></div><div><div><strong>Beneficiar</strong><p>Prima plată către acest beneficiar.</p></div><span>4,00 <small>din 4 puncte</small></span></div><div><div><strong>Încasări recente</strong><p>0 cereri primite în ultimele 5 minute, înaintea acestei plăți.</p></div><span>0,00 <small>din 4 puncte</small></span></div><div><div><strong>Istoric disponibil</strong><p>28 cereri anterioare ale clientului; profil de comparație disponibil.</p></div><span>0,00 <small>din 3 puncte</small></span></div></div><p class=\"ds-caption\">67,66 puncte, rotunjite la 68/100. Verificare de la 45; risc ridicat de la 60; blocarea unei cereri noi de la 70.</p></div></details><p class=\"ds-caption\">Scor explicativ pentru datele demonstrative, fără probabilitate calibrată de fraudă.</p></section>",
-      "css": ".ds-risk-panel{font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;line-height:1.55;background:#fff;border:1px solid var(--line,#e2e8f1);border-radius:var(--radius,12px);padding:25px;color:var(--ink,#172641);overflow:hidden}.ds-risk-panel h2{font-size:17px;line-height:1.4;letter-spacing:-.015em;font-weight:650;margin:0 0 10px}.ds-muted{color:var(--muted,#627087)}.ds-risk-heading{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-top:22px}.ds-risk-heading>div>span{font-size:12px}.ds-risk-score{margin:4px 0 12px;color:var(--ink,#172641);font-size:40px;line-height:1.15;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.025em}.ds-risk-score>span{font-size:15px;font-weight:400;color:var(--muted,#627087);letter-spacing:normal}.ds-risk-badge{display:inline-block;padding:4px 9px;border-radius:5px;font-size:12px;font-weight:550;white-space:nowrap}.ds-risk-badge.ds-block{background:#fceced;color:var(--danger,#a53738)}.ds-risk-badge.ds-review{background:#fff4db;color:var(--warning,#895e12)}.ds-risk-badge.ds-allow{background:#ebf5ee;color:var(--success,#226749)}.ds-risk-meter{width:100%;height:9px;display:block;margin-bottom:20px;border:0;background:var(--line,#e2e8f1);border-radius:4px}.ds-risk-meter::-webkit-meter-bar{background:var(--line,#e2e8f1);border:0}.ds-risk-meter.ds-allow::-webkit-meter-optimum-value{background:var(--success,#226749)}.ds-risk-meter.ds-review::-webkit-meter-optimum-value{background:var(--warning,#895e12)}.ds-risk-meter.ds-block::-webkit-meter-optimum-value{background:var(--danger,#a53738)}.ds-risk-meter.ds-allow::-moz-meter-bar{background:var(--success,#226749)}.ds-risk-meter.ds-review::-moz-meter-bar{background:var(--warning,#895e12)}.ds-risk-meter.ds-block::-moz-meter-bar{background:var(--danger,#a53738)}.ds-risk-summary{font-size:13px;color:var(--ink,#172641);margin:0 0 22px;max-width:72ch}.ds-risk-evidence{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px}.ds-risk-evidence h3{margin:0 0 12px;font-size:12px;color:var(--muted,#627087);font-weight:550}.ds-risk-evidence ul{list-style:none;padding:0;margin:0}.ds-risk-evidence li{padding:12px 0;border-top:1px solid var(--line,#e2e8f1);font-size:13px}.ds-risk-evidence li>div{display:flex;justify-content:space-between;gap:10px}.ds-risk-evidence strong{font-size:12px;font-weight:600}.ds-risk-evidence li p{font-size:12px;margin:5px 0 0;line-height:1.6;color:var(--muted,#627087);max-width:72ch}.ds-factor-points{color:var(--warning,#895e12);font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums}.ds-risk-calculation{border-bottom:1px solid var(--line,#e2e8f1);margin:12px 0 4px}.ds-risk-calculation summary{color:var(--ink,#172641);cursor:pointer;padding:18px 0;font-size:13px;font-weight:550}.ds-risk-calculation summary::marker{color:var(--blue,#2259da)}.ds-risk-calculation summary:hover{color:var(--blue,#2259da)}.ds-risk-calculation summary:focus-visible{outline:3px solid #83a6ff;outline-offset:3px}.ds-disclosure-body{padding:7px 0 24px}.ds-factor-list>div{display:grid;grid-template-columns:1fr auto;align-items:start;gap:16px;padding:13px 0;border-bottom:1px solid var(--line,#e2e8f1);font-size:12px}.ds-factor-list strong{font-weight:550}.ds-factor-list p{margin:5px 0 0;font-size:12px;color:var(--muted,#627087);max-width:72ch}.ds-factor-list>div>span{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}.ds-factor-list small{display:block;font-size:11px;color:var(--muted,#627087);font-weight:400}.ds-caption{font-size:12px;color:var(--muted,#627087);line-height:1.65;margin:18px 0 0;max-width:72ch}@media(max-width:760px){.ds-risk-panel{padding:20px}.ds-risk-evidence{grid-template-columns:1fr;gap:20px}.ds-risk-score{font-size:36px}}"
+      "refersTo": "monitor-metric",
+      "description": "Tabular values remain indivisible on phones.",
+      "html": "<div class=\"ds-sample\"><div class=\"ds-metric\"><span>Volum solicitat</span><strong>95.205.617<small>MDL demo · interval selectat</small></strong></div></div>",
+      "css": ".ds-sample{font:14px/1.6 -apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;color:var(--ink,#1d1d1f)}.ds-sample :focus-visible{outline:3px solid var(--blue,#0066cc);outline-offset:3px}.ds-metric{background:var(--surface,#ffffff);padding:0 24px;min-width:0}.ds-metric>span{font-size:13px;color:var(--muted,#626873)}.ds-metric strong{display:block;font-size:32px;font-weight:600;line-height:1.2;letter-spacing:-.035em;margin:9px 0 6px;font-variant-numeric:tabular-nums}.ds-metric small{display:block;font-size:12px;margin-top:8px;letter-spacing:normal;color:var(--muted,#626873);font-weight:400;line-height:1.5}@media(max-width:1250px){.ds-metric strong{font-size:28px}}@media(max-width:1023px){.ds-metric strong{font-size:30px}}@media(max-width:620px){.ds-metric{padding:0 16px}.ds-metric strong{font-size:clamp(20px,6.4vw,28px);white-space:nowrap;overflow-wrap:normal}.ds-metric>span{font-size:12px}.ds-metric small{font-size:11px;white-space:normal}}"
     }
   ],
   "narrative": {
-    "northStar": "The Analyst’s Desk",
-    "overview": "The Analyst’s Desk is a restrained working environment: white content surfaces on a pale blue wash, a pale navigation rail, clear blue actions, and readable operational data. The user-approved direction is minimalist blue and white; the metaphor describes the implemented result rather than a separately approved visual concept.\n\nFlat boundaries and measured spacing let telemetry, numbers, and investigation actions carry the hierarchy. The monitoring language takes its cue from Grafana and Prometheus while retaining the incumbent white and blue workspace. Romanian labels keep the university prototype direct and understandable. Essential measurements remain visible; secondary operational detail opens through native disclosures. This records the current code. No approved image comp or quality card exists.",
+    "northStar": "The Apple-inspired Analyst’s Desk",
+    "overview": "The user-selected Apple-like white and blue direction defines a quiet Romanian workspace: neutral canvas, white grouped panels, a compact navigation rail, generous headings, and clear blue actions. System typography and restrained separators keep attention on the analyst’s next task.\n\nEssential values stay visible; secondary evidence opens through native disclosures. Stable controls, explicit list updates, and focus-preserving live panels protect reading and investigation. This record describes the shipped stylesheet; surface composition lives in .impeccable/surfaces/.",
     "keyCharacteristics": [
-      "White content surfaces on a pale blue wash with a pale blue-gray navigation rail.",
-      "Blue actions and selection states, with restrained semantic status colors.",
-      "System typography, tabular numbers, and compact readable tables.",
-      "Flat bordered containers, native disclosures, and visible keyboard focus."
+      "Neutral canvas and white panels with restrained borders.",
+      "System typography, tabular numbers, and generous page headings.",
+      "Blue primary actions and a solid blue current navigation destination.",
+      "Collapsible tablet navigation and labeled phone records.",
+      "Quiet updates, native disclosures, and visible keyboard focus."
     ],
     "rules": [
       {
         "name": "The Explicit State Rule",
-        "body": "Every decision badge includes a text label; color reinforces meaning.",
+        "body": "Every decision and risk state has a text label; color reinforces meaning.",
         "section": "colors"
       },
       {
-        "name": "The Flat Surface Rule",
-        "body": "Use the established borders and tonal separation for panels; the current system does not define raised surfaces.",
+        "name": "The Whole Number Rule",
+        "body": "Monitoring values remain indivisible on phones; responsive type fits the number before its unit wraps.",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Depth Rule",
+        "body": "Panels stay flat; only the selected time segment uses a small shadow.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "Do use the documented blue and white palette for the analyst workspace.",
-      "Do accompany decision colors with explicit Permisă, De verificat, or Blocată text.",
-      "Do retain visible keyboard focus and the skip-to-content link.",
-      "Do preserve horizontal table scrolling and its Romanian mobile hint when columns exceed the viewport.",
-      "Do keep essential tasks visible and secondary operational details in clearly labeled disclosures.",
-      "Do keep the shared simulation and risk-score context readable.",
-      "Do pair current risk with concrete causes, favorable facts, and an explicit score/status; keep the original decision clearly labeled."
+      "Do use the Apple-inspired neutral canvas, white panels, system font, and blue action vocabulary.",
+      "Do retain visible keyboard focus, explicit field labels, and the skip link.",
+      "Do present phone tables as labeled records when enhanced; retain scrolling and its hint as a fallback.",
+      "Do preserve focused or expanded live content, filter state, and invalid form drafts.",
+      "Do distinguish current risk, original decisions, and profile-only alert counts."
     ],
     "donts": [
-      "Don't encode operational decisions through color alone.",
-      "Don't replace Romanian task labels with untranslated interface copy.",
-      "Don't describe risk scores as fraud probabilities.",
-      "Don't combine amounts from different currency units into one unqualified total.",
-      "Don't expose algorithm names, raw model scores, or technical configuration in the analyst interface.",
-      "Don’t link Django administration from the platform navigation."
+      "Don't split a monitoring number across lines on phones.",
+      "Don't encode decisions through color alone.",
+      "Don't replace Romanian task labels with untranslated copy.",
+      "Don't describe the 0–100 risk score as a fraud probability or rewrite initial decision history.",
+      "Don't expose algorithm names, raw model scores, configuration, or Django administration in the analyst navigation."
     ]
   }
 }

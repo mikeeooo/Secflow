@@ -34,7 +34,9 @@ TEMPLATES = [{
 DATABASES = {'default': {
     'ENGINE': 'django.db.backends.sqlite3',
     'NAME': BASE_DIR / 'db.sqlite3',
-    'OPTIONS': {'timeout': 60},
+    # Reserve the writer before reading inside atomic workflows. A deferred
+    # read-to-write upgrade can fail immediately when the worker is writing.
+    'OPTIONS': {'timeout': 60, 'transaction_mode': 'IMMEDIATE'},
 }}
 
 STATIC_URL = 'static/'

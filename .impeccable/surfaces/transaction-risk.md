@@ -1,6 +1,6 @@
 # Transaction risk surface
 
-Status: shipped additive risk-explanation extension in the incumbent Romanian white and blue workspace. User-facing title: Detaliile tranzacției. No approved image comp or quality card. The context engine remains unavailable; no detector ran in this pass. The fresh final reviewer returned SHIP with no material findings and confirmed all six risk captures valid.
+Status: shipped Apple-inspired Romanian white and blue redesign. Detaliile tranzacției. User-selected direction and direct code build. The final visual reviewer cleared desktop 1440px, user-width 799px, and phone 390/375px; all 48 application tests passed in the implementation handoff. This documentation pass changes no implementation.
 
 ## Purpose
 Explain why a transfer has its current 0–100 risk score, including high-risk and low-risk evidence, while preserving the decision and risk recorded at receipt.
@@ -18,11 +18,12 @@ Explain why a transfer has its current 0–100 risk score, including high-risk a
 - Favorable facts may contribute few points or zero; they do not subtract points or guarantee safety. Concrete behavioral drivers take priority in the highlighted risk list.
 - Current thresholds distinguish review from 45, high risk from 60, and blocking of a new request from 70. The explicit risk status is not the original decision.
 - A queued/running request shows automatic-processing feedback. Failed analysis has an error message. If stored explanation is absent, an existing assessment falls back to concise observations; otherwise show evaluating/reference context.
-- At 1100px the detail evidence stacks inside the still-two-column layout. At 760px panels stack risk-first, evidence becomes one column, and the score reduces from 40px to 36px. DOM reading order matches visual order.
+- At 1250px evidence stacks inside the two-panel layout. At 850px panels stack risk-first and evidence returns to two columns. At 620px evidence becomes one column and the score reduces from 48px to 44px. DOM reading order matches visual order.
 - Transaction and alert lists label Scor actual and Decizie inițială separately; Vezi cauzele opens this surface. The customer list instead links its latest evaluated outgoing transfer's score to the profile risk context.
 
 ## Authority and verification
-Implementation: templates/detail.html, templates/risk_explanation.html, templates/transactions.html, templates/dashboard_panels.html, core/views.py, and static/app.css. Semantics: detection/risk.py and stored assessment/transaction explanations. System: DESIGN.md and .impeccable/design.json. Valid final captures: .impeccable/review/risk-desktop-high.jpg, risk-mobile-high.jpg, risk-desktop-low.jpg, and risk-desktop-breakdown.jpg. The two profile captures complete the six validated images. This pass checked source consistency; it did not run a detector or backend tests.
+
+Current implementation: templates/detail.html, templates/risk_explanation.html, templates/transactions.html, core/views.py, detection/risk.py, and static/app.css. Reusable tokens and components: DESIGN.md and .impeccable/design.json. The handoff reports completed visual review and 48 passing tests; this pass checked documentation consistency, JSON, and whitespace without rerunning browser review.
 
 ## Content guardrails
 Keep the current score, original decision, and historical initial risk distinct. Show concrete facts for both raised and low risk. No algorithm names, raw model scores, or formulas appear in the analyst UI. Scores explain the demonstration data and are not calibrated fraud probabilities. Profile-only alert-volume forecasting remains a separate quantity.

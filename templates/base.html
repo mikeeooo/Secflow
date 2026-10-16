@@ -4,19 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="{% static 'icon.svg' %}"><title>{{ title }} · SecFlow</title>
-  <link rel="stylesheet" href="{% static 'app.css' %}?v=20261015j">
-  <script defer src="{% static 'app.js' %}?v=20261015j"></script>
+  <link rel="stylesheet" href="{% static 'app.css' %}?v=20261016b">
+  <script defer src="{% static 'app.js' %}?v=20261016b"></script>
 </head>
 <body>
 <a class="skip" href="#main">Sari la conținut</a>
 <aside class="sidebar">
+  <div class="sidebar-header">
   <a href="/" class="brand"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 7h22v7H12v5h15v7H5v-7h15v-5H5z" fill="currentColor"/></svg>SecFlow</a>
+  <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="workspace-navigation"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>Meniu</button>
+  </div>
+  <div class="navigation-content" id="workspace-navigation">
   {% with current=request.resolver_match.url_name %}
   <nav aria-label="Navigare principală">
     <a href="/" {% if current == 'dashboard' %}aria-current="page"{% endif %}><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l5-6 4 3 8-10"/><path d="M3 4v16h18"/></svg><span>Monitorizare</span></a>
     <a href="/transactions/" {% if current == 'transactions' or current == 'detail' or current == 'simulate' %}aria-current="page"{% endif %}><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h17m-4-4 4 4-4 4M21 17H4m4-4-4 4 4 4"/></svg><span>Tranzacții</span></a>
     <a href="/cases/" {% if current == 'cases' or current == 'case' %}aria-current="page"{% endif %}><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4H5a2 2 0 0 0-2 2v14h18V6a2 2 0 0 0-2-2h-4"/><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M7 11h10M7 15h7"/></svg><span>Cazuri</span></a>
-    <a href="/accounts/" {% if current == 'accounts' or current == 'account' %}aria-current="page"{% endif %}><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 5a3 3 0 0 1 0 6M21 21v-3a6 6 0 0 0-3-5"/></svg><span>Clienți și conturi</span></a>
+    <a href="/accounts/" {% if current == 'accounts' or current == 'account' %}aria-current="page"{% endif %}><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 5a3 3 0 0 1 0 6M21 21v-3a6 6 0 0 0-3-5"/></svg><span>Clienți</span></a>
     <a href="/algorithms/" {% if current == 'algorithms' %}aria-current="page"{% endif %}><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 20h17M9 16v-4M14 16V8M19 16V5"/></svg><span>Rezultate</span></a>
   </nav>
   <div class="sidebar-bottom">
@@ -25,12 +29,14 @@
     <div class="simulation"><span class="status-dot"></span> Simulare locală<small>Portofoliu fictiv</small></div>
   </div>
   {% endwith %}
+  </div>
 </aside>
 <div class="workspace">
-  <header class="topbar"><span>MIA · Plăți instant</span><div class="identity"><span class="avatar">{{ user.username|first|upper }}</span><span>{{ user.username }}<small>{% if user.is_staff %}Administrator{% else %}Analist{% endif %}</small></span><form method="post" action="/logout/">{% csrf_token %}<button class="text-button">Ieșire</button></form></div></header>
+  <header class="topbar"><div class="topbar-context"><strong>MIA</strong><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" aria-hidden="true"><path d="m6 4 4 4-4 4"/></svg><span>Plăți instant</span></div><div class="identity"><span class="avatar">{{ user.username|first|upper }}</span><span>{{ user.username }}<small>{% if user.is_staff %}Administrator{% else %}Analist{% endif %}</small></span><form method="post" action="/logout/">{% csrf_token %}<button class="text-button">Ieșire</button></form></div></header>
   <main id="main" class="{% block main_class %}{% endblock %}" {% if auto_refresh %}data-monitor-revision="{{ monitor_revision }}"{% endif %}>
     <div class="page-heading"><div><h1>{% block page_title %}{{ title }}{% endblock %}</h1><p>{% block subtitle %}Investighează tranzacțiile pe baza dovezilor.{% endblock %}</p></div>{% block actions %}{% endblock %}</div>
-    {% for message in messages %}<div role="{% if message.tags == 'error' %}alert{% else %}status{% endif %}" class="message {{ message.tags }}">{{ message }}</div>{% endfor %}
+    {% for message in messages %}<div role="{% if message.tags == 'error' %}alert{% else %}status{% endif %}" class="message {{ message.tags }}" {% if message.tags == 'error' %}tabindex="-1" data-error-summary{% endif %}>{{ message }}</div>{% endfor %}
+    {% if auto_refresh %}<div class="list-update" data-list-update hidden role="status"><span>Sunt disponibile date noi.</span><button type="button" class="text-button" data-refresh-list>Actualizează lista</button></div>{% endif %}
     {% block content %}{% endblock %}
     <footer>SecFlow · Simulare MIA<span>Clienți fictivi. Scorul de risc nu este probabilitate de fraudă.</span></footer>
   </main>

@@ -1,9 +1,18 @@
-{% extends 'base.html' %}{% load secflow %}
+{% extends 'base.html' %}{% load secflow l10n %}
 {% block subtitle %}Cât de bine sunt identificate scenariile suspecte din demonstrație.{% endblock %}
 {% block actions %}{% if run %}<a class="button secondary" href="/export/?kind=metrics">Exportă rezultate</a>{% endif %}{% endblock %}
 {% block content %}
 {% with m=selected_result.methods.test.Combined %}{% if m %}
-<section class="panel padded"><h2>Rezultate pe datele de test</h2><p>{{ m.n }} transferuri sintetice evaluate separat de referință și validare.</p><div class="metrics result-metrics"><div><span>Alarme corecte</span><strong>{{ m.precision|percent }}</strong><small>Din toate transferurile semnalate</small></div><div><span>Fraude detectate</span><strong>{{ m.recall|percent }}</strong><small>Din toate fraudele simulate</small></div><div><span>Alarme false</span><strong>{{ m.false_positive_rate|percent }}</strong><small>Din transferurile legitime</small></div></div><div class="evaluation-counts"><span>Fraude găsite <strong>{{ m.tp }}</strong></span><span>Fraude omise <strong>{{ m.fn }}</strong></span><span>Alarme false <strong>{{ m.fp }}</strong></span><span>Legitime nesemnalate <strong>{{ m.tn }}</strong></span></div></section>
+<section class="panel result-panel">
+  <h2>Rezultate pe datele de test</h2>
+  <p>{{ m.n }} transferuri sintetice, evaluate separat de datele de referință și validare.</p>
+  <div class="metrics result-metrics">
+    <div><span>Alarme corecte</span><strong>{{ m.precision|percent }}</strong><small>Din toate transferurile semnalate</small><meter min="0" max="1" value="{{ m.precision|unlocalize }}" aria-label="Alarme corecte: {{ m.precision|percent }}">{{ m.precision|percent }}</meter><small>{{ m.tp }} din {{ m.tp|add:m.fp }} semnale au indicat fraude simulate.</small></div>
+    <div><span>Fraude detectate</span><strong>{{ m.recall|percent }}</strong><small>Din toate fraudele simulate</small><meter min="0" max="1" value="{{ m.recall|unlocalize }}" aria-label="Fraude detectate: {{ m.recall|percent }}">{{ m.recall|percent }}</meter><small>{{ m.tp }} din {{ m.tp|add:m.fn }} fraude au fost identificate.</small></div>
+    <div><span>Alarme false</span><strong>{{ m.false_positive_rate|percent }}</strong><small>Din transferurile legitime</small><meter class="false-rate" min="0" max="1" value="{{ m.false_positive_rate|unlocalize }}" aria-label="Alarme false: {{ m.false_positive_rate|percent }}">{{ m.false_positive_rate|percent }}</meter><small>{{ m.fp }} din {{ m.fp|add:m.tn }} transferuri legitime au fost semnalate.</small></div>
+  </div>
+  <details class="disclosure evaluation-details"><summary>Vezi distribuția rezultatelor</summary><div class="disclosure-body evaluation-counts"><div><span>Fraude găsite</span><strong>{{ m.tp }}</strong></div><div><span>Fraude omise</span><strong>{{ m.fn }}</strong></div><div><span>Alarme false</span><strong>{{ m.fp }}</strong></div><div><span>Legitime nesemnalate</span><strong>{{ m.tn }}</strong></div></div></details>
+</section>
 <p class="caption">{{ evaluation_scope }} Datele sunt sintetice; procentele nu descriu performanța într-o bancă.</p>
 {% else %}<section class="panel padded empty"><h2>Analiză în pregătire</h2><p>Rezultatele vor apărea după pregătirea datelor demonstrative.</p></section>{% endif %}{% endwith %}
 {% endblock %}

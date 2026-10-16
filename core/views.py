@@ -77,6 +77,7 @@ def dashboard_data(request):
 
 @login_required
 @require_POST
+@transaction.atomic
 def playback_control(request):
     action = request.POST.get('action')
     if action not in ('running', 'paused'):
@@ -144,15 +145,20 @@ def cases(request):
 @login_required
 def case_detail(request, pk):
     case = get_object_or_404(FraudCase.objects.select_related('transaction__sender', 'transaction__recipient'), pk=pk, transaction__visible=True)
+    case_errors = {}
     if request.method == 'POST':
         status = request.POST.get('status')
         outcome = request.POST.get('outcome', '')
         note = request.POST.get('note', '').strip()
-        if (status not in ['Open', 'Investigating', 'Resolved']
-                or outcome not in ['', 'Confirmed fraud', 'False positive', 'Inconclusive']
-                or (status == 'Resolved' and not outcome) or not note):
-            messages.error(request, 'Adaugă o notă și alege o concluzie pentru rezolvarea cazului.')
-        else:
+        if status not in ['Open', 'Investigating', 'Resolved']:
+            case_errors['status'] = 'Alege o stare validă pentru caz.'
+        if outcome not in ['', 'Confirmed fraud', 'False positive', 'Inconclusive']:
+            case_errors['outcome'] = 'Alege o concluzie validă.'
+        elif status == 'Resolved' and not outcome:
+            case_errors['outcome'] = 'Alege o concluzie pentru a rezolva cazul.'
+        if not note:
+            case_errors['note'] = 'Adaugă dovezile verificate în nota de investigație.'
+        if not case_errors:
             with transaction.atomic():
                 before = case.status
                 case.status = status
@@ -166,7 +172,7 @@ def case_detail(request, pk):
             messages.success(request, 'Investigația a fost salvată. Restricția contului se gestionează separat.')
             return redirect('case', pk=pk)
     return shell(request, 'case.html', 'Investigație', case=case,
-                 selected_status=request.POST.get('status', case.status),
+                 case_errors=case_errors, selected_status=request.POST.get('status', case.status),
                  selected_outcome=request.POST.get('outcome', case.outcome),
                  draft_note=request.POST.get('note', ''), notes=case.notes.select_related('author').order_by('-created'))
 

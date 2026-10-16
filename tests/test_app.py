@@ -39,6 +39,31 @@ class WorkflowTests(TestCase):
         self.assertContains(self.client.get(url), 'selected>Alarmă falsă')
         response=self.client.post(url,{'status':'Resolved','note':'Unsaved findings'})
         self.assertContains(response,'Unsaved findings')
+        self.assertContains(response, 'Alege o concluzie pentru a rezolva cazul.')
+        self.assertContains(response, 'aria-describedby="case-outcome-error"')
+        self.assertNotContains(response, 'Adaugă dovezile verificate în nota de investigație.')
+    def test_case_list_uses_current_explanation_without_changing_initial_decision(self):
+        self.client.force_login(self.user)
+        self.tx.risk_explanation = {'score': 52}
+        self.tx.save(update_fields=['risk_explanation'])
+        response = self.client.get('/cases/')
+        self.assertContains(response, '52 / 100')
+        self.assertNotContains(response, '80 / 100')
+        self.tx.refresh_from_db()
+        self.assertEqual(self.tx.risk, 80)
+        self.assertEqual(self.tx.decision, 'Block')
+
+    def test_transaction_list_formats_amount_and_identifies_the_transfer(self):
+        self.client.force_login(self.user)
+        self.tx.amount = 12345.67
+        self.tx.save(update_fields=['amount'])
+        response = self.client.get('/transactions/?q=T')
+        self.assertContains(response, '12.345,67')
+        self.assertContains(response, '<small class="identifier">T</small>', html=True)
+        self.tx.risk = None
+        self.tx.save(update_fields=['risk'])
+        self.assertContains(self.client.get('/transactions/?q=T'), 'Neevaluată')
+
     def test_csrf_enforced(self):
         from django.test import Client
         client=Client(enforce_csrf_checks=True); client.force_login(self.user)
