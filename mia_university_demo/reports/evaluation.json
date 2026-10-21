@@ -1,0 +1,274 @@
+{
+  "simulation": true,
+  "test_range": "days 81-100",
+  "test_rows": 2000,
+  "test_labels": 20,
+  "observed_test_prevalence": 0.01,
+  "model_version": "model-v1-ba3a098dbf83",
+  "policy_version": "policy-v1",
+  "methods": {
+    "rules_only": {
+      "threshold": 60,
+      "precision": 0.6,
+      "recall": 0.15,
+      "f1": 0.24,
+      "false_positive_rate": 0.001,
+      "pr_auc": 0.566,
+      "alert_volume": 5,
+      "tp": 3,
+      "fp": 2,
+      "fn": 17,
+      "tn": 1978
+    },
+    "isolation_forest": {
+      "threshold": 60,
+      "precision": 0.0279,
+      "recall": 1.0,
+      "f1": 0.0543,
+      "false_positive_rate": 0.352,
+      "pr_auc": 0.6201,
+      "alert_volume": 717,
+      "tp": 20,
+      "fp": 697,
+      "fn": 0,
+      "tn": 1283
+    },
+    "lof": {
+      "threshold": 60,
+      "precision": 0.0202,
+      "recall": 0.8,
+      "f1": 0.0395,
+      "false_positive_rate": 0.3914,
+      "pr_auc": 0.3679,
+      "alert_volume": 791,
+      "tp": 16,
+      "fp": 775,
+      "fn": 4,
+      "tn": 1205
+    },
+    "if_plus_lof": {
+      "threshold": 60,
+      "precision": 0.0277,
+      "recall": 0.95,
+      "f1": 0.0537,
+      "false_positive_rate": 0.3374,
+      "pr_auc": 0.564,
+      "alert_volume": 687,
+      "tp": 19,
+      "fp": 668,
+      "fn": 1,
+      "tn": 1312
+    },
+    "combined": {
+      "threshold": 60,
+      "precision": 0.0882,
+      "recall": 0.75,
+      "f1": 0.1579,
+      "false_positive_rate": 0.0783,
+      "pr_auc": 0.5573,
+      "alert_volume": 170,
+      "tp": 15,
+      "fp": 155,
+      "fn": 5,
+      "tn": 1825,
+      "block_volume": 3
+    }
+  },
+  "per_scenario": {
+    "account_takeover": {
+      "cases": 4,
+      "detected": 4,
+      "recall": 1.0
+    },
+    "coordinated": {
+      "cases": 4,
+      "detected": 0,
+      "recall": 0.0
+    },
+    "mule_flow": {
+      "cases": 4,
+      "detected": 4,
+      "recall": 1.0
+    },
+    "social_engineering": {
+      "cases": 4,
+      "detected": 3,
+      "recall": 0.75
+    },
+    "velocity": {
+      "cases": 4,
+      "detected": 4,
+      "recall": 1.0
+    }
+  },
+  "scenario_time_to_detection": {
+    "p50_seconds": 0.0,
+    "p95_seconds": 0.0,
+    "p99_seconds": 0.0
+  },
+  "offline_assessment_latency": {
+    "p50_ms": 4.18,
+    "p95_ms": 4.261,
+    "p99_ms": 4.34
+  },
+  "model_scoring_latency": {
+    "p50_ms": 4.176,
+    "p95_ms": 4.258,
+    "p99_ms": 4.334
+  },
+  "hardware": {
+    "machine": "arm64",
+    "processor": "arm",
+    "python": "3.12.13"
+  },
+  "prevalence_sensitivity": {
+    "0.1%": 0.0095,
+    "3.0%": 0.2285
+  },
+  "evaluation_notes": [
+    "All fitting and calibration ignore private scenario labels; labels join only for validation and final metrics.",
+    "Thresholds 60/85 were frozen before final testing; no final-test tuning.",
+    "The 0.1% and 3% values are precision projections using measured TPR/FPR, not MIA prevalence estimates.",
+    "Offline scoring uses fixed synthetic history; it does not model fraud prevented by a Block decision.",
+    "Anomaly ranking is not fraud probability; some authorized scams are not behaviorally distinguishable."
+  ],
+  "validation": {
+    "rows": 1000,
+    "labels": 10,
+    "fixed_threshold_metrics": {
+      "threshold": 60,
+      "precision": 0.1111,
+      "recall": 0.7,
+      "f1": 0.1918,
+      "false_positive_rate": 0.0566,
+      "pr_auc": 0.6248,
+      "alert_volume": 63,
+      "tp": 7,
+      "fp": 56,
+      "fn": 3,
+      "tn": 934
+    },
+    "usage": "Validation labels assess the predeclared policy; final-test labels never tune it"
+  },
+  "api_benchmark": {
+    "samples": 30,
+    "p50_ms": 7.444,
+    "p95_ms": 8.102,
+    "p99_ms": 9.807,
+    "measurement": "FastAPI TestClient in-process with SQLite and model scoring; no network transport"
+  },
+  "dbscan": {
+    "account_windows": 3023,
+    "positive_account_windows": 11,
+    "noise_only": {
+      "threshold": 60,
+      "precision": 0.0285,
+      "recall": 0.7273,
+      "f1": 0.0548,
+      "false_positive_rate": 0.0906,
+      "pr_auc": 0.3784,
+      "alert_volume": 281,
+      "tp": 8,
+      "fp": 273,
+      "fn": 3,
+      "tn": 2739
+    },
+    "contextual_flags": {
+      "threshold": 60,
+      "precision": 1.0,
+      "recall": 0.4545,
+      "f1": 0.625,
+      "false_positive_rate": 0.0,
+      "pr_auc": 0.7283,
+      "alert_volume": 5,
+      "tp": 5,
+      "fp": 0,
+      "fn": 6,
+      "tn": 3012
+    },
+    "runtime_seconds": 0.098,
+    "python_allocations_peak_mb": 1.42,
+    "caveat": "Cluster IDs are local to each daily fit; noise and contextual flags are investigation signals, not fraud proof. Memory number is Python traced allocations, not total native RSS."
+  },
+  "robustness": {
+    "seeds": [
+      {
+        "seed": 42,
+        "model_version": "model-v1-ba3a098dbf83",
+        "test_rows": 2000,
+        "combined": {
+          "threshold": 60,
+          "precision": 0.0882,
+          "recall": 0.75,
+          "f1": 0.1579,
+          "false_positive_rate": 0.0783,
+          "pr_auc": 0.5573,
+          "alert_volume": 170,
+          "tp": 15,
+          "fp": 155,
+          "fn": 5,
+          "tn": 1825,
+          "block_volume": 3
+        }
+      },
+      {
+        "seed": 43,
+        "model_version": "model-v1-a38ae68fc15e",
+        "test_rows": 2000,
+        "combined": {
+          "threshold": 60,
+          "precision": 0.0641,
+          "recall": 0.75,
+          "f1": 0.1181,
+          "false_positive_rate": 0.1106,
+          "pr_auc": 0.5429,
+          "alert_volume": 234,
+          "tp": 15,
+          "fp": 219,
+          "fn": 5,
+          "tn": 1761,
+          "block_volume": 3
+        }
+      },
+      {
+        "seed": 44,
+        "model_version": "model-v1-d79aac5cec17",
+        "test_rows": 2000,
+        "combined": {
+          "threshold": 60,
+          "precision": 0.0769,
+          "recall": 0.75,
+          "f1": 0.1395,
+          "false_positive_rate": 0.0909,
+          "pr_auc": 0.547,
+          "alert_volume": 195,
+          "tp": 15,
+          "fp": 180,
+          "fn": 5,
+          "tn": 1800,
+          "block_volume": 1
+        }
+      }
+    ],
+    "unseen_accounts": {
+      "seed": 45,
+      "account_prefix": "U",
+      "test_rows": 2000,
+      "combined": {
+        "threshold": 60,
+        "precision": 0.0897,
+        "recall": 0.7,
+        "f1": 0.1591,
+        "false_positive_rate": 0.0717,
+        "pr_auc": 0.4591,
+        "alert_volume": 156,
+        "tp": 14,
+        "fp": 142,
+        "fn": 6,
+        "tn": 1838,
+        "block_volume": 2
+      }
+    },
+    "note": "Each seed run retrains on its own days 11-60 and calibrates on days 61-70. The unseen-account run uses the baseline model and a disjoint account-ID population with the same generator design; this is not external validation."
+  }
+}

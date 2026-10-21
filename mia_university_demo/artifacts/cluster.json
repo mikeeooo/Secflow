@@ -1,0 +1,17 @@
+{
+  "min_samples": 10,
+  "eps": 0.5,
+  "training_rows": 7018,
+  "validation_rows": 1324,
+  "eps_method": "90th percentile of validation k-distances; floor 0.5",
+  "feature_order": [
+    "log_incoming",
+    "log_outgoing",
+    "log_unique_senders",
+    "log_unique_recipients",
+    "outgoing_to_incoming_clipped_20",
+    "no_incoming",
+    "rapid_outflow_share"
+  ],
+  "version": "cluster-v1-29e8c87d1966"
+}

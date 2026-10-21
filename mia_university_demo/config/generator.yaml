@@ -1,0 +1,9 @@
+generator_version: generator-v1
+seed: 42
+accounts: 400
+attempts: 10000
+days: 100
+currency: MDL
+local_psp: LOCAL
+external_psps: [PSP-1, PSP-2, PSP-3]
+data_kind: fictitious_synthetic

@@ -1,0 +1,10 @@
+policy_version: policy-v1
+model_weights:
+  isolation_forest: 0.6
+  lof: 0.4
+combined_weights:
+  model: 0.7
+  rules: 0.3
+verify_threshold: 60
+block_threshold: 85
+score_is_probability: false

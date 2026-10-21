@@ -1,0 +1,23 @@
+{
+  "config": {
+    "seed": 42,
+    "accounts": 400,
+    "attempts": 10000,
+    "days": 100,
+    "account_prefix": "A",
+    "start": "2026-07-13T00:00:00+00:00",
+    "external_psps": [
+      "PSP-1",
+      "PSP-2",
+      "PSP-3"
+    ],
+    "generator_version": "generator-v1",
+    "scenario_count": 100
+  },
+  "requests": 10000,
+  "observations": 21690,
+  "labels": 100,
+  "prevalence": 0.01,
+  "fingerprint": "dd6f4c33fa2654b4dfe0e2bacbc07ecc8e24f32b7078c09a21936a9fbdd0f74e",
+  "disclaimer": "Fictitious data generated for one simulated PSP; not MIA transaction data"
+}

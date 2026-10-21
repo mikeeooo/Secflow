@@ -1,0 +1,12 @@
+import {AlertCircle,CheckCircle2,Clock3,RefreshCw,ShieldAlert} from 'lucide-react'
+import {Button} from './ui/button'
+import {Badge} from './ui/badge'
+import type {Decision,PaymentStatus} from '../api/types'
+import {dateTime} from '../lib-utils'
+export function DecisionBadge({value}:{value:Decision|null}){const map:Record<Decision,string>={Permit:'status-permit',Verify:'status-verify',Block:'status-block',Pending:'status-pending'};return <Badge className={value?map[value]:'status-muted'}>{value||'Neanalizată'}</Badge>}
+export function PaymentBadge({value}:{value:PaymentStatus|string}){const label:Record<string,string>={completed:'Finalizată',awaiting_review:'În așteptare',blocked:'Neexecutată',pending:'În așteptare',attempt_only:'Încercare observată'};return <span className="substatus">{value==='completed'?<CheckCircle2 size={14}/>:<Clock3 size={14}/>} {label[value]||value}</span>}
+export function ReviewBadge({value}:{value:string}){const label:Record<string,string>={pending:'Revizuire necesară',approved:'Aprobată',rejected:'Respinsă',none:'Nu se aplică',not_applicable:'Istoric'};return <span className="muted small">{label[value]||value}</span>}
+export function SectionHeading({title,detail,action}:{title:string;detail?:string;action?:React.ReactNode}){return <div className="section-heading"><div><h2 className="section-title">{title}</h2>{detail&&<p className="section-detail">{detail}</p>}</div>{action}</div>}
+export function DataState({loading,error,hasData,onRetry}:{loading:boolean;error:string|null;hasData:boolean;onRetry:()=>void}){if(loading&&!hasData)return <div className="state-box"><RefreshCw className="spin"/><strong>Se încarcă datele…</strong></div>;if(error&&!hasData)return <div className="state-box error"><AlertCircle/><strong>Nu putem încărca datele</strong><p>{error}</p><Button variant="outline" onClick={onRetry}>Reîncearcă</Button></div>;return null}
+export function StaleBanner({error}:{error:string|null}){return error?<div className="notice warning" role="status"><ShieldAlert size={17}/><span>Datele afișate pot fi vechi. {error}</span></div>:null}
+export function LastUpdate({value,onRefresh}:{value:string|null;onRefresh:()=>void}){return <div className="last-update"><span>{value?`Actualizat: ${dateTime(value)}`:'Fără actualizare'}</span><Button size="icon" variant="ghost" onClick={onRefresh} aria-label="Reîmprospătează"><RefreshCw size={17}/></Button></div>}

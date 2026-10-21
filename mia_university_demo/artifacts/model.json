@@ -1,0 +1,60 @@
+{
+  "feature_order": [
+    "log_amount",
+    "amount_to_sender_median_30d",
+    "outgoing_attempts_5m",
+    "outgoing_attempts_1h",
+    "outgoing_amount_1h",
+    "unique_recipients_24h",
+    "recipient_is_new",
+    "device_is_new",
+    "account_age_days",
+    "seconds_since_last_attempt",
+    "last_attempt_missing",
+    "incoming_amount_1h",
+    "unique_senders_1h",
+    "amount_to_recent_inflow",
+    "no_recent_inflow",
+    "recent_password_reset",
+    "history_count_30d"
+  ],
+  "train_range": [
+    "2026-07-23T00:10:00+00:00",
+    "2026-09-10T21:58:57+00:00"
+  ],
+  "calibration_range": [
+    "2026-09-11T08:07:26+00:00",
+    "2026-09-20T21:50:27+00:00"
+  ],
+  "train_rows": 5010,
+  "calibration_rows": 1000,
+  "lof_reference_rows": 5010,
+  "peer_median_bani": 10012,
+  "generator_config": {
+    "seed": 42,
+    "accounts": 400,
+    "attempts": 10000,
+    "days": 100,
+    "account_prefix": "A",
+    "start": "2026-07-13T00:00:00+00:00",
+    "external_psps": [
+      "PSP-1",
+      "PSP-2",
+      "PSP-3"
+    ],
+    "generator_version": "generator-v1",
+    "scenario_count": 100
+  },
+  "dependency_lock_sha256": "9c1201ed18669d4975e5dc5708453f4ac5d76a56dcb5be5ab704559c6f6de2c9",
+  "if_params": {
+    "n_estimators": 200,
+    "max_samples": 256,
+    "random_state": 42
+  },
+  "lof_params": {
+    "n_neighbors": 35,
+    "novelty": true
+  },
+  "score_meaning": "0-100 anomaly ranking, not fraud probability",
+  "model_version": "model-v1-ba3a098dbf83"
+}
