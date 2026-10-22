@@ -6,6 +6,9 @@ from time import perf_counter
 from typing import Literal
 from uuid import uuid4
 import json
+import os
+import shutil
+import tempfile
 
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel, Field
@@ -293,4 +296,21 @@ def create_app(db_path: str | Path = "data/demo.sqlite3", model_path: str | Path
     return app
 
 
-app = create_app()
+def _deployment_db_path() -> Path:
+    """Give each Vercel instance a writable copy of the bundled synthetic demo."""
+    source = Path(__file__).resolve().parents[2] / "data" / "demo.sqlite3"
+    destination = Path(tempfile.gettempdir()) / "secflow-mia-demo.sqlite3"
+    if not destination.exists():
+        shutil.copyfile(source, destination)
+    return destination
+
+
+if os.environ.get("VERCEL"):
+    _project_root = Path(__file__).resolve().parents[2]
+    app = create_app(
+        db_path=_deployment_db_path(),
+        model_path=_project_root / "artifacts" / "model.joblib",
+        report_path=_project_root / "reports" / "evaluation.json",
+    )
+else:
+    app = create_app()

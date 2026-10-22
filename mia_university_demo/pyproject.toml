@@ -29,5 +29,8 @@ build-backend = "hatchling.build"
 [tool.hatch.build.targets.wheel]
 packages = ["src/mia_demo"]
 
+[tool.vercel]
+entrypoint = "main:app"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]

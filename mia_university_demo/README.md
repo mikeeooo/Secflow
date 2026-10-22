@@ -39,6 +39,12 @@ cd frontend && npm run dev -- --port 5173
 
 Deschide [interfața locală](http://127.0.0.1:5173). [Documentația API](http://127.0.0.1:8001/docs) este disponibilă separat. Vite redirecționează `/api` către FastAPI; poți schimba ținta locală cu `MIA_API_PROXY_TARGET`. Pentru un host static, configurează aceeași rutare sau `VITE_API_BASE_URL` la build. După reantrenare, repornește API-ul pentru a încărca noul model.
 
+## Publicare Vercel
+
+`vercel.json` publică frontendul Vite și backendul FastAPI ca două servicii ale aceluiași deploy. Proiectul Vercel trebuie să aibă directorul rădăcină `mia_university_demo`; rutele `/api/*` ajung la FastAPI, iar celelalte la React.
+
+Pe Vercel, baza SQLite sintetică inclusă în repository este copiată în `/tmp` la pornirea fiecărei instanțe. Datele istorice, modelul și raportul se pot consulta, iar acțiunile simulate pot fi încercate, dar modificările sunt temporare și pot dispărea ori diferi între instanțe. Pentru o aplicație cu stare comună și persistentă este necesară migrarea repository-ului la o bază de date externă. Demo-ul local de mai sus păstrează toate datele în SQLite pe disc.
+
 Pentru verificare:
 
 ```bash
