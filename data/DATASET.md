@@ -1,81 +1,35 @@
-# SecFlow dataset
+# Setul sintetic SecFlow
 
-The dataset is prepared from the original PaySim CSV plus reproducible generated scenarios. All payment activity is synthetic. No connection to MIA or a bank is involved.
+**Origine:** generat local de `src/mia_demo/simulation/generator.py`; nu este extras din MIA și nu conține persoane reale. Fișierele vechi PaySim din proiectul părinte nu sunt modificate sau amestecate cu această populație.
 
-## Files
+Configurația implicită (`config/generator.yaml`) are 400 de conturi locale, 10.000 de **cereri de plată** și 100 de zile fixe, 13 iulie–20 octombrie 2026. Data de sfârșit este aproape de momentul prezentării, astfel încât cererile noi au istoric recent pentru ferestrele de 5 minute, 24 de ore și 30 de zile. Fluxul de observații este mai mare decât numărul de cereri, deoarece o cerere are o observație de încercare și, dacă a fost finalizată în istoricul sintetic, una de finalizare; există și intrări din PSP-uri externe fictive. Un set de 2.000 de conturi și aproximativ 150.000 de cereri se poate genera prin parametrii CLI, dar experimentele livrate folosesc volumul de dezvoltare de 10.000 pentru reproductibilitate rapidă. Testul automat verifică și prevalența unui volum de 11.000 de cereri; volumul de 150.000 nu a fost evaluat ca timp de execuție.
 
-| File | Content |
+## Fișiere
+
+| Fișier | Conținut |
 |---|---|
-| `generated/secflow_transactions.csv` | Main application input: PaySim subset and generated scenarios, sorted chronologically. |
-| `generated/paysim_extended.csv` | Only the selected PaySim rows, with generated timing and security metadata. |
-| `generated/generated_scenarios.csv` | Normal histories and generated demonstration scenarios. |
-| `generated/accounts.csv` | Account identifiers and descriptive dataset-wide activity totals. |
-| `generated/devices.csv` | Account/device relationships and first/last observation times. |
-| `generated/authentication_events.csv` | Individual failed and successful login attempts linked to transactions and sessions. |
-| `generated/manifest.json` | Counts, selection method, seed, provenance, exclusions, and SHA-256 checksums. |
-| `raw/PS_20174392719_1491204439457_log.csv` | Complete original PaySim CSV, unchanged. |
-| `raw/paysim.zip` | Original downloaded archive. |
+| `accounts.jsonl` | conturi locale și solduri inițiale, în bani |
+| `closing_balances.json` | soldurile după istoricul generat |
+| `events.jsonl` | încercări, finalizări și intrări, cu `occurred_at` și `observed_at` UTC |
+| `sessions.jsonl` | dispozitive și sesiuni observate |
+| `account_events.jsonl` | resetări de parolă simulate |
+| `requests.jsonl` | cererile scorabile; nu conțin etichete de fraudă |
+| `features.jsonl` | caracteristici istorice calculate înaintea fiecărei cereri |
+| `private/evaluation_labels.jsonl` | adevărul sintetic folosit numai pentru evaluare |
+| `manifest.json` | numărări, parametri, amprentă SHA-256 și avertisment de proveniență |
 
-## Current working dataset
+## Construcție și delimitări
 
-- **54,520 transactions:** 50,000 PaySim rows and 4,520 generated rows.
-- **100 source fraud labels** and **580 generated fraud labels**, reported separately.
-- **11 scenario categories**, with 10 episodes per category and normal history before each episode.
-- **78,969 account identifiers**, **50,220 account/device relationships**, and **60,815 authentication events**.
-- PaySim selection: first 50,000 rows in original chronological order, covering source hours 1–9. No fraud oversampling or class balancing.
-- Seed: `42`. The full original CSV is available locally for larger future experiments.
+Conturile au destinatari preferați, ore de activitate obișnuite, sume variabile, plăți locale și externe și intrări recurente de tip salariu. Soldurile sunt întregi în bani și nu devin negative. Există cumpărături legitime neobișnuite care se suprapun cu semnalele de risc. PSP-ul local cunoaște doar propriile plăți și încasări; nu inventăm istoricul financiar al destinatarilor de la alte PSP-uri.
 
-This prefix supports a local demonstration. It is not a representative sample of the whole month. Source accounts can have little history within the selected slice; generated episodes provide coherent histories for demonstration.
+Cele cinci scenarii sunt: preluare de cont, flux rapid printr-un cont intermediar, transferuri repetate, inginerie socială și lanț/ciclu între conturi locale. Fiecare instanță rămâne într-o singură perioadă. În setul implicit, zilele 81–100 conțin 20 de cereri etichetate din 2.000 (1%). Etichetele sunt separate fizic de datele accesibile motorului de caracteristici. `observed_at`, nu `occurred_at`, determină ce era disponibil la momentul deciziei. Cererea curentă și sesiunea ei nu sunt tratate drept istoric.
 
-## Added fields
+| Zile | Utilizare |
+|---|---|
+| 1–10 | încălzirea istoricului |
+| 11–60 | antrenare fără etichete și preprocesare |
+| 61–70 | calibrare CDF pe rânduri noi |
+| 71–80 | verificarea politicii fixate |
+| 81–100 | test final blocat |
 
-The original eleven PaySim fields are preserved. Added fields include `transaction_id`, `source_row_id`, `timestamp_seconds`, `device_id`, `is_new_device`, `session_id`, `login_attempts`, `failed_login_attempts`, `data_origin`, `security_metadata_origin`, `timestamp_origin`, `scenario_type`, `scenario_id`, `ground_truth_fraud`, and `currency`.
-
-`timestamp_seconds = (step - 1) * 3600 + offset_seconds`. Offsets are generated within the original hour, preserve source row order, and can coincide. They are not recovered real timestamps. No calendar date is implied.
-
-Device and authentication fields are generated. The first observed device is marked new even for a legitimate account. PaySim security metadata generation is independent of `isFraud`. Each session ends with a successful login after zero or more failed attempts; authentication timestamps do not occur after the associated transfer.
-
-Amounts retain their own units: `PAYSIM_UNIT` for source transactions and `DEMO_UNIT` for generated scenarios. Neither is asserted to be MDL. Filter by origin/currency when aggregating values; do not combine them into a purported bank-wide monetary total.
-
-## Generated scenarios
-
-- `unusual_amount`
-- `repeated_transfers`
-- `amount_fragmentation`
-- `account_takeover`
-- `mule_account`
-- `suspicious_beneficiary`
-- `coordinated_activity`
-- `scam_related_transfer`
-- `legitimate_large_payment`
-- `legitimate_new_device`
-- `legitimate_burst`
-
-`normal_history` contains the normal activity preceding these episodes. Generated accounts use a separate `SIM_` namespace. All generated transactions use `TRANSFER`. Labels describe the generator's scenario, not independent confirmation of a real fraud.
-
-Large legitimate payments overlap deliberately with unusual fraudulent amounts. Legitimate bursts and device changes make it possible to test false positives. For mule scenarios, several funded senders transfer to the mule, which then forwards 98% of the received value. No scenario claims that a behavioral signal uniquely proves fraud.
-
-## Detection and evaluation
-
-Do not use fraud labels, source markers, scenario categories/identifiers, or PaySim balance columns as detection features. The complete exclusion list is in the manifest. Transaction identifiers are join keys, not numerical algorithm features. Dataset-wide account totals and device last-seen times are descriptive, retrospective exports; compute causal features from prior events instead.
-
-Use `isFraud` for the PaySim benchmark and `ground_truth_fraud` for generated-scenario evaluation. Evaluate them separately. Source timing originally has only hourly precision, so second-level features belong to the simulated extension evaluation.
-
-Split chronologically and fit preprocessing only on the reference/training portion. The algorithms have not yet been implemented; these CSV files contain labels and observations, not precomputed model scores or blocking decisions.
-
-## Rebuild and verify
-
-Run from the repository root with Python 3.10 or later. No third-party packages are required for dataset preparation.
-
-```bash
-python3 datasets/prepare_dataset.py --limit 50000 --repeats 10 --seed 42
-python3 -m unittest discover -s tests -v
-```
-
-The generator reads the local original CSV. To use a different file, pass `--source /path/to/paysim.csv`. `--output` selects another output directory. The same source, seed, limits, and generator produce byte-identical outputs. Raw data and generated CSV exports are excluded from Git; the code and this guide are suitable for the repository.
-
-## Source and attribution
-
-[PaySim dataset](https://www.kaggle.com/datasets/ealaxi/paysim1/data), downloaded through Kaggle's public dataset endpoint. Published under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
-
-Dataset citation: E. A. Lopez-Rojas, A. Elmir, and S. Axelsson. *PaySim: A financial mobile money simulator for fraud detection.* European Modeling and Simulation Symposium, 2016.
+Toate valorile sunt alegeri de proiect universitar; nu sunt statistici ori praguri oficiale MIA.

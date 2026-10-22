@@ -2,7 +2,7 @@
 
 ## Ce este proiectul activ
 
-`mia_university_demo/` este aplicația SecFlow integrată. Backendul FastAPI, generatorul, caracteristicile istorice, modelele, politica de risc, SQLite și evaluarea provin din demo-ul MIA. Interfața React a fost adaptată la stilul SecFlow: fundal alb, navigare structurală deschisă, tabele aerisite și albastru rezervat acțiunilor. Django rămâne în repository ca implementare anterioară.
+Rădăcina repository-ului este aplicația SecFlow. Backendul FastAPI, generatorul, caracteristicile istorice, modelele, politica de risc, SQLite și evaluarea provin din demo-ul MIA. Interfața React folosește stilul SecFlow: fundal alb, navigare structurală deschisă, tabele aerisite și albastru rezervat acțiunilor.
 
 | Etapă din planul universitar | Rezultat în aplicația integrată |
 | --- | --- |
@@ -26,4 +26,4 @@ Setul MIA este complet sintetic și nu se combină cu PaySim. Modelul și raport
 - Filtrul de tranzacții pentru 21 octombrie a inclus încercările de la 00:08–00:58 ora Chișinăului, care ar fi fost excluse cu o limită UTC directă. Baza de date a fost apoi readusă la copia din proiectul sursă, pentru a livra un demo curat.
 - Capturi ale interfeței integrate la lățimea disponibilă în browser: `reports/integrated-overview-mobile.jpg` și `reports/integrated-evaluation-mobile.jpg`.
 
-Instalarea Python complet nouă nu a putut fi verificată offline în sandbox, fiindcă wheel-ul `scipy` din lockfile nu era în cache. Pentru rularea locală verificată s-au folosit pachetele deja instalate în mediul virtual copiat din sursă și `PYTHONPATH=src`. Comanda obișnuită `uv sync --extra dev --frozen` rămâne documentată pentru un mediu cu acces la registrul de pachete. Mediul virtual este ignorat de Git; setul sintetic, baza SQLite, modelele și raportul sunt incluse în fișierele proiectului, iar regenerarea se poate face cu `uv run mia-demo all --robustness` după instalare.
+Instalarea Python complet nouă nu a putut fi verificată offline în sandbox, fiindcă wheel-ul `scipy` din lockfile nu era în cache. Pentru rularea locală verificată s-au folosit pachetele deja instalate în mediul virtual și `PYTHONPATH=src`. Comanda obișnuită `uv sync --extra dev --frozen` rămâne documentată pentru un mediu cu acces la registrul de pachete. Mediul virtual este ignorat de Git; setul sintetic, baza SQLite, modelele și raportul sunt incluse în fișierele proiectului, iar regenerarea se poate face cu `uv run secflow all --robustness` după instalare.

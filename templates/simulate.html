@@ -1,4 +1,0 @@
-{% extends 'base.html' %}
-{% block subtitle %}Testează o cerere folosind conturile din setul generat.{% endblock %}
-{% block actions %}<a class="button secondary" href="/transactions/">Înapoi la tranzacții</a>{% endblock %}
-{% block content %}<section class="panel padded simulation-form"><h2>Tranzacție nouă</h2><p>Sumele sunt exprimate în MDL demonstrativi. Cererea intră în coada automată de analiză.</p><form method="post" class="stack" data-busy="Se înregistrează cererea…">{% csrf_token %}{{ form.as_div }}<button>Trimite cererea de test</button></form></section>{% endblock %}

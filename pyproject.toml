@@ -1,5 +1,5 @@
 [project]
-name = "secflow-mia-demo"
+name = "secflow"
 version = "0.1.0"
 description = "Explainable synthetic MIA-style fraud demo for a university project"
 requires-python = "==3.12.*"
@@ -20,7 +20,7 @@ dependencies = [
 dev = ["pytest>=8,<10"]
 
 [project.scripts]
-mia-demo = "mia_demo.cli:main"
+secflow = "mia_demo.cli:main"
 
 [build-system]
 requires = ["hatchling"]

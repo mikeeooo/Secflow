@@ -1,3 +1,0 @@
-# Product context
-
-A university demonstration for an analyst inspecting fictitious P2P transfers from one simulated PSP. FastAPI computes causal historical features, uses pretrained Isolation Forest and novelty LOF plus explicit rules, and records Permit, Verify or Block decisions. Daily DBSCAN account findings remain separate. A React/TypeScript client presents six Romanian application areas through the API only. All amounts are integer bani internally and formatted as MDL. The UI never implies real MIA integration, confirmed fraud, or a calibrated fraud probability. Payment status, risk decision and review status are separate.
