@@ -43,6 +43,31 @@ transfer stream starts with the backend, so Live Transfers fills without opening
 To serve the production build from the backend process instead, run
 `npm --prefix frontend run build`, restart uvicorn, and open <http://127.0.0.1:8001>.
 
+## Deploying on Vercel (Services)
+
+`vercel.json` defines one Vercel project with two services:
+
+| Service | Root | What it is | Public path |
+|---|---|---|---|
+| `app` | `.` | FastAPI backend (`backend.api:app`) | `/api/*` |
+| `frontend` | `frontend/` | Vite static build, with an SPA fallback to `index.html` | everything else |
+
+The browser calls the backend on the same domain through relative `/api/...` URLs, so no service
+calls another server-side and no bindings are needed. The backend keeps its `/api` prefix because
+Vercel passes the original request path through. Offline-only files (the 88 MB training corpus,
+cached features, tests, docs, and the frontend source) are excluded from the backend function
+bundle.
+
+Run both services together locally with the Vercel CLI:
+
+```bash
+npx vercel dev -L
+```
+
+On Vercel the backend runs as a function on Fluid compute. The process-memory caveat below matters
+more there: instances can be recycled or scaled out, so simulations, reviews, and the live stream
+are per instance and short-lived.
+
 ## Rebuilding everything from scratch
 
 ```bash

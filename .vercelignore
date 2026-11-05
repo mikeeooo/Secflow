@@ -1,0 +1,9 @@
+# Local environments and build outputs; Vercel installs and builds each service itself.
+.venv/
+**/__pycache__/
+.pytest_cache/
+.ruff_cache/
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+artifacts/features/
