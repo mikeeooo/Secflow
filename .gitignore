@@ -9,3 +9,5 @@ frontend/coverage/
 artifacts/features/
 .DS_Store
 .vercel/
+.vercel
+.env*
