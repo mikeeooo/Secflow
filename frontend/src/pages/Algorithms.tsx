@@ -1,9 +1,12 @@
-import type { ReactNode } from "react";
-import { useAlgorithms, useEvaluation } from "../api/hooks";
+import { useState, type ReactNode } from "react";
+import { Link, useSearchParams } from "react-router";
+import { useAlgorithms, useClusterGraph, useEvaluation } from "../api/hooks";
+import { ClusterGraph } from "../components/ClusterGraph";
+import { MonitoringDashboard } from "../components/MonitoringDashboard";
 import type { Report } from "../api/types";
 import { ColumnChart } from "../components/charts";
 import { ErrorState, LoadingState } from "../components/States";
-import { Card, CardHeader, Chip, KeyValue, PageHeader, Stat } from "../components/ui";
+import { Card, CardHeader, Chip, KeyValue, PageHeader, Segmented, Stat } from "../components/ui";
 import { FAMILY_TEXT, formatDay, formatInt, formatPercent, humanize } from "../lib/format";
 
 function Table({ head, rows, caption }: { head: string[]; rows: ReactNode[][]; caption?: string }) {
@@ -28,7 +31,78 @@ function Table({ head, rows, caption }: { head: string[]; rows: ReactNode[][]; c
 
 const num = (v: unknown, digits = 3) => (typeof v === "number" ? v.toFixed(digits) : "n/a");
 
+type View = "dashboard" | "graph" | "models";
+
 export function AlgorithmsPage() {
+  const [params, setParams] = useSearchParams();
+  const view = (["dashboard", "graph", "models"].includes(params.get("view") ?? "") ? params.get("view") : "dashboard") as View;
+  return (
+    <>
+      <PageHeader
+        title="Algorithm Results"
+        subtitle="Monitor the assessments, explore how DBSCAN account-context clusters connect, and review how the frozen models performed."
+        action={
+          <Segmented
+            label="View"
+            value={view}
+            onChange={(next) => setParams(next === "dashboard" ? {} : { view: next }, { replace: true })}
+            options={[
+              { value: "dashboard", label: "Dashboard" },
+              { value: "graph", label: "Cluster graph" },
+              { value: "models", label: "Models & evaluation" },
+            ]}
+          />
+        }
+      />
+      {view === "dashboard" ? <MonitoringDashboard /> : view === "graph" ? <ClusterGraphView /> : <ModelsAndEvaluation />}
+    </>
+  );
+}
+
+function ClusterGraphView() {
+  const [anomalies, setAnomalies] = useState("150");
+  const [showCores, setShowCores] = useState(true);
+  const { data, error, isPending, isFetching, refetch } = useClusterGraph(Number(anomalies));
+  return (
+    <Card className="p-4 sm:p-5">
+      <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
+        <div>
+          <h2 className="text-[17px] font-semibold">DBSCAN account-context clusters</h2>
+          <p className="text-[13px] text-label-2">How the frozen training clusters connect, and which recorded profiles fall outside all of them.</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          <label className="flex items-center gap-2 text-[13px]">
+            <input type="checkbox" className="size-4 accent-[var(--sf-accent)]" checked={showCores} onChange={(e) => setShowCores(e.target.checked)} />
+            Show core samples
+          </label>
+          <Segmented label="Anomalies shown" size="sm" value={anomalies} onChange={setAnomalies}
+            options={[{ value: "50", label: "50 latest" }, { value: "150", label: "150" }, { value: "300", label: "300" }]} />
+        </div>
+      </div>
+      {isPending ? <LoadingState rows={8} label="Building the cluster graph" /> : error ? (
+        <ErrorState error={error} onRetry={() => void refetch()} />
+      ) : (
+        <div aria-busy={isFetching}>
+          <ClusterGraph data={data} showCores={showCores} />
+          <details className="mt-4 text-[13px]">
+            <summary className="cursor-pointer font-medium">View clusters and anomalies as a table</summary>
+            <div className="mt-3 grid gap-5 lg:grid-cols-2">
+              <Table caption="Largest clusters" head={["Cluster", "Core samples", "Nearest anomalies"]}
+                rows={data.clusters.slice(0, 25).map((c) => [`C${c.cluster}`, formatInt(c.size), c.anomalies])} />
+              <Table caption="Anomalies" head={["Request", "Nearest cluster", "Distance", "Decision"]}
+                rows={data.nodes.filter((n) => n.kind === "anomaly").slice(0, 40).map((n) => [
+                  <Link key={n.id} className="text-accent" to={`/investigations/${encodeURIComponent(n.request_id ?? "")}`}>{n.sender} → {n.recipient}</Link>,
+                  `C${n.cluster}`, num(n.distance, 2), n.decision_label ?? "",
+                ])} />
+            </div>
+          </details>
+        </div>
+      )}
+    </Card>
+  );
+}
+
+function ModelsAndEvaluation() {
   const algorithms = useAlgorithms();
   const evaluation = useEvaluation();
   if (algorithms.isPending) return <Card><LoadingState rows={10} /></Card>;
@@ -45,8 +119,6 @@ export function AlgorithmsPage() {
 
   return (
     <>
-      <PageHeader title="Algorithm Results" subtitle="How the models were fitted, how the score is combined, and how the frozen policy performed on the untouched test period." />
-
       <Card className="mb-5 p-5">
         <h2 className="text-[17px] font-semibold">How the anomaly-risk index is built</h2>
         <p className="tabular mt-3 rounded-[10px] bg-surface-2 p-3 font-mono text-[13px] break-words">

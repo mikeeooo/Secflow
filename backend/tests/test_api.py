@@ -237,3 +237,42 @@ def test_missing_model_routes_everything_to_verify(tmp_path: Path) -> None:
         assert (body["decision"], body["decision_source"], body["assessment_status"]) == (
             "Verify", "assessment_safeguard", "model_unavailable")
         assert body["risk_score"] is None
+
+
+def test_dashboard_history_and_live_windows(client: TestClient) -> None:
+    client.post("/api/simulations", json=payload("dash-000001", sender_id="ACC-0021", device_id=known_device(client, "ACC-0021")))
+    history = client.get("/api/dashboard", params={"window": "history"}).json()
+    assert history["bucket_seconds"] == 86_400 and len(history["series"]) >= 100
+    assert history["totals"]["requests"] == sum(b["requests"] for b in history["series"])
+    first = history["series"][0]
+    assert first["requests"] == first["permit"] + first["verify"] + first["block_risk"] + first["block_evidence"]
+    assert first["risk_p50"] <= first["risk_p90"] <= first["risk_p99"]
+    assert history["thresholds"]["verify"] < history["thresholds"]["block"]
+    live = client.get("/api/dashboard", params={"window": "live"}).json()
+    assert live["bucket_seconds"] == 60 and len(live["series"]) == 30
+    assert live["totals"]["requests"] >= 1 and live["totals"]["latency_mean_ms"] > 0
+    assert client.get("/api/dashboard", params={"window": "year"}).status_code == 422
+
+
+def test_cluster_graph_links_clusters_and_anomalies(client: TestClient) -> None:
+    graph = client.get("/api/algorithms/cluster-graph", params={"anomalies": 60}).json()
+    ids = {n["id"] for n in graph["nodes"]}
+    kinds = {n["kind"] for n in graph["nodes"]}
+    assert kinds == {"cluster", "core", "anomaly"}
+    assert all(e["source"] in ids and e["target"] in ids for e in graph["edges"])
+    clusters = [n for n in graph["nodes"] if n["kind"] == "cluster"]
+    assert len(clusters) == graph["summary"]["clusters"] > 1
+    assert sum(c["size"] for c in clusters) == graph["summary"]["core_samples"]
+    near = [e for e in graph["edges"] if e["kind"] == "near"]
+    assert near and all(e["distance"] <= graph["summary"]["link_distance"] + 1e-9 for e in near)
+    anomalies = [n for n in graph["nodes"] if n["kind"] == "anomaly"]
+    assert 0 < len(anomalies) == graph["summary"]["anomalies_shown"] <= 60
+    for node in anomalies[:10]:
+        detail = client.get(f"/api/investigations/{node['request_id']}").json()["assessment"]
+        dbscan = next(c for c in detail["component_details"] if c["key"] == "dbscan")
+        assert dbscan["status"] == "outside_context"
+        assert node["distance"] > graph["summary"]["eps"]
+        assert {"source": f"c{node['cluster']}", "target": node["id"]}.items() <= next(
+            e for e in graph["edges"] if e["target"] == node["id"]
+        ).items()
+        assert not {"is_fraud", "scenario", "label"} & set(node)

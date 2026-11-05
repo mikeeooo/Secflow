@@ -22,6 +22,7 @@ from typing import Any
 import numpy as np
 
 from backend import views
+from backend.analytics import ClusterGraphBuilder, dashboard
 from backend.schemas import (
     AccountPage,
     AccountSummary,
@@ -39,6 +40,7 @@ from ml.policy import OperatingPoint, load_policy
 from storage.dataset import Dataset, load_dataset
 from storage.history import HistoryIndex
 from storage.memory import (
+    COMPLETED_OUTCOMES,
     OUTCOME_FOR_DECISION,
     AssessmentRecord,
     ConflictError,
@@ -58,7 +60,6 @@ from storage.records import (
 )
 
 log = logging.getLogger("secflow.service")
-COMPLETED_OUTCOMES = frozenset({"permitted", "approved_after_review"})
 HISTOGRAM_BINS = 20
 
 
@@ -117,6 +118,7 @@ class SecFlowService:
         self._wall_epoch = time.monotonic()
         self._last_ts = self._sim_epoch
         self._sim_counter = 0
+        self._graph = ClusterGraphBuilder(self.bundle.dbscan) if self.bundle else None
         self.startup_seconds = round(time.perf_counter() - started, 2)
         log.info("SecFlow service ready in %.2fs", self.startup_seconds)
 
@@ -227,7 +229,9 @@ class SecFlowService:
             auth_method=payload.auth_method, ip_country=payload.ip_country,
         )
         key = self._next_key(request.ts)
+        started = time.perf_counter()
         result = assess_one(request, key, history, account, self.bundle, self.evidence, self.policy, self.operating_point)
+        latency_ms = (time.perf_counter() - started) * 1_000
         history.add_request(request, key)  # attempted activity counts regardless of the decision
         outcome = OUTCOME_FOR_DECISION[result.policy.decision]
         if outcome == "permitted":
@@ -236,6 +240,7 @@ class SecFlowService:
         return AssessmentRecord(
             seq=self.state.next_seq(), origin="simulation", producer=producer, request=request, key=key, result=result,
             assessed_at=utc_now_iso(), fingerprint=None, session_events=tuple(events), outcome=outcome,
+            latency_ms=round(latency_ms, 3),
         )
 
     def _settle(self, request: PaymentRequest, ts: int) -> None:
@@ -557,6 +562,14 @@ class SecFlowService:
                 "search": training["search"],
             },
         }
+
+    def dashboard(self, window: str) -> dict[str, Any]:
+        return dashboard(self._records(), window, self.simulation_now(), self.operating_point, dict(self.policy.goals))
+
+    def cluster_graph(self, max_anomalies: int) -> dict[str, Any]:
+        if self._graph is None:
+            raise NotFoundError("cluster graph (model bundle unavailable)")
+        return self._graph.build(self._records(), self.party, max_anomalies)
 
     def evaluation(self) -> dict[str, Any] | None:
         path = self.settings.artifacts_dir / "evaluation.json"

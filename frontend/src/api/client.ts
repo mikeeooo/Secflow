@@ -1,4 +1,7 @@
 import type {
+  ClusterGraph,
+  Dashboard,
+  DashboardWindow,
   AccountDetail,
   AccountSummary,
   AssessmentDetail,
@@ -96,4 +99,6 @@ export const api = {
   streamMode: (mode: StreamStatus["mode"]) => request<StreamStatus>("/api/simulation-stream/mode", post({ mode })),
   algorithms: () => request<Report>("/api/algorithms"),
   evaluation: () => request<Report>("/api/evaluation"),
+  dashboard: (window: DashboardWindow) => request<Dashboard>(`/api/dashboard${query({ window })}`),
+  clusterGraph: (anomalies: number) => request<ClusterGraph>(`/api/algorithms/cluster-graph${query({ anomalies })}`),
 };

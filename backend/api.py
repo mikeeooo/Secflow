@@ -198,6 +198,18 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     def algorithms(request: Request) -> dict[str, Any]:
         return svc(request).algorithms()
 
+    @app.get("/api/dashboard")
+    def monitoring_dashboard(
+        request: Request, window: Annotated[str, Query(pattern="^(history|live)$")] = "history"
+    ) -> dict[str, Any]:
+        return svc(request).dashboard(window)
+
+    @app.get("/api/algorithms/cluster-graph")
+    def cluster_graph(
+        request: Request, anomalies: Annotated[int, Query(ge=0, le=500)] = 150
+    ) -> dict[str, Any]:
+        return svc(request).cluster_graph(anomalies)
+
     @app.get("/api/evaluation")
     def evaluation(request: Request) -> dict[str, Any]:
         data = svc(request).evaluation()

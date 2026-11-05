@@ -274,3 +274,93 @@ export interface Health {
 
 // The algorithms and evaluation payloads are large reports; the pages read them defensively.
 export type Report = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+export type DashboardWindow = "history" | "live";
+
+export interface DashboardBucket {
+  t: string;
+  requests: number;
+  permit: number;
+  verify: number;
+  block_risk: number;
+  block_evidence: number;
+  safeguard: number;
+  outside_context: number;
+  scored: number;
+  completed_amount: number;
+  pending_amount: number;
+  blocked_amount: number;
+  mean_isolation_forest: number | null;
+  mean_lof: number | null;
+  mean_rules: number | null;
+  latency_mean_ms: number | null;
+  latency_max_ms: number | null;
+  risk_p50: number | null;
+  risk_p90: number | null;
+  risk_p99: number | null;
+}
+
+export interface Dashboard {
+  window: DashboardWindow;
+  label: string;
+  bucket_seconds: number;
+  range: { from: string; to: string };
+  series: DashboardBucket[];
+  totals: {
+    requests: number;
+    verify_rate: number | null;
+    block_rate: number | null;
+    outside_context_rate: number | null;
+    preventive_blocks: number;
+    evidence_blocks: number;
+    latency_mean_ms: number | null;
+    latency_p95_ms: number | null;
+  };
+  decision_sources: Record<string, number>;
+  rule_triggers: { code: string; count: number; share: number }[];
+  thresholds: { verify: number; block: number };
+  goals: { max_verify_rate: number | null };
+}
+
+export interface GraphNode {
+  id: string;
+  kind: "cluster" | "core" | "anomaly";
+  cluster: number | null;
+  size?: number;
+  request_id?: string;
+  decision_label?: DecisionLabel;
+  risk_score?: number | null;
+  distance?: number;
+  sender?: string;
+  recipient?: string;
+  amount?: number;
+  event_time?: string;
+  origin?: string;
+}
+
+export interface GraphEdge {
+  source: string;
+  target: string;
+  kind: "member" | "near" | "nearest" | "anomaly";
+  distance: number;
+  pairs: number;
+}
+
+export interface ClusterGraph {
+  nodes: GraphNode[];
+  edges: GraphEdge[];
+  clusters: { cluster: number; size: number; anomalies: number }[];
+  summary: {
+    clusters: number;
+    core_samples: number;
+    eps: number;
+    min_samples: number;
+    link_distance: number;
+    near_links: number;
+    nearest_links: number;
+    training_noise_fraction: number | null;
+    anomalies_total: number;
+    anomalies_shown: number;
+    note: string;
+  };
+}

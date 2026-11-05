@@ -27,6 +27,7 @@ class NotFoundError(KeyError):
     """Unknown request, account, or other identifier."""
 
 
+COMPLETED_OUTCOMES = frozenset({"permitted", "approved_after_review"})
 OUTCOME_FOR_DECISION = {"Permit": "permitted", "Verify": "pending_verification", "Block": "blocked_attempt"}
 
 
@@ -63,6 +64,7 @@ class AssessmentRecord:
     session_events: tuple[AuthEvent, ...]
     outcome: str
     reviews: list[ReviewRecord] = field(default_factory=list)
+    latency_ms: float | None = None  # measured single-request assessment time (simulations only)
 
 
 class MemoryState:

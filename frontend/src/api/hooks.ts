@@ -1,6 +1,6 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "./client";
-import type { ReviewRequest, SimulationRequest, StreamStatus } from "./types";
+import type { DashboardWindow, ReviewRequest, SimulationRequest, StreamStatus } from "./types";
 
 export const keys = {
   overview: ["overview"] as const,
@@ -63,3 +63,14 @@ export function useStreamControl() {
     mode: useMutation({ mutationFn: api.streamMode, onSuccess }),
   };
 }
+
+export const useDashboard = (window: DashboardWindow) =>
+  useQuery({
+    queryKey: ["dashboard", window],
+    queryFn: () => api.dashboard(window),
+    refetchInterval: window === "live" ? 5_000 : 30_000,
+    placeholderData: keepPreviousData,
+  });
+
+export const useClusterGraph = (anomalies: number) =>
+  useQuery({ queryKey: ["cluster-graph", anomalies], queryFn: () => api.clusterGraph(anomalies), placeholderData: keepPreviousData });

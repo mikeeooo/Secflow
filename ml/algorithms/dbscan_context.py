@@ -32,6 +32,7 @@ class ContextResult:
     status: str
     distance: float | None
     cluster: int | None
+    nearest_cluster: int | None = None  # closest frozen cluster, also for outside-context profiles
 
 
 class DBSCANContext:
@@ -86,9 +87,9 @@ class DBSCANContext:
             distance = float(distances[row, 0])
             cluster = int(self.core_labels[indices[row, 0]])
             if status != "ok":
-                results.append(ContextResult(0.0, "insufficient_history", None, None))
+                results.append(ContextResult(0.0, "insufficient_history", None, None, cluster))
             elif distance <= self.eps:
-                results.append(ContextResult(0.0, "within_context", distance, cluster))
+                results.append(ContextResult(0.0, "within_context", distance, cluster, cluster))
             else:
-                results.append(ContextResult(1.0, "outside_context", distance, None))
+                results.append(ContextResult(1.0, "outside_context", distance, None, cluster))
         return results
