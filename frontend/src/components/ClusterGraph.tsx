@@ -9,7 +9,7 @@ import {
   type SimulationLinkDatum,
   type SimulationNodeDatum,
 } from "d3-force";
-import { Maximize2, Minus, Plus } from "lucide-react";
+import { Maximize2, Minus, Pause, Play, Plus } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import type { ClusterGraph as GraphData, DecisionLabel, GraphEdge, GraphNode } from "../api/types";
@@ -17,7 +17,13 @@ import { formatMoney } from "../lib/format";
 import { DecisionBadge } from "./DecisionBadge";
 import { Button, Chip, cx } from "./ui";
 
-type SimNode = GraphNode & SimulationNodeDatum & { r: number };
+type SimNode = GraphNode & SimulationNodeDatum & { r: number; px?: number; py?: number };
+
+const ROTATION_SPEED = 0.08; // radians per second: one full turn in about 80 seconds
+
+function prefersReducedMotion(): boolean {
+  return typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 type SimLink = SimulationLinkDatum<SimNode> & Pick<GraphEdge, "kind" | "distance" | "pairs">;
 
 /**
@@ -56,13 +62,17 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
   const simRef = useRef<Simulation<SimNode, SimLink> | null>(null);
   const nodesRef = useRef<SimNode[]>([]);
   const linksRef = useRef<SimLink[]>([]);
-  const view = useRef({ k: 1, x: 0, y: 0, auto: true });
+  const view = useRef({ k: 1, x: 0, y: 0, cx: 0, cy: 0, auto: true });
+  const angleRef = useRef(0);
+  const pointerInsideRef = useRef(false);
+  const draggingRef = useRef(false);
   const sizeRef = useRef({ w: 800, h: 560 });
   const hoverRef = useRef<SimNode | null>(null);
   const selectedRef = useRef<number | null>(null);
   const showCoresRef = useRef(showCores);
   const [hover, setHover] = useState<{ node: SimNode; x: number; y: number } | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
+  const [rotating, setRotating] = useState(() => !prefersReducedMotion());
   const navigate = useNavigate();
 
   const neighbours = useMemo(() => {
@@ -85,8 +95,16 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
     const dpr = window.devicePixelRatio || 1;
     const nodes = nodesRef.current;
     if (view.current.auto && nodes.length) fit(nodes);
-    const { k, x, y } = view.current;
-    canvas.dataset.view = `${k.toFixed(4)},${x.toFixed(1)},${y.toFixed(1)}`;
+    const { k, x, y, cx, cy } = view.current;
+    const cos = Math.cos(angleRef.current);
+    const sin = Math.sin(angleRef.current);
+    for (const n of nodes) {
+      const dx = (n.x ?? 0) - cx;
+      const dy = (n.y ?? 0) - cy;
+      n.px = cx + dx * cos - dy * sin;
+      n.py = cy + dx * sin + dy * cos;
+    }
+    canvas.dataset.view = `${k.toFixed(4)},${x.toFixed(1)},${y.toFixed(1)},${angleRef.current.toFixed(3)}`;
     const focus = selectedRef.current;
     const linked = focus == null ? null : new Set([focus, ...(neighbours.get(focus) ?? []).map((n) => n.cluster)]);
     const dim = (cluster: number | null | undefined) => linked != null && (cluster == null || !linked.has(cluster));
@@ -106,8 +124,8 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
       ctx.strokeStyle = link.kind === "anomaly" ? DECISION_COLOR[t.decision_label ?? "Permitted"] : GRAPH.edge;
       ctx.setLineDash(link.kind === "nearest" || link.kind === "anomaly" ? [3 / k, 3 / k] : []);
       ctx.beginPath();
-      ctx.moveTo(s.x ?? 0, s.y ?? 0);
-      ctx.lineTo(t.x ?? 0, t.y ?? 0);
+      ctx.moveTo(s.px ?? 0, s.py ?? 0);
+      ctx.lineTo(t.px ?? 0, t.py ?? 0);
       ctx.stroke();
     }
     ctx.setLineDash([]);
@@ -115,8 +133,8 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
     for (const node of nodes) {
       if (node.kind === "core" && !showCoresRef.current) continue;
       ctx.globalAlpha = dim(node.cluster) ? 0.12 : 1;
-      const nx = node.x ?? 0;
-      const ny = node.y ?? 0;
+      const nx = node.px ?? 0;
+      const ny = node.py ?? 0;
       if (node.kind === "anomaly") {
         const c = DECISION_COLOR[node.decision_label ?? "Permitted"];
         ctx.fillStyle = c;
@@ -152,7 +170,7 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
     ctx.font = `${11 / k}px -apple-system, system-ui, sans-serif`;
     for (const node of nodes) {
       if (node.kind === "cluster" && ((node.size ?? 0) > 400 || node.cluster === focus) && !dim(node.cluster)) {
-        ctx.fillText(`C${node.cluster}`, (node.x ?? 0) + node.r + 2 / k, (node.y ?? 0) - node.r);
+        ctx.fillText(`C${node.cluster}`, (node.px ?? 0) + node.r + 2 / k, (node.py ?? 0) - node.r);
       }
     }
     const hovered = hoverRef.current;
@@ -160,20 +178,25 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
       ctx.strokeStyle = GRAPH.ring;
       ctx.lineWidth = 1.5 / k;
       ctx.beginPath();
-      ctx.arc(hovered.x ?? 0, hovered.y ?? 0, hovered.r + 4, 0, Math.PI * 2);
+      ctx.arc(hovered.px ?? 0, hovered.py ?? 0, hovered.r + 4, 0, Math.PI * 2);
       ctx.stroke();
     }
   };
 
+  /** Fit by the layout's radius around its centroid, so the frame stays still while the graph rotates. */
   function fit(nodes: SimNode[]) {
     const { w, h } = sizeRef.current;
-    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+    let sx = 0, sy = 0;
     for (const n of nodes) {
-      minX = Math.min(minX, n.x ?? 0); maxX = Math.max(maxX, n.x ?? 0);
-      minY = Math.min(minY, n.y ?? 0); maxY = Math.max(maxY, n.y ?? 0);
+      sx += n.x ?? 0;
+      sy += n.y ?? 0;
     }
-    const k = Math.min(4, Math.max(0.05, Math.min((w - 40) / Math.max(1, maxX - minX), (h - 40) / Math.max(1, maxY - minY))));
-    view.current = { k, x: -((minX + maxX) / 2) * k, y: -((minY + maxY) / 2) * k, auto: true };
+    const cx = sx / nodes.length;
+    const cy = sy / nodes.length;
+    let radius = 1;
+    for (const n of nodes) radius = Math.max(radius, Math.hypot((n.x ?? 0) - cx, (n.y ?? 0) - cy) + n.r);
+    const k = Math.min(4, Math.max(0.05, (Math.min(w, h) - 32) / (2 * radius)));
+    view.current = { k, x: -cx * k, y: -cy * k, cx, cy, auto: true };
   }
 
   // Build the simulation whenever the data changes.
@@ -198,8 +221,7 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
       .alphaDecay(0.03);
     simRef.current = sim;
     view.current.auto = true;
-    const reduce = typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) {
+    if (prefersReducedMotion()) {
       sim.stop();
       sim.tick(300);
       draw();
@@ -241,6 +263,25 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected, showCores]);
 
+  // Slow continuous rotation; holds still while the pointer is over the graph so nodes can be inspected.
+  useEffect(() => {
+    if (!rotating || typeof requestAnimationFrame === "undefined") return;
+    let frame = 0;
+    let last = performance.now();
+    const step = (now: number) => {
+      const dt = Math.min(0.1, (now - last) / 1000);
+      last = now;
+      if (!pointerInsideRef.current && !draggingRef.current) {
+        angleRef.current = (angleRef.current + dt * ROTATION_SPEED) % (Math.PI * 2);
+        draw();
+      }
+      frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rotating]);
+
   // Pointer interaction: wheel zoom, drag to pan, hover, click.
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -248,8 +289,12 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
     let drag: { x: number; y: number; moved: boolean } | null = null;
     const toWorld = (event: { offsetX: number; offsetY: number }) => {
       const { w, h } = sizeRef.current;
-      const { k, x, y } = view.current;
-      return { wx: (event.offsetX - w / 2 - x) / k, wy: (event.offsetY - h / 2 - y) / k };
+      const { k, x, y, cx, cy } = view.current;
+      const rx = (event.offsetX - w / 2 - x) / k - cx;
+      const ry = (event.offsetY - h / 2 - y) / k - cy;
+      const cos = Math.cos(-angleRef.current);
+      const sin = Math.sin(-angleRef.current);
+      return { wx: cx + rx * cos - ry * sin, wy: cy + rx * sin + ry * cos };
     };
     const find = (event: { offsetX: number; offsetY: number }) => {
       const { wx, wy } = toWorld(event);
@@ -263,6 +308,7 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
     };
     const onDown = (event: PointerEvent) => {
       drag = { x: event.clientX, y: event.clientY, moved: false };
+      draggingRef.current = true;
       canvas.setPointerCapture(event.pointerId);
     };
     const onMove = (event: PointerEvent) => {
@@ -287,13 +333,18 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
     const onUp = (event: PointerEvent) => {
       const wasDrag = drag?.moved;
       drag = null;
+      draggingRef.current = false;
       if (wasDrag) return;
       const node = find(event);
       if (!node) return setSelected(null);
       if (node.kind === "anomaly" && node.request_id) navigate(`/investigations/${encodeURIComponent(node.request_id)}`);
       else setSelected((current) => (current === node.cluster ? null : node.cluster));
     };
+    const onEnter = () => {
+      pointerInsideRef.current = true;
+    };
     const onLeave = () => {
+      pointerInsideRef.current = false;
       hoverRef.current = null;
       setHover(null);
       draw();
@@ -303,7 +354,9 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
     canvas.addEventListener("pointermove", onMove);
     canvas.addEventListener("pointerup", onUp);
     canvas.addEventListener("pointerleave", onLeave);
+    canvas.addEventListener("pointerenter", onEnter);
     return () => {
+      canvas.removeEventListener("pointerenter", onEnter);
       canvas.removeEventListener("wheel", onWheel);
       canvas.removeEventListener("pointerdown", onDown);
       canvas.removeEventListener("pointermove", onMove);
@@ -319,7 +372,7 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
     const k = Math.min(12, Math.max(0.05, v.k * factor));
     const cx0 = sx - w / 2;
     const cy0 = sy - h / 2;
-    view.current = { k, x: cx0 - ((cx0 - v.x) / v.k) * k, y: cy0 - ((cy0 - v.y) / v.k) * k, auto: false };
+    view.current = { ...v, k, x: cx0 - ((cx0 - v.x) / v.k) * k, y: cy0 - ((cy0 - v.y) / v.k) * k, auto: false };
     draw();
   }
 
@@ -336,6 +389,9 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
           className="block touch-none"
         />
         <div className="absolute top-3 right-3 flex gap-1">
+          <Button aria-label={rotating ? "Pause rotation" : "Rotate graph"} aria-pressed={rotating} onClick={() => setRotating((r) => !r)}>
+            {rotating ? <Pause aria-hidden className="size-4" /> : <Play aria-hidden className="size-4" />}
+          </Button>
           <Button aria-label="Zoom in" onClick={() => zoomAt(sizeRef.current.w / 2, sizeRef.current.h / 2, 1.4)}><Plus aria-hidden className="size-4" /></Button>
           <Button aria-label="Zoom out" onClick={() => zoomAt(sizeRef.current.w / 2, sizeRef.current.h / 2, 1 / 1.4)}><Minus aria-hidden className="size-4" /></Button>
           <Button aria-label="Fit graph to view" onClick={() => { view.current.auto = true; draw(); }}><Maximize2 aria-hidden className="size-4" /></Button>
@@ -376,8 +432,8 @@ export function ClusterGraph({ data, showCores }: { data: GraphData; showCores: 
           </div>
         ) : (
           <div className="rounded-[10px] bg-surface-2 p-3 text-label-2">
-            Hover a node for details. Click a cluster to highlight its connections, or click a diamond to open that request's investigation.
-            Scroll to zoom, drag to pan.
+            Hover a node for details; rotation pauses while the pointer is over the graph. Click a cluster to highlight its connections,
+            or click a diamond to open that request's investigation. Scroll to zoom, drag to pan.
           </div>
         )}
         <div className="grid grid-cols-2 gap-2">

@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { NavLink, useLocation } from "react-router";
-import { useStreamStatus } from "../api/hooks";
 import { cx } from "./ui";
 
 export const NAV = [
@@ -26,7 +25,7 @@ export const NAV = [
 function Wordmark() {
   return (
     <div className="flex items-center gap-2.5">
-      <span aria-hidden className="grid size-8 place-items-center rounded-[9px] bg-accent text-white">
+      <span aria-hidden className="grid size-8 place-items-center rounded-[9px] bg-accent-strong text-white">
         <Activity className="size-[18px]" strokeWidth={2.4} />
       </span>
       <span className="font-display text-[19px] font-bold tracking-[-0.02em]">SecFlow</span>
@@ -59,18 +58,6 @@ function NavItems({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-export function StreamPill() {
-  const { data, isError } = useStreamStatus();
-  const running = data?.running ?? false;
-  const text = isError ? "Stream status unavailable" : running ? "Simulated stream running" : "Simulated stream stopped";
-  return (
-    <NavLink to="/live" className="flex items-center gap-2 rounded-[10px] px-3 py-2 text-[13px] text-label-2 hover:bg-surface-2">
-      <span aria-hidden className={cx("size-2 rounded-full", running ? "bg-permit" : "bg-label-2")} />
-      {text}
-    </NavLink>
-  );
-}
-
 export function Layout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -97,12 +84,6 @@ export function Layout({ children }: { children: ReactNode }) {
         <nav aria-label="Main">
           <NavItems />
         </nav>
-        <div className="mt-auto space-y-1">
-          <StreamPill />
-          <p className="px-3 text-[12px] leading-snug text-label-2">
-            Simulations and reviews are held in server memory and reset when the server restarts.
-          </p>
-        </div>
       </aside>
 
       <header className="sticky top-0 z-30 flex items-center justify-between border-b border-separator bg-surface/90 px-4 py-2.5 backdrop-blur-xl lg:hidden">
@@ -129,9 +110,6 @@ export function Layout({ children }: { children: ReactNode }) {
               </button>
             </div>
             <NavItems onNavigate={() => setOpen(false)} />
-            <div className="mt-3 border-t border-separator pt-3">
-              <StreamPill />
-            </div>
           </nav>
         </div>
       ) : null}

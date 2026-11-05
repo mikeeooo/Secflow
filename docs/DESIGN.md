@@ -1,8 +1,7 @@
 # Interface design notes
 
-SecFlow is a quiet analyst tool. The design follows Apple's Human Interface Guidelines as
-principles for a web app (sidebar navigation, semantic colours, system type, light and dark
-appearance with no in-app toggle). Identity lives in one place.
+SecFlow is a quiet analyst tool with a single dark appearance (Grafana-style surfaces), chosen for
+long monitoring sessions. Navigation uses a sidebar and system type; identity lives in one place.
 
 ## The signature: the risk composition bar
 
@@ -13,17 +12,21 @@ marked on the same scale. Under the bar, each part prints its own arithmetic (`0
 This is the product's point of view: a decision is only as good as its explanation. Everything
 around the bar stays neutral.
 
-## Tokens
+## Tokens (dark only)
 
-| Role | Light | Dark | Text contrast |
-|---|---|---|---|
-| Canvas / surface | `#F2F2F7` / `#FFFFFF` | `#000000` / `#1C1C1E` | — |
-| Label / secondary | `#1D1D1F` / `#6E6E73` | `#F5F5F7` / `#A1A1A6` | 16.8:1 / 5.1:1 on white |
-| Accent (links, primary) | `#0066CC` | `#4DA3FF` | 5.7:1 on white |
-| Permitted | `#1E7D34` | `#32D74B` | 5.2:1 on white |
-| Needs verification | `#9A5B00` | `#FFB340` | 5.4:1 on white |
-| Preventive risk block | `#C42B1C` | `#FF6961` | 5.6:1 on white |
-| Confirmed fraud evidence | solid `#1D1D1F` badge, white text | solid `#F5F5F7` badge, dark text | 16:1 |
+| Role | Value | Contrast on panel `#16171C` |
+|---|---|---|
+| Canvas / panel / raised | `#0B0C0F` / `#16171C` / `#202228` | — |
+| Label / secondary | `#F2F2F5` / `#A5A7B0` | 16.0:1 / 7.5:1 |
+| Accent (links, focus) | `#4DA3FF` | 6.8:1 |
+| Filled buttons | `#0A6FD6` (primary), `#C4372B` (destructive) | white text 4.9:1 / 5.4:1 |
+| Permitted | `#32D74B` | 9.3:1 |
+| Needs verification | `#FFB340` | 10.0:1 |
+| Preventive risk block | `#FF6961` | 6.3:1 |
+| Confirmed fraud evidence | solid `#F2F2F5` badge, dark text | 16:1 |
+
+The light dark-mode accent and red cannot carry white text (about 2.7:1), so filled buttons use the
+deeper `*-strong` fills.
 
 Decision states always pair an icon with the text label (check, hourglass, ban, shield), so colour
 is never the only signal.
@@ -31,14 +34,16 @@ is never the only signal.
 Confirmed evidence uses a solid inverse badge rather than another hue. It reads as authoritative,
 stays distinct from the red preventive block, and leaves the chart hues free.
 
-Chart categorical slots for the four components are blue `#2A78D6`, magenta `#E87BA4`, violet
-`#6250D6`, and aqua `#1BAF7A` (dark: `#3987E5`, `#D55181`, `#9085E9`, `#199E70`). They were checked
-with the dataviz palette validator in both modes. The first candidate, an all-blue ramp, failed the
-lightness, chroma, and normal-vision checks, and an aqua–magenta adjacency failed deuteranopia
-separation in dark mode. The order above passes all hard gates.
+Chart categorical slots for the four components are blue `#3987E5`, magenta `#D55181`, violet
+`#9085E9`, and aqua `#199E70`, checked with the dataviz palette validator against the `#16171C`
+panel. An earlier all-blue ramp failed the lightness, chroma, and normal-vision checks, and an
+aqua–magenta adjacency failed deuteranopia separation. The order above passes all hard gates.
 
-Magenta and aqua are below 3:1 against white, so every chart carries direct text values or a data
-table. Segments keep 2px surface gaps.
+Every chart still carries direct text values or a data table, and segments keep 2px surface gaps.
+
+The DBSCAN cluster graph rotates slowly (one turn in about 80 seconds) around its centroid. It
+holds still while the pointer is over it, has a pause control, and starts paused when the system
+asks for reduced motion.
 
 ## Type and layout
 

@@ -60,15 +60,6 @@ export function InvestigationPage() {
             </div>
           </Card>
           <Timeline entries={data.timeline} />
-          <Card>
-            <CardHeader title="Versions" />
-            <div className="space-y-1 px-5 pb-4 font-mono text-[12px] break-all text-label-2">
-              <p>model {a.model_version ?? "unavailable"}</p>
-              <p>policy {a.policy_version}</p>
-              <p>operating point {a.operating_point_version} ({a.thresholds.source})</p>
-              <p className="font-sans">Assessed {formatDateTime(a.assessed_at)}</p>
-            </div>
-          </Card>
         </div>
       </div>
     </>

@@ -45,10 +45,10 @@ type Variant = "primary" | "secondary" | "plain" | "destructive";
 
 export function Button({ variant = "secondary", className, children, ...props }: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant }) {
   const styles: Record<Variant, string> = {
-    primary: "bg-accent text-white hover:brightness-110 disabled:opacity-50",
+    primary: "bg-accent-strong text-white hover:brightness-110 disabled:opacity-50",
     secondary: "bg-surface-2 text-label hover:bg-surface-3 disabled:opacity-50",
     plain: "text-accent hover:bg-accent-soft disabled:opacity-50",
-    destructive: "bg-block text-white hover:brightness-110 disabled:opacity-50",
+    destructive: "bg-block-strong text-white hover:brightness-110 disabled:opacity-50",
   };
   return (
     <button

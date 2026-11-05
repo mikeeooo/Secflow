@@ -1,60 +1,37 @@
 @import "tailwindcss";
 
 /*
- * SecFlow tokens. Semantic colours switch with the system appearance; there is no in-app
- * appearance toggle. Text colours meet WCAG AA (>= 4.5:1) on their surfaces in both modes.
+ * SecFlow tokens: a single dark appearance (Grafana-style surfaces). Text colours meet WCAG AA
+ * (>= 4.5:1) on the panel surfaces: label 16.0:1, secondary 7.5:1, accent 6.8:1, status 6.3-10:1.
+ * Filled buttons use the deeper *-strong fills so white text stays above 4.9:1.
  */
 :root {
-  --sf-canvas: #f2f2f7;
-  --sf-surface: #ffffff;
-  --sf-surface-2: #f5f5f7;
-  --sf-surface-3: #e8e8ed;
-  --sf-separator: rgb(60 60 67 / 0.16);
-  --sf-label: #1d1d1f;
-  --sf-label-2: #6e6e73;
-  --sf-accent: #0066cc;
-  --sf-accent-soft: rgb(0 102 204 / 0.1);
-  --sf-permit: #1e7d34;
-  --sf-permit-soft: rgb(30 125 52 / 0.1);
-  --sf-verify: #9a5b00;
-  --sf-verify-soft: rgb(255 159 10 / 0.16);
-  --sf-block: #c42b1c;
-  --sf-block-soft: rgb(196 43 28 / 0.1);
-  --sf-evidence: #1d1d1f;
-  --sf-evidence-soft: rgb(29 29 31 / 0.08);
-  /* chart categorical slots (validated: dataviz validate_palette.js, adjacent pairs, light) */
-  --sf-if: #2a78d6;
-  --sf-lof: #e87ba4;
-  --sf-dbscan: #6250d6;
-  --sf-rules: #1baf7a;
-  --sf-focus: #0066cc;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sf-canvas: #000000;
-    --sf-surface: #1c1c1e;
-    --sf-surface-2: #2c2c2e;
-    --sf-surface-3: #3a3a3c;
-    --sf-separator: rgb(84 84 88 / 0.65);
-    --sf-label: #f5f5f7;
-    --sf-label-2: #a1a1a6;
-    --sf-accent: #4da3ff;
-    --sf-accent-soft: rgb(77 163 255 / 0.16);
-    --sf-permit: #32d74b;
-    --sf-permit-soft: rgb(50 215 75 / 0.14);
-    --sf-verify: #ffb340;
-    --sf-verify-soft: rgb(255 179 64 / 0.16);
-    --sf-block: #ff6961;
-    --sf-block-soft: rgb(255 105 97 / 0.16);
-    --sf-evidence: #f5f5f7;
-    --sf-evidence-soft: rgb(245 245 247 / 0.12);
-    --sf-if: #3987e5;
-    --sf-lof: #d55181;
-    --sf-dbscan: #9085e9;
-    --sf-rules: #199e70;
-    --sf-focus: #4da3ff;
-  }
+  color-scheme: dark;
+  --sf-canvas: #0b0c0f;
+  --sf-surface: #16171c;
+  --sf-surface-2: #202228;
+  --sf-surface-3: #2b2e35;
+  --sf-separator: rgb(204 204 220 / 0.12);
+  --sf-label: #f2f2f5;
+  --sf-label-2: #a5a7b0;
+  --sf-accent: #4da3ff;
+  --sf-accent-strong: #0a6fd6;
+  --sf-accent-soft: rgb(77 163 255 / 0.16);
+  --sf-permit: #32d74b;
+  --sf-permit-soft: rgb(50 215 75 / 0.14);
+  --sf-verify: #ffb340;
+  --sf-verify-soft: rgb(255 179 64 / 0.16);
+  --sf-block: #ff6961;
+  --sf-block-strong: #c4372b;
+  --sf-block-soft: rgb(255 105 97 / 0.16);
+  --sf-evidence: #f2f2f5;
+  --sf-evidence-soft: rgb(242 242 245 / 0.1);
+  /* chart categorical slots (validated with the dataviz palette validator against #16171c) */
+  --sf-if: #3987e5;
+  --sf-lof: #d55181;
+  --sf-dbscan: #9085e9;
+  --sf-rules: #199e70;
+  --sf-focus: #4da3ff;
 }
 
 @theme {
@@ -70,6 +47,8 @@
   --color-label-2: var(--sf-label-2);
   --color-accent: var(--sf-accent);
   --color-accent-soft: var(--sf-accent-soft);
+  --color-accent-strong: var(--sf-accent-strong);
+  --color-block-strong: var(--sf-block-strong);
   --color-permit: var(--sf-permit);
   --color-permit-soft: var(--sf-permit-soft);
   --color-verify: var(--sf-verify);

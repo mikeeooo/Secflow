@@ -187,7 +187,7 @@ export function SimulatorPage() {
                     <div className="mt-2 flex flex-wrap gap-1.5">
                       {sender.recent_recipients.slice(0, 5).map((r) => (
                         <button key={r.id} type="button" onClick={() => change({ recipient: { ...r, detail: "" } })}
-                          className={cx("rounded-full px-2.5 py-1 text-[12px] font-medium", form.recipient?.id === r.id ? "bg-accent text-white" : "bg-surface-2 text-label hover:bg-surface-3")}>
+                          className={cx("rounded-full px-2.5 py-1 text-[12px] font-medium", form.recipient?.id === r.id ? "bg-accent-strong text-white" : "bg-surface-2 text-label hover:bg-surface-3")}>
                           {r.name}
                         </button>
                       ))}
@@ -289,7 +289,7 @@ function ResultCard({ result }: { result: AssessmentDetail }) {
         </div>
       ) : null}
       <div className="flex flex-wrap gap-2 border-t border-separator p-5">
-        <Link to={`/investigations/${encodeURIComponent(result.request_id)}`} className="inline-flex min-h-9 items-center gap-1 rounded-[10px] bg-accent px-3.5 font-medium text-white hover:brightness-110">
+        <Link to={`/investigations/${encodeURIComponent(result.request_id)}`} className="inline-flex min-h-9 items-center gap-1 rounded-[10px] bg-accent-strong px-3.5 font-medium text-white hover:brightness-110">
           Open investigation <ArrowRight aria-hidden className="size-4" />
         </Link>
         <Link to="/live" className="inline-flex min-h-9 items-center rounded-[10px] px-3.5 font-medium text-accent hover:bg-accent-soft">See it in Live Transfers</Link>
