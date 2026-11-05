@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+/*
+ * SecFlow tokens. Semantic colours switch with the system appearance; there is no in-app
+ * appearance toggle. Text colours meet WCAG AA (>= 4.5:1) on their surfaces in both modes.
+ */
+:root {
+  --sf-canvas: #f2f2f7;
+  --sf-surface: #ffffff;
+  --sf-surface-2: #f5f5f7;
+  --sf-surface-3: #e8e8ed;
+  --sf-separator: rgb(60 60 67 / 0.16);
+  --sf-label: #1d1d1f;
+  --sf-label-2: #6e6e73;
+  --sf-accent: #0066cc;
+  --sf-accent-soft: rgb(0 102 204 / 0.1);
+  --sf-permit: #1e7d34;
+  --sf-permit-soft: rgb(30 125 52 / 0.1);
+  --sf-verify: #9a5b00;
+  --sf-verify-soft: rgb(255 159 10 / 0.16);
+  --sf-block: #c42b1c;
+  --sf-block-soft: rgb(196 43 28 / 0.1);
+  --sf-evidence: #1d1d1f;
+  --sf-evidence-soft: rgb(29 29 31 / 0.08);
+  /* chart categorical slots (validated: dataviz validate_palette.js, adjacent pairs, light) */
+  --sf-if: #2a78d6;
+  --sf-lof: #e87ba4;
+  --sf-dbscan: #6250d6;
+  --sf-rules: #1baf7a;
+  --sf-focus: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --sf-canvas: #000000;
+    --sf-surface: #1c1c1e;
+    --sf-surface-2: #2c2c2e;
+    --sf-surface-3: #3a3a3c;
+    --sf-separator: rgb(84 84 88 / 0.65);
+    --sf-label: #f5f5f7;
+    --sf-label-2: #a1a1a6;
+    --sf-accent: #4da3ff;
+    --sf-accent-soft: rgb(77 163 255 / 0.16);
+    --sf-permit: #32d74b;
+    --sf-permit-soft: rgb(50 215 75 / 0.14);
+    --sf-verify: #ffb340;
+    --sf-verify-soft: rgb(255 179 64 / 0.16);
+    --sf-block: #ff6961;
+    --sf-block-soft: rgb(255 105 97 / 0.16);
+    --sf-evidence: #f5f5f7;
+    --sf-evidence-soft: rgb(245 245 247 / 0.12);
+    --sf-if: #3987e5;
+    --sf-lof: #d55181;
+    --sf-dbscan: #9085e9;
+    --sf-rules: #199e70;
+    --sf-focus: #4da3ff;
+  }
+}
+
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", "Segoe UI", Roboto, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --color-canvas: var(--sf-canvas);
+  --color-surface: var(--sf-surface);
+  --color-surface-2: var(--sf-surface-2);
+  --color-surface-3: var(--sf-surface-3);
+  --color-separator: var(--sf-separator);
+  --color-label: var(--sf-label);
+  --color-label-2: var(--sf-label-2);
+  --color-accent: var(--sf-accent);
+  --color-accent-soft: var(--sf-accent-soft);
+  --color-permit: var(--sf-permit);
+  --color-permit-soft: var(--sf-permit-soft);
+  --color-verify: var(--sf-verify);
+  --color-verify-soft: var(--sf-verify-soft);
+  --color-block: var(--sf-block);
+  --color-block-soft: var(--sf-block-soft);
+  --color-evidence: var(--sf-evidence);
+  --color-evidence-soft: var(--sf-evidence-soft);
+  --color-c-if: var(--sf-if);
+  --color-c-lof: var(--sf-lof);
+  --color-c-dbscan: var(--sf-dbscan);
+  --color-c-rules: var(--sf-rules);
+  --radius-card: 14px;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--sf-canvas);
+  color: var(--sf-label);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--sf-focus);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes sf-arrive {
+  from {
+    background-color: var(--sf-accent-soft);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+.sf-arrive {
+  animation: sf-arrive 1.6s ease-out;
+}

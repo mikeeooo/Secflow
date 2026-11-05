@@ -1,0 +1,80 @@
+{
+  "policy_name": "secflow-evidence-first",
+  "policy_revision": "1.0.0",
+  "description": "Weighted anomaly-risk index with an evidence-first action table. Scores are anomaly/context indices, not fraud probabilities.",
+  "weights": {
+    "isolation_forest": 0.35,
+    "lof": 0.25,
+    "dbscan": 0.10,
+    "rules": 0.30
+  },
+  "initial_thresholds": {
+    "verify": 35,
+    "block": 70
+  },
+  "threshold_search": {
+    "verify": {"start": 30, "stop": 80, "step": 1},
+    "block": {"start": 45, "stop": 98, "step": 1}
+  },
+  "validation_goals": {
+    "max_legitimate_false_block_rate": 0.001,
+    "max_verify_rate": 0.05,
+    "min_block_precision": 0.99
+  },
+  "corroboration": {
+    "min_distinct_families": 2,
+    "families": {
+      "velocity": "Unusually intense transfer velocity for this sender",
+      "amount_deviation": "Material deviation from the sender's own recent amounts",
+      "compromised_access": "Device or session change accompanied by recent authentication failures",
+      "beneficiary_risk": "New beneficiary that other accounts started paying at the same time",
+      "funds_flow": "Recently received funds being passed straight on to a new beneficiary"
+    }
+  },
+  "rules": [
+    {"code": "AMOUNT_SPIKE", "family": "amount_deviation", "weight": 0.30, "corroborating": true,
+     "description": "Amount is far above this sender's recent payments",
+     "params": {"min_zscore": 3.0, "min_ratio_to_prior_max": 3.0}},
+    {"code": "AMOUNT_ELEVATED", "family": "amount_deviation", "weight": 0.10, "corroborating": false,
+     "description": "Amount is noticeably above this sender's recent payments",
+     "params": {"min_zscore": 2.0}},
+    {"code": "VELOCITY_BURST", "family": "velocity", "weight": 0.30, "corroborating": true,
+     "description": "Several payments in the last hour, well above this sender's usual pace",
+     "params": {"min_requests_1h": 3, "min_requests_24h": 6, "min_velocity_ratio": 4.0}},
+    {"code": "RECIPIENT_FANOUT", "family": "velocity", "weight": 0.10, "corroborating": false,
+     "description": "Many different recipients paid in the last 24 hours",
+     "params": {"min_unique_recipients_24h": 5, "min_velocity_ratio": 3.0}},
+    {"code": "NEW_DEVICE_AFTER_FAILED_LOGINS", "family": "compromised_access", "weight": 0.35, "corroborating": true,
+     "description": "Payment from a newly added device, after failed sign-in attempts",
+     "params": {"min_failures_24h": 1}},
+    {"code": "REPEATED_FAILED_LOGINS", "family": "compromised_access", "weight": 0.15, "corroborating": true,
+     "description": "Repeated failed sign-in attempts in the last 24 hours",
+     "params": {"min_failures_24h": 3}},
+    {"code": "NEW_DEVICE", "family": "compromised_access", "weight": 0.10, "corroborating": false,
+     "description": "Payment from a device added in the last 24 hours to an established account",
+     "params": {}},
+    {"code": "FOREIGN_SESSION", "family": "compromised_access", "weight": 0.10, "corroborating": false,
+     "description": "Session originates outside the account's home country",
+     "params": {}},
+    {"code": "SHARED_NEW_BENEFICIARY", "family": "beneficiary_risk", "weight": 0.30, "corroborating": true,
+     "description": "New beneficiary that other accounts also began paying in the last 24 hours",
+     "params": {"min_other_senders_24h": 2, "max_recipient_history_days": 7}},
+    {"code": "NEW_BENEFICIARY_HIGH_AMOUNT", "family": "amount_deviation", "weight": 0.20, "corroborating": true,
+     "description": "Unusually high amount sent to a beneficiary without an established payment history",
+     "params": {"min_zscore": 1.2}},
+    {"code": "NEW_BENEFICIARY", "family": "beneficiary_risk", "weight": 0.05, "corroborating": false,
+     "description": "No established payment history with this beneficiary (first paid less than 24 hours ago)",
+     "params": {}},
+    {"code": "PASS_THROUGH_FUNDS", "family": "funds_flow", "weight": 0.30, "corroborating": true,
+     "description": "Most of the funds received in the last 24 hours are being sent on to a recent beneficiary",
+     "params": {"min_incoming_24h": 300, "min_outflow_share": 0.5, "max_recipient_history_days": 7}}
+  ],
+  "cold_start": {
+    "max_amount_without_history": 500,
+    "strong_auth_methods": ["biometric", "password_otp"]
+  },
+  "evidence": {
+    "trusted_sources": ["bank_security_operations", "fraud_investigations_unit"],
+    "blocking_types": ["compromised_session", "fraud_controlled_beneficiary", "compromised_device", "compromised_account"]
+  }
+}

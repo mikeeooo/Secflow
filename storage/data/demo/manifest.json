@@ -1,0 +1,133 @@
+{
+  "dataset": "demo",
+  "schema_version": "1.0",
+  "generator_version": "secflow-generator-1.0.0",
+  "seed": 43,
+  "identity_seed": 42,
+  "provenance": "Fully synthetic data produced by storage/generator.py. Accounts, counterparties, payments, sessions and security evidence are generated; they describe no real people, businesses, or confirmed fraud cases. Security evidence is a simulated trusted server-side stream.",
+  "date_range": {
+    "start": "2026-07-20T00:15:49Z",
+    "end": "2026-10-27T23:39:58Z"
+  },
+  "days": 100,
+  "requests_per_day": 100,
+  "partitions": [
+    {
+      "name": "demo",
+      "first_day": 1,
+      "last_day": 100
+    }
+  ],
+  "counts": {
+    "requests": 10000,
+    "accounts": 400,
+    "counterparties": 1064,
+    "payment_events": 11858,
+    "authentication_events": 10262,
+    "security_events": 14,
+    "fraud": 100,
+    "legitimate": 9900,
+    "unusual_legitimate": 500,
+    "routine_legitimate": 9400,
+    "by_scenario": {
+      "account_recovery": 15,
+      "account_takeover": 20,
+      "business_settlement": 18,
+      "coordinated": 20,
+      "household_repeat": 102,
+      "large_planned_purchase": 18,
+      "mule_flow": 20,
+      "new_device_legitimate": 26,
+      "new_recipient_legitimate": 14,
+      "payroll_burst": 166,
+      "routine_payment": 9400,
+      "shared_group_payment": 70,
+      "social_engineering": 20,
+      "travel": 71,
+      "velocity": 20
+    },
+    "by_partition": {
+      "demo": {
+        "requests": 10000,
+        "fraud": 100,
+        "legitimate": 9900,
+        "unusual_legitimate": 500,
+        "fraud_by_category": {
+          "velocity": 20,
+          "social_engineering": 20,
+          "coordinated": 20,
+          "mule_flow": 20,
+          "account_takeover": 20
+        }
+      }
+    },
+    "cold_start_accounts": 0
+  },
+  "cold_start": {
+    "partition": null,
+    "account_ids": []
+  },
+  "security_evidence": {
+    "campaign_evidence_events": 4,
+    "fixtures": {
+      "expired": 2,
+      "retracted": 2,
+      "future": 2,
+      "pending_review": 2,
+      "untrusted_source": 2
+    },
+    "administrative_session_revocations": 25,
+    "trusted_sources": [
+      "bank_security_operations",
+      "fraud_investigations_unit"
+    ],
+    "note": "All evidence is simulated. Fixtures must never trigger a confirmed-fraud block."
+  },
+  "feature_assumptions": [
+    "Runtime features use only events ordered strictly before the request (timestamp, type rank, id).",
+    "Labels, scenarios, campaign IDs, split assignments and generator parameters are offline-only.",
+    "Payment events are the historical ledger; every historical request settled within seconds."
+  ],
+  "files": {
+    "accounts.jsonl": {
+      "sha256": "ac539c366d18d1f0eb77ae562ddb40519f42a0788a5e49973fe3b5721e509f29",
+      "lines": 400,
+      "role": "runtime"
+    },
+    "counterparties.jsonl": {
+      "sha256": "8b310d96de47a7cceb0cdf4f19f7e9a477c292e2725e4f2ef9b3411137d7dd7f",
+      "lines": 1064,
+      "role": "runtime"
+    },
+    "requests.jsonl": {
+      "sha256": "53bb75989bcb8010a2a707eb19dd3853aba4a77db6503fdf85e5ee50d5c0f0f2",
+      "lines": 10000,
+      "role": "runtime"
+    },
+    "payment_events.jsonl": {
+      "sha256": "025078e9024e3e05166232c129dd6c2ac826d3e862948452efdf529241d8cb84",
+      "lines": 11858,
+      "role": "runtime"
+    },
+    "authentication_events.jsonl": {
+      "sha256": "239aadc119d31663e500d47d03528953dde115d96bbebde982ea2c9d00493cea",
+      "lines": 10262,
+      "role": "runtime"
+    },
+    "security_events.jsonl": {
+      "sha256": "6a934594c993097a98f403ba8d1abca3a381f99768b2c9a096a865ceaf1168c2",
+      "lines": 14,
+      "role": "runtime"
+    },
+    "evaluation_labels.jsonl": {
+      "sha256": "70021f9d47b101fc75985b9b5cf3eb981c75da9f2d2459e1aa10e5f588af9b67",
+      "lines": 10000,
+      "role": "offline_only"
+    },
+    "generator_account_params.jsonl": {
+      "sha256": "349dc5d4276cfc94cab068dbf8b8ce1c6caec300c8365d8d280ff3e02a10d004",
+      "lines": 400,
+      "role": "offline_only"
+    }
+  }
+}

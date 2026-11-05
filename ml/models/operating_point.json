@@ -1,0 +1,7 @@
+{
+  "verify_threshold": 61.0,
+  "block_threshold": 97.0,
+  "source": "validated",
+  "version": "op-7edcea41",
+  "model_version": "secflow-sk-1.0-71ecbbce2d"
+}

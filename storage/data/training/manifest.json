@@ -1,0 +1,233 @@
+{
+  "dataset": "training",
+  "schema_version": "1.0",
+  "generator_version": "secflow-generator-1.0.0",
+  "seed": 42,
+  "identity_seed": 42,
+  "provenance": "Fully synthetic data produced by storage/generator.py. Accounts, counterparties, payments, sessions and security evidence are generated; they describe no real people, businesses, or confirmed fraud cases. Security evidence is a simulated trusted server-side stream.",
+  "date_range": {
+    "start": "2026-04-06T00:05:10Z",
+    "end": "2026-07-14T23:59:00Z"
+  },
+  "days": 100,
+  "requests_per_day": 1000,
+  "partitions": [
+    {
+      "name": "train",
+      "first_day": 1,
+      "last_day": 60
+    },
+    {
+      "name": "calibration",
+      "first_day": 61,
+      "last_day": 70
+    },
+    {
+      "name": "validation",
+      "first_day": 71,
+      "last_day": 80
+    },
+    {
+      "name": "test",
+      "first_day": 81,
+      "last_day": 100
+    }
+  ],
+  "counts": {
+    "requests": 100000,
+    "accounts": 400,
+    "counterparties": 4872,
+    "payment_events": 105685,
+    "authentication_events": 102720,
+    "security_events": 83,
+    "fraud": 1000,
+    "legitimate": 99000,
+    "unusual_legitimate": 5000,
+    "routine_legitimate": 94000,
+    "by_scenario": {
+      "account_recovery": 215,
+      "account_takeover": 200,
+      "business_settlement": 187,
+      "coordinated": 200,
+      "household_repeat": 866,
+      "large_planned_purchase": 248,
+      "mule_flow": 200,
+      "new_device_legitimate": 368,
+      "new_recipient_legitimate": 228,
+      "payroll_burst": 1628,
+      "routine_payment": 94000,
+      "shared_group_payment": 704,
+      "social_engineering": 200,
+      "travel": 556,
+      "velocity": 200
+    },
+    "by_partition": {
+      "train": {
+        "requests": 60000,
+        "fraud": 600,
+        "legitimate": 59400,
+        "unusual_legitimate": 3000,
+        "fraud_by_category": {
+          "velocity": 120,
+          "mule_flow": 120,
+          "social_engineering": 120,
+          "coordinated": 120,
+          "account_takeover": 120
+        }
+      },
+      "calibration": {
+        "requests": 10000,
+        "fraud": 100,
+        "legitimate": 9900,
+        "unusual_legitimate": 500,
+        "fraud_by_category": {
+          "account_takeover": 20,
+          "velocity": 20,
+          "coordinated": 20,
+          "social_engineering": 20,
+          "mule_flow": 20
+        }
+      },
+      "validation": {
+        "requests": 10000,
+        "fraud": 100,
+        "legitimate": 9900,
+        "unusual_legitimate": 500,
+        "fraud_by_category": {
+          "account_takeover": 20,
+          "mule_flow": 20,
+          "social_engineering": 20,
+          "coordinated": 20,
+          "velocity": 20
+        }
+      },
+      "test": {
+        "requests": 20000,
+        "fraud": 200,
+        "legitimate": 19800,
+        "unusual_legitimate": 1000,
+        "fraud_by_category": {
+          "account_takeover": 40,
+          "social_engineering": 40,
+          "mule_flow": 40,
+          "velocity": 40,
+          "coordinated": 40
+        }
+      }
+    },
+    "cold_start_accounts": 40
+  },
+  "cold_start": {
+    "partition": "test",
+    "account_ids": [
+      "ACC-0019",
+      "ACC-0021",
+      "ACC-0027",
+      "ACC-0037",
+      "ACC-0040",
+      "ACC-0061",
+      "ACC-0068",
+      "ACC-0085",
+      "ACC-0091",
+      "ACC-0101",
+      "ACC-0102",
+      "ACC-0104",
+      "ACC-0114",
+      "ACC-0145",
+      "ACC-0153",
+      "ACC-0156",
+      "ACC-0157",
+      "ACC-0161",
+      "ACC-0174",
+      "ACC-0186",
+      "ACC-0189",
+      "ACC-0192",
+      "ACC-0193",
+      "ACC-0203",
+      "ACC-0213",
+      "ACC-0215",
+      "ACC-0233",
+      "ACC-0239",
+      "ACC-0242",
+      "ACC-0252",
+      "ACC-0255",
+      "ACC-0266",
+      "ACC-0289",
+      "ACC-0291",
+      "ACC-0331",
+      "ACC-0343",
+      "ACC-0347",
+      "ACC-0356",
+      "ACC-0369",
+      "ACC-0389"
+    ]
+  },
+  "security_evidence": {
+    "campaign_evidence_events": 73,
+    "fixtures": {
+      "expired": 2,
+      "retracted": 2,
+      "future": 2,
+      "pending_review": 2,
+      "untrusted_source": 2
+    },
+    "administrative_session_revocations": 25,
+    "trusted_sources": [
+      "bank_security_operations",
+      "fraud_investigations_unit"
+    ],
+    "note": "All evidence is simulated. Fixtures must never trigger a confirmed-fraud block."
+  },
+  "feature_assumptions": [
+    "Runtime features use only events ordered strictly before the request (timestamp, type rank, id).",
+    "Labels, scenarios, campaign IDs, split assignments and generator parameters are offline-only.",
+    "Payment events are the historical ledger; every historical request settled within seconds."
+  ],
+  "files": {
+    "accounts.jsonl": {
+      "sha256": "ac539c366d18d1f0eb77ae562ddb40519f42a0788a5e49973fe3b5721e509f29",
+      "lines": 400,
+      "role": "runtime"
+    },
+    "counterparties.jsonl": {
+      "sha256": "e8f5c48c6bc691417c6bd0c9e5166e58651e51ad98ef1f7bb039a3bb5b1e75c2",
+      "lines": 4872,
+      "role": "runtime"
+    },
+    "requests.jsonl": {
+      "sha256": "b087b943c203a8339f4d23e257ec268f462ccc67a781bc2d0bcaacad3764f8f2",
+      "lines": 100000,
+      "role": "runtime"
+    },
+    "payment_events.jsonl": {
+      "sha256": "8e9da218c454fe66f56096314fefd1f1e4b6b982cf9403dc5065c464768a2a29",
+      "lines": 105685,
+      "role": "runtime"
+    },
+    "authentication_events.jsonl": {
+      "sha256": "1741268dbd933a1409d7acd938e63700a56932fcc61744f9c482908d347c1df7",
+      "lines": 102720,
+      "role": "runtime"
+    },
+    "security_events.jsonl": {
+      "sha256": "5bc7f72e9f3c8834ea0aa600a1dfe13b37adb27b5601ee8905e9cbfe84faecf8",
+      "lines": 83,
+      "role": "runtime"
+    },
+    "evaluation_labels.jsonl": {
+      "sha256": "93ceabe373bd74685e8a7ac5bde9ab330790c893c5b59b45803bf4df61625aa5",
+      "lines": 100000,
+      "role": "offline_only"
+    },
+    "generator_account_params.jsonl": {
+      "sha256": "349dc5d4276cfc94cab068dbf8b8ce1c6caec300c8365d8d280ff3e02a10d004",
+      "lines": 400,
+      "role": "offline_only"
+    },
+    "split_assignments.jsonl": {
+      "sha256": "622321bc8f2c009c28bb64b4f5f06d82d1d31b185c44ff6b2757919719963bed",
+      "lines": 100000,
+      "role": "offline_only"
+    }
+  }
+}

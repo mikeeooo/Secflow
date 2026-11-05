@@ -1,0 +1,33 @@
+[project]
+name = "secflow"
+version = "1.0.0"
+description = "SecFlow: explainable payment-risk analysis with scikit-learn anomaly detection and an evidence-first decision policy."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.8",
+    "numpy>=2.1",
+    "scikit-learn>=1.7",
+    "joblib>=1.4",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "httpx>=0.27",
+    "ruff>=0.6",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+exclude = ["frontend"]

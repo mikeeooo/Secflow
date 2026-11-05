@@ -1,0 +1,658 @@
+{
+  "generated_at": "2026-11-05T13:39:50Z",
+  "scope": "Synthetic final-test period (days 81-100) of the 100,000-request training corpus. Results describe this generated data only; they are not evidence of real-world detection or fraud reduction.",
+  "model_version": "secflow-sk-1.0-71ecbbce2d",
+  "policy_version": "secflow-evidence-first-1.0.0+21de4ca9",
+  "operating_point": {
+    "verify": 61.0,
+    "block": 97.0,
+    "source": "validated",
+    "version": "op-7edcea41"
+  },
+  "positive_definitions": {
+    "verify_or_block": "A request counts as flagged when the final action is Verify or Block.",
+    "block_only": "A request counts as flagged only when the final action is Block."
+  },
+  "splits": {
+    "train": {
+      "requests": 60000,
+      "fraud": 600,
+      "fraud_share": 0.01
+    },
+    "calibration": {
+      "requests": 10000,
+      "fraud": 100,
+      "fraud_share": 0.01
+    },
+    "validation": {
+      "requests": 10000,
+      "fraud": 100,
+      "fraud_share": 0.01
+    },
+    "test": {
+      "requests": 20000,
+      "fraud": 200,
+      "fraud_share": 0.01
+    }
+  },
+  "test_requests": 20000,
+  "test_fraud": 200,
+  "components": {
+    "isolation_forest": {
+      "flag_threshold": 0.9535049999999999,
+      "threshold_source": "validation top-5% budget",
+      "confusion_matrix": {
+        "true_positive": 132,
+        "false_positive": 1101,
+        "false_negative": 68,
+        "true_negative": 18699
+      },
+      "precision": 0.1070559610705596,
+      "precision_95ci": [
+        0.091,
+        0.1256
+      ],
+      "recall": 0.66,
+      "f1": 0.1842288904396371,
+      "false_positive_rate": 0.0556060606060606,
+      "flag_rate": 0.06165,
+      "positives": 200,
+      "negatives": 19800,
+      "note": null,
+      "average_precision": 0.24327068368826413,
+      "roc_auc": 0.927379797979798
+    },
+    "lof": {
+      "flag_threshold": 0.9491,
+      "threshold_source": "validation top-5% budget",
+      "confusion_matrix": {
+        "true_positive": 30,
+        "false_positive": 2021,
+        "false_negative": 170,
+        "true_negative": 17779
+      },
+      "precision": 0.01462701121404193,
+      "precision_95ci": [
+        0.0103,
+        0.0208
+      ],
+      "recall": 0.15,
+      "f1": 0.026654820079964465,
+      "false_positive_rate": 0.10207070707070708,
+      "flag_rate": 0.10255,
+      "positives": 200,
+      "negatives": 19800,
+      "note": null,
+      "average_precision": 0.012005631961758372,
+      "roc_auc": 0.5584825757575758
+    },
+    "dbscan": {
+      "flag_threshold": 1.0,
+      "threshold_source": "outside_context",
+      "confusion_matrix": {
+        "true_positive": 93,
+        "false_positive": 1250,
+        "false_negative": 107,
+        "true_negative": 18550
+      },
+      "precision": 0.06924795234549516,
+      "precision_95ci": [
+        0.0569,
+        0.0841
+      ],
+      "recall": 0.465,
+      "f1": 0.12054439403758911,
+      "false_positive_rate": 0.06313131313131314,
+      "flag_rate": 0.06715,
+      "positives": 200,
+      "negatives": 19800,
+      "note": null,
+      "average_precision": 0.03755029784065525,
+      "roc_auc": 0.7009343434343435
+    },
+    "rules": {
+      "flag_threshold": 0.15,
+      "threshold_source": "validation top-5% budget",
+      "confusion_matrix": {
+        "true_positive": 149,
+        "false_positive": 953,
+        "false_negative": 51,
+        "true_negative": 18847
+      },
+      "precision": 0.13520871143375682,
+      "precision_95ci": [
+        0.1163,
+        0.1567
+      ],
+      "recall": 0.745,
+      "f1": 0.22887864823348694,
+      "false_positive_rate": 0.04813131313131313,
+      "flag_rate": 0.0551,
+      "positives": 200,
+      "negatives": 19800,
+      "note": null,
+      "average_precision": 0.49552721949769263,
+      "roc_auc": 0.9667434343434343
+    },
+    "combined_risk_score": {
+      "average_precision": 0.3427222000372875,
+      "roc_auc": 0.8922955808080808
+    }
+  },
+  "combined_policy": {
+    "verify_or_block": {
+      "confusion_matrix": {
+        "true_positive": 141,
+        "false_positive": 1029,
+        "false_negative": 59,
+        "true_negative": 18771
+      },
+      "precision": 0.12051282051282051,
+      "precision_95ci": [
+        0.1031,
+        0.1404
+      ],
+      "recall": 0.705,
+      "f1": 0.20583941605839418,
+      "false_positive_rate": 0.05196969696969697,
+      "flag_rate": 0.0585,
+      "positives": 200,
+      "negatives": 19800,
+      "note": null
+    },
+    "block_only": {
+      "confusion_matrix": {
+        "true_positive": 23,
+        "false_positive": 0,
+        "false_negative": 177,
+        "true_negative": 19800
+      },
+      "precision": 1.0,
+      "precision_95ci": [
+        0.8569,
+        1.0
+      ],
+      "recall": 0.115,
+      "f1": 0.2062780269058296,
+      "false_positive_rate": 0.0,
+      "flag_rate": 0.00115,
+      "positives": 200,
+      "negatives": 19800,
+      "note": null
+    },
+    "verify_rate": 0.05735,
+    "block_rate": 0.00115,
+    "permit_rate": 0.9415,
+    "legitimate_false_block_rate": 0.0,
+    "legitimate_review_rate": 0.05196969696969697,
+    "predicted_blocks": 23,
+    "block_precision_95ci": [
+      0.8569,
+      1.0
+    ]
+  },
+  "combined_policy_without_evidence": {
+    "verify_or_block": {
+      "confusion_matrix": {
+        "true_positive": 131,
+        "false_positive": 1029,
+        "false_negative": 69,
+        "true_negative": 18771
+      },
+      "precision": 0.11293103448275862,
+      "precision_95ci": [
+        0.096,
+        0.1324
+      ],
+      "recall": 0.655,
+      "f1": 0.19264705882352942,
+      "false_positive_rate": 0.05196969696969697,
+      "flag_rate": 0.058,
+      "positives": 200,
+      "negatives": 19800,
+      "note": null
+    },
+    "block_only": {
+      "confusion_matrix": {
+        "true_positive": 3,
+        "false_positive": 0,
+        "false_negative": 197,
+        "true_negative": 19800
+      },
+      "precision": 1.0,
+      "precision_95ci": [
+        0.4385,
+        1.0
+      ],
+      "recall": 0.015,
+      "f1": 0.02955665024630542,
+      "false_positive_rate": 0.0,
+      "flag_rate": 0.00015,
+      "positives": 200,
+      "negatives": 19800,
+      "note": null
+    },
+    "verify_rate": 0.05785,
+    "block_rate": 0.00015,
+    "permit_rate": 0.942,
+    "legitimate_false_block_rate": 0.0,
+    "legitimate_review_rate": 0.05196969696969697,
+    "predicted_blocks": 3,
+    "block_precision_95ci": [
+      0.4385,
+      1.0
+    ]
+  },
+  "evidence_channel": {
+    "evidence_blocks": 20,
+    "evidence_blocks_on_fraud": 20,
+    "evidence_blocks_on_legitimate": 0,
+    "fraud_with_active_evidence": 20,
+    "fraud_without_evidence": 180,
+    "model_only_recall_on_fraud_without_evidence": 0.6722222222222223,
+    "note": "All security evidence is simulated. The evidence channel is reported separately so it cannot hide weak model-only detection."
+  },
+  "per_scenario": {
+    "account_recovery": {
+      "kind": "legitimate",
+      "requests": 37,
+      "verify_or_block_rate": 0.5135135135135135,
+      "block_rate": 0.0,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.5135135135135135,
+      "model_only_block_rate": 0.0
+    },
+    "account_takeover": {
+      "kind": "fraud",
+      "requests": 40,
+      "verify_or_block_rate": 0.75,
+      "block_rate": 0.025,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.75,
+      "model_only_block_rate": 0.025
+    },
+    "business_settlement": {
+      "kind": "legitimate",
+      "requests": 44,
+      "verify_or_block_rate": 0.13636363636363635,
+      "block_rate": 0.0,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.13636363636363635,
+      "model_only_block_rate": 0.0
+    },
+    "coordinated": {
+      "kind": "fraud",
+      "requests": 40,
+      "verify_or_block_rate": 0.925,
+      "block_rate": 0.125,
+      "evidence_block_rate": 0.075,
+      "model_only_verify_or_block_rate": 0.925,
+      "model_only_block_rate": 0.05
+    },
+    "household_repeat": {
+      "kind": "legitimate",
+      "requests": 188,
+      "verify_or_block_rate": 0.010638297872340425,
+      "block_rate": 0.0,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.010638297872340425,
+      "model_only_block_rate": 0.0
+    },
+    "large_planned_purchase": {
+      "kind": "legitimate",
+      "requests": 51,
+      "verify_or_block_rate": 0.5686274509803921,
+      "block_rate": 0.0,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.5686274509803921,
+      "model_only_block_rate": 0.0
+    },
+    "mule_flow": {
+      "kind": "fraud",
+      "requests": 40,
+      "verify_or_block_rate": 0.85,
+      "block_rate": 0.225,
+      "evidence_block_rate": 0.225,
+      "model_only_verify_or_block_rate": 0.775,
+      "model_only_block_rate": 0.0
+    },
+    "new_device_legitimate": {
+      "kind": "legitimate",
+      "requests": 79,
+      "verify_or_block_rate": 0.34177215189873417,
+      "block_rate": 0.0,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.34177215189873417,
+      "model_only_block_rate": 0.0
+    },
+    "new_recipient_legitimate": {
+      "kind": "legitimate",
+      "requests": 55,
+      "verify_or_block_rate": 0.07272727272727272,
+      "block_rate": 0.0,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.07272727272727272,
+      "model_only_block_rate": 0.0
+    },
+    "payroll_burst": {
+      "kind": "legitimate",
+      "requests": 281,
+      "verify_or_block_rate": 0.19572953736654805,
+      "block_rate": 0.0,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.19572953736654805,
+      "model_only_block_rate": 0.0
+    },
+    "routine_payment": {
+      "kind": "legitimate",
+      "requests": 18800,
+      "verify_or_block_rate": 0.0425,
+      "block_rate": 0.0,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.0425,
+      "model_only_block_rate": 0.0
+    },
+    "shared_group_payment": {
+      "kind": "legitimate",
+      "requests": 134,
+      "verify_or_block_rate": 0.3805970149253731,
+      "block_rate": 0.0,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.3805970149253731,
+      "model_only_block_rate": 0.0
+    },
+    "social_engineering": {
+      "kind": "fraud",
+      "requests": 40,
+      "verify_or_block_rate": 0.35,
+      "block_rate": 0.2,
+      "evidence_block_rate": 0.2,
+      "model_only_verify_or_block_rate": 0.175,
+      "model_only_block_rate": 0.0
+    },
+    "travel": {
+      "kind": "legitimate",
+      "requests": 131,
+      "verify_or_block_rate": 0.2824427480916031,
+      "block_rate": 0.0,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.2824427480916031,
+      "model_only_block_rate": 0.0
+    },
+    "velocity": {
+      "kind": "fraud",
+      "requests": 40,
+      "verify_or_block_rate": 0.65,
+      "block_rate": 0.0,
+      "evidence_block_rate": 0.0,
+      "model_only_verify_or_block_rate": 0.65,
+      "model_only_block_rate": 0.0
+    }
+  },
+  "unusual_legitimate": {
+    "requests": 1000,
+    "fraud": 0,
+    "verify_or_block": {
+      "confusion_matrix": {
+        "true_positive": 0,
+        "false_positive": 230,
+        "false_negative": 0,
+        "true_negative": 770
+      },
+      "precision": 0.0,
+      "precision_95ci": [
+        0.0,
+        0.0164
+      ],
+      "recall": null,
+      "f1": null,
+      "false_positive_rate": 0.23,
+      "flag_rate": 0.23,
+      "positives": 0,
+      "negatives": 1000,
+      "note": null
+    },
+    "block_only": {
+      "confusion_matrix": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_negative": 1000
+      },
+      "precision": null,
+      "precision_95ci": null,
+      "recall": null,
+      "f1": null,
+      "false_positive_rate": 0.0,
+      "flag_rate": 0.0,
+      "positives": 0,
+      "negatives": 1000,
+      "note": "No positive predictions; precision and F1 are undefined."
+    },
+    "verify_rate": 0.23,
+    "block_rate": 0.0,
+    "permit_rate": 0.77,
+    "legitimate_false_block_rate": 0.0,
+    "legitimate_review_rate": 0.23,
+    "predicted_blocks": 0,
+    "block_precision_95ci": null
+  },
+  "routine_legitimate": {
+    "requests": 18800,
+    "fraud": 0,
+    "verify_or_block": {
+      "confusion_matrix": {
+        "true_positive": 0,
+        "false_positive": 799,
+        "false_negative": 0,
+        "true_negative": 18001
+      },
+      "precision": 0.0,
+      "precision_95ci": [
+        0.0,
+        0.0048
+      ],
+      "recall": null,
+      "f1": null,
+      "false_positive_rate": 0.0425,
+      "flag_rate": 0.0425,
+      "positives": 0,
+      "negatives": 18800,
+      "note": null
+    },
+    "block_only": {
+      "confusion_matrix": {
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "true_negative": 18800
+      },
+      "precision": null,
+      "precision_95ci": null,
+      "recall": null,
+      "f1": null,
+      "false_positive_rate": 0.0,
+      "flag_rate": 0.0,
+      "positives": 0,
+      "negatives": 18800,
+      "note": "No positive predictions; precision and F1 are undefined."
+    },
+    "verify_rate": 0.0425,
+    "block_rate": 0.0,
+    "permit_rate": 0.9575,
+    "legitimate_false_block_rate": 0.0,
+    "legitimate_review_rate": 0.0425,
+    "predicted_blocks": 0,
+    "block_precision_95ci": null
+  },
+  "cold_start_accounts": {
+    "accounts": 40,
+    "requests": 1545,
+    "fraud": 15,
+    "verify_or_block": {
+      "confusion_matrix": {
+        "true_positive": 14,
+        "false_positive": 315,
+        "false_negative": 1,
+        "true_negative": 1215
+      },
+      "precision": 0.0425531914893617,
+      "precision_95ci": [
+        0.0255,
+        0.0702
+      ],
+      "recall": 0.9333333333333333,
+      "f1": 0.08139534883720931,
+      "false_positive_rate": 0.20588235294117646,
+      "flag_rate": 0.21294498381877022,
+      "positives": 15,
+      "negatives": 1530,
+      "note": null
+    },
+    "block_only": {
+      "confusion_matrix": {
+        "true_positive": 2,
+        "false_positive": 0,
+        "false_negative": 13,
+        "true_negative": 1530
+      },
+      "precision": 1.0,
+      "precision_95ci": [
+        0.3424,
+        1.0
+      ],
+      "recall": 0.13333333333333333,
+      "f1": 0.23529411764705882,
+      "false_positive_rate": 0.0,
+      "flag_rate": 0.0012944983818770227,
+      "positives": 15,
+      "negatives": 1530,
+      "note": null
+    },
+    "verify_rate": 0.21165048543689322,
+    "block_rate": 0.0012944983818770227,
+    "permit_rate": 0.7870550161812297,
+    "legitimate_false_block_rate": 0.0,
+    "legitimate_review_rate": 0.20588235294117646,
+    "predicted_blocks": 2,
+    "block_precision_95ci": [
+      0.3424,
+      1.0
+    ]
+  },
+  "existing_accounts": {
+    "requests": 18455,
+    "fraud": 185,
+    "verify_or_block": {
+      "confusion_matrix": {
+        "true_positive": 127,
+        "false_positive": 714,
+        "false_negative": 58,
+        "true_negative": 17556
+      },
+      "precision": 0.15101070154577884,
+      "precision_95ci": [
+        0.1284,
+        0.1768
+      ],
+      "recall": 0.6864864864864865,
+      "f1": 0.24756335282651076,
+      "false_positive_rate": 0.03908045977011494,
+      "flag_rate": 0.04557030615009482,
+      "positives": 185,
+      "negatives": 18270,
+      "note": null
+    },
+    "block_only": {
+      "confusion_matrix": {
+        "true_positive": 21,
+        "false_positive": 0,
+        "false_negative": 164,
+        "true_negative": 18270
+      },
+      "precision": 1.0,
+      "precision_95ci": [
+        0.8454,
+        1.0
+      ],
+      "recall": 0.11351351351351352,
+      "f1": 0.2038834951456311,
+      "false_positive_rate": 0.0,
+      "flag_rate": 0.0011379030073150908,
+      "positives": 185,
+      "negatives": 18270,
+      "note": null
+    },
+    "verify_rate": 0.044432403142779735,
+    "block_rate": 0.0011379030073150908,
+    "permit_rate": 0.9544296938499052,
+    "legitimate_false_block_rate": 0.0,
+    "legitimate_review_rate": 0.03908045977011494,
+    "predicted_blocks": 21,
+    "block_precision_95ci": [
+      0.8454,
+      1.0
+    ]
+  },
+  "decision_sources": {
+    "Block/confirmed_fraud_evidence": 20,
+    "Block/risk_policy": 3,
+    "Permit/risk_policy": 18830,
+    "Verify/assessment_safeguard": 11,
+    "Verify/risk_policy": 1136
+  },
+  "assessment_statuses": {
+    "assessed": 19800,
+    "insufficient_history": 11,
+    "limited_history": 189
+  },
+  "latency_ms": {
+    "requests_timed": 300,
+    "scope": "single-request path: features + IF + LOF + DBSCAN context + rules + evidence + policy, in-process",
+    "mean": 3.525,
+    "p50": 3.5,
+    "p95": 4.23,
+    "p99": 4.586,
+    "max": 4.94
+  },
+  "validation_goals": {
+    "max_legitimate_false_block_rate": 0.001,
+    "max_verify_rate": 0.05,
+    "min_block_precision": 0.99
+  },
+  "goal_assessment": [
+    {
+      "goal": "Legitimate false-block rate <= 0.1%",
+      "measured": 0.0,
+      "met": true
+    },
+    {
+      "goal": "Verify rate <= 5%",
+      "measured": 0.05735,
+      "met": false
+    },
+    {
+      "goal": "Block precision >= 99%",
+      "measured": 1.0,
+      "interval_95": [
+        0.8569,
+        1.0
+      ],
+      "predicted_blocks": 23,
+      "met": null,
+      "note": "Fewer than 100 predicted blocks: the sample cannot establish 99% precision either way."
+    }
+  ],
+  "headline": {
+    "test_requests": 20000,
+    "test_fraud": 200,
+    "recall_verify_or_block": 0.705,
+    "precision_verify_or_block": 0.12051282051282051,
+    "recall_block_only": 0.115,
+    "block_precision": 1.0,
+    "verify_rate": 0.05735,
+    "legitimate_false_block_rate": 0.0,
+    "model_only_recall_verify_or_block": 0.655,
+    "latency_p95_ms": 4.23
+  }
+}

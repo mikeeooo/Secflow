@@ -1,0 +1,93 @@
+{
+  "model_version": "secflow-sk-1.0-71ecbbce2d",
+  "feature_version": "features-1.0.0",
+  "payment_features": [
+    "log_amount",
+    "amount_zscore_30d",
+    "log_amount_to_prior_max_30d",
+    "requests_1h",
+    "requests_24h",
+    "log_sum_24h",
+    "velocity_ratio_24h",
+    "unique_recipients_24h",
+    "new_recipient",
+    "recipient_senders_24h",
+    "log_recipient_history_days",
+    "log_device_age_hours",
+    "auth_failures_24h",
+    "log_hours_since_last_request",
+    "log_account_age_days",
+    "log_incoming_24h",
+    "foreign_ip",
+    "weak_auth",
+    "hour_deviation",
+    "log_requests_30d"
+  ],
+  "context_features": [
+    "ctx_log_requests_24h",
+    "ctx_log_sum_24h",
+    "ctx_unique_recipients_24h",
+    "ctx_new_recipients_24h",
+    "ctx_devices_24h",
+    "ctx_auth_failures_24h",
+    "ctx_log_incoming_24h",
+    "ctx_log_amount_ratio_24h"
+  ],
+  "sklearn_version": "1.9.1",
+  "random_seed": 42,
+  "training_dataset": {
+    "path": "storage/data/training",
+    "seed": 42,
+    "generator_version": "secflow-generator-1.0.0",
+    "file_hashes": {
+      "accounts.jsonl": "ac539c366d18d1f0eb77ae562ddb40519f42a0788a5e49973fe3b5721e509f29",
+      "counterparties.jsonl": "e8f5c48c6bc691417c6bd0c9e5166e58651e51ad98ef1f7bb039a3bb5b1e75c2",
+      "requests.jsonl": "b087b943c203a8339f4d23e257ec268f462ccc67a781bc2d0bcaacad3764f8f2",
+      "payment_events.jsonl": "8e9da218c454fe66f56096314fefd1f1e4b6b982cf9403dc5065c464768a2a29",
+      "authentication_events.jsonl": "1741268dbd933a1409d7acd938e63700a56932fcc61744f9c482908d347c1df7",
+      "security_events.jsonl": "5bc7f72e9f3c8834ea0aa600a1dfe13b37adb27b5601ee8905e9cbfe84faecf8",
+      "evaluation_labels.jsonl": "93ceabe373bd74685e8a7ac5bde9ab330790c893c5b59b45803bf4df61625aa5",
+      "generator_account_params.jsonl": "349dc5d4276cfc94cab068dbf8b8ce1c6caec300c8365d8d280ff3e02a10d004",
+      "split_assignments.jsonl": "622321bc8f2c009c28bb64b4f5f06d82d1d31b185c44ff6b2757919719963bed"
+    }
+  },
+  "fit_rows": {
+    "preprocessing": 60000,
+    "isolation_forest": 60000,
+    "lof": 60000,
+    "dbscan": 20000,
+    "score_mapping_reference": 10000
+  },
+  "selected_parameters": {
+    "isolation_forest": {
+      "n_estimators": 100,
+      "max_samples": 512
+    },
+    "lof": {
+      "n_neighbors": 50
+    },
+    "dbscan": {
+      "min_samples": 5,
+      "eps": 0.89123,
+      "eps_quantile": 0.9
+    }
+  },
+  "dbscan_context": {
+    "fit_profiles": 20000.0,
+    "core_samples": 18014.0,
+    "clusters": 122.0,
+    "noise_fraction": 0.06695,
+    "eps": 0.8912333758422342,
+    "min_samples": 5,
+    "metric": "euclidean",
+    "adapter": "frozen-core: within eps of a training core sample -> 0, outside -> 1, insufficient history -> 0"
+  },
+  "score_mapping": "empirical CDF of inverted raw scores over the unlabelled calibration period",
+  "policy_version": "secflow-evidence-first-1.0.0+21de4ca9",
+  "operating_point": {
+    "verify": 61.0,
+    "block": 97.0,
+    "source": "validated",
+    "version": "op-7edcea41"
+  }
+}
